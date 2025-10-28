@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Lesmana</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <nav class="container">
+            <a href="#home" class="logo">Lesmana Adhi Kusuma</a>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">Tentang Saya</a></li>
+                <li><a href="#portfolio">Portofolio</a></li>
+                <li><a href="#contact">Kontak</a></li>
+            </ul>
+            <div class="menu-toggle" id="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Halo, Saya <span class="highlight">Lesmana Adhi Kusuma</span></h1>
+                <p>Saya seorang Web Developer</p>
+                <a href="#portfolio" class="cta-button">Lihat Karya Saya</a>
+            </div>
+        </section>
+
+        <section id="about" class="container">
+            <h2>Tentang Saya</h2>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="images/profil.png" alt="Foto Profil">
+                </div>
+                <div class="about-text">
+                    <h3>Perkenalkan, saya Lesmana Adhi Kusuma.</h3>
+                    <p>
+                        Saya seorang mahasiswa Teknik Informatika yang bersemangat mengembangkan aplikasi web yang fungsional dan intuitif. Keahlian utama saya meliputi HTML, CSS, JavaScript, serta pengalaman menggunakan framework seperti Laravel dan React, serta alat pendukung seperti Git. Saat ini saya sedang mengerjakan beberapa proyek pribadi untuk memperkuat kemampuan front-end dan mempelajari back-end dengan Node.js/Express.
+                    </p>
+                    <p>
+                        Saat ini saya sedang fokus belajar framework laravel serta IoT dan 
+                        mencari peluang untuk berkontribusi dalam proyek-proyek yang menantang.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio">
+            <div class="container">
+                <h2>Portofolio</h2>
+                <p class="section-subtitle">Beberapa proyek yang pernah saya kerjakan.</p>
+
+                <div class="portfolio-grid">
+                    <div class="project-card">
+                        <img src="images/image1.png" alt="Gambar Proyek 1">
+                        <div class="project-content">
+                            <h3>Awan Laundry</h3>
+                            <p>Proyek Ini untuk membuat sistem pemesanan dan pencatatan pada Awan Laundry. Teknologi yang digunakan adalah native website(HTML,CSS,JS,PHP) bertujuan untuk alat pembelajaran</p>
+                            <a href="#" class="project-link" target="_blank">Lihat Detail</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <img src="images/image2.png" alt="Gambar Proyek 2">
+                        <div class="project-content">
+                            <h3>Sistem Penyiraman Otomatis Jondol Tani</h3>
+                            <p>Proyek ini bertujuan membuat sistem automisasi penyiraman pada kios bunga Jondo Tani. Teknologi yang digunakan adalah framework Laravel.</p>
+                            <a href="#" class="project-link" target="_blank">Lihat Detail</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <img src="images/image3.png" alt="Gambar Proyek 3">
+                        <div class="project-content">
+                            <h3>Scientific-calculator</h3>
+                            <p>Proyek ini bersifat sederhana dibuat untuk memenuhi assigment kelas IBM SkillBuilds</p>
+                            <a href="https://kalkulator-ilmiah.netlify.app/" class="project-link" target="_blank">Lihat Detail</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="container">
+            <h2>Hubungi Saya</h2>
+            <p class="section-subtitle">
+                Saya tertarik untuk berdiskusi tentang peluang baru. Jangan ragu untuk menghubungi saya!
+            </p>
+            <div class="contact-links">
+                <a href="mailto:lesmanaadhik@gmail.com" class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>lesmanaadhik@gmail.com</span>
+                </a>
+                <a href="https://linkedin.com/in/lesmana-adhi-kusuma" class="contact-item" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="https://github.com/Lesmana24" class="contact-item" target="_blank">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <span id="current-year"></span> Lesmana Adhi Kusuma. Dibuat dengan <i class="fas fa-heart"></i>.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
