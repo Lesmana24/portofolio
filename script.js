@@ -87,4 +87,33 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // --- FUNGSI TOMBOL SCROLL HORIZONTAL (BARU) ---
+    const portfolioGrid = document.getElementById('portfolio-grid');
+    const scrollLeftBtn = document.getElementById('scroll-left');
+    const scrollRightBtn = document.getElementById('scroll-right');
+
+    // Pastikan elemennya ada sebelum menjalankan fungsi
+    if (portfolioGrid && scrollLeftBtn && scrollRightBtn) {
+        
+        // Jarak scroll sekali klik. 
+        // Kita set sekitar 350px (lebar kartu 320px + gap 2rem)
+        const scrollAmount = 350;
+
+        scrollRightBtn.addEventListener('click', () => {
+            portfolioGrid.scrollBy({
+                top: 0,
+                left: scrollAmount, // Geser ke kanan
+                behavior: 'smooth'  // Efek geser halus
+            });
+        });
+
+        scrollLeftBtn.addEventListener('click', () => {
+            portfolioGrid.scrollBy({
+                top: 0,
+                left: -scrollAmount, // Geser ke kiri (nilai negatif)
+                behavior: 'smooth'
+            });
+        });
+    }
+
 });

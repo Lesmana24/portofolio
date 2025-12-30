@@ -201,19 +201,100 @@ header nav {
     background-color: var(--secondary-color);
 }
 
+/* Container Utama untuk Scroll Samping */
 .portfolio-grid {
-    display: grid;
-    /* PERUBAHAN: Memaksa 2 kolom */
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 2rem;
+    display: flex;               /* Membuat isi berjejer ke samping */
+    overflow-x: auto;            /* Mengaktifkan scroll horizontal */
+    gap: 2rem;                   /* Jarak antar kartu */
+    padding: 1rem 0.5rem 2rem;   /* Padding (atas, kanan-kiri, bawah) */
+    
+    /* Efek 'Magnet' saat digeser (Snap) */
+    scroll-snap-type: x mandatory; 
+    -webkit-overflow-scrolling: touch; /* Agar smooth di iPhone/Android */
 }
 
+/* Kustomisasi Scrollbar (Opsional: Supaya terlihat rapi) */
+.portfolio-grid::-webkit-scrollbar {
+    height: 8px; /* Tinggi scrollbar */
+}
+
+.portfolio-grid::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 4px;
+}
+
+.portfolio-grid::-webkit-scrollbar-thumb {
+    background: #ccc; /* Warna batang scroll */
+    border-radius: 4px;
+}
+
+.portfolio-grid::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
 .project-card {
+    min-width: 320px;     /* Lebar minimal kartu (PENTING: supaya tidak gepeng) */
+    max-width: 320px;     /* Lebar maksimal (supaya seragam) */
+    
     background-color: var(--light-color);
     border-radius: 10px;
     box-shadow: var(--shadow);
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    /* Agar kartu pas di tengah saat discroll (efek magnet) */
+    scroll-snap-align: center; 
+    flex: 0 0 auto;       /* Mencegah kartu mengecil otomatis */
+}
+
+/* ======== GAYA UNTUK TOMBOL SCROLL PANAH ======== */
+
+/* Wrapper baru perlu posisi relative agar panah bisa diposisikan absolute di dalamnya */
+.portfolio-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Gaya umum tombol panah */
+.scroll-arrow {
+    position: absolute;
+    top: 50%; /* Posisi tengah vertikal */
+    transform: translateY(-50%); /* Koreksi agar benar-benar di tengah */
+    
+    width: 45px;
+    height: 45px;
+    border-radius: 50%; /* Membuat tombol bulat */
+    border: none;
+    background-color: #fff; /* Latar putih */
+    color: var(--primary-color); /* Ikon warna biru utama */
+    font-size: 1.2rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Bayangan agar terlihat melayang */
+    
+    cursor: pointer;
+    z-index: 10; /* Pastikan di atas kartu */
+    
+    display: flex; /* Untuk menengahkan ikon di dalam tombol */
+    justify-content: center;
+    align-items: center;
+    
+    transition: all 0.3s ease;
+}
+
+/* Efek hover pada tombol */
+.scroll-arrow:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+/* Posisi spesifik kiri dan kanan */
+/* Kita gunakan nilai negatif agar tombol sedikit keluar dari area konten */
+.scroll-left {
+    left: -20px;
+}
+
+.scroll-right {
+    right: -20px;
 }
 
 .project-card:hover {
@@ -225,6 +306,7 @@ header nav {
     width: 100%;
     height: 220px;
     object-fit: cover;
+    display: block;
 }
 
 .project-content {
@@ -295,6 +377,7 @@ footer p {
 footer .fa-heart {
     color: #e25555;
 }
+
 
 /* ======== RESPONSIVE (MOBILE) ======== */
 
@@ -372,5 +455,15 @@ footer .fa-heart {
     .contact-links {
         flex-direction: column;
         align-items: center;
+    }
+
+    .scroll-arrow {
+        display: none;
+    }
+    
+    /* Kembalikan posisi wrapper agar tidak aneh di mobile */
+    .scroll-left, .scroll-right {
+        left: auto;
+        right: auto;
     }
 }
