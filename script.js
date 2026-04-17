@@ -99,6 +99,40 @@ document.addEventListener('DOMContentLoaded', function() {
         // Kita set sekitar 350px (lebar kartu 320px + gap 2rem)
         const scrollAmount = 350;
 
+        // Fungsi untuk mengontrol kapan tombol panah muncul/hilang
+        const updateScrollButtons = () => {
+            // Jika di tampilan mobile (<= 768px), hapus inline style agar CSS media query bekerja (tersembunyi)
+            if (window.innerWidth <= 768) {
+                scrollLeftBtn.style.display = '';
+                scrollRightBtn.style.display = '';
+                return;
+            }
+
+            // Cek apakah sudah mentok kiri (dengan toleransi 1px)
+            if (portfolioGrid.scrollLeft <= 1) {
+                scrollLeftBtn.style.display = 'none';
+            } else {
+                scrollLeftBtn.style.display = ''; // Kembali ke default CSS (flex)
+            }
+
+            // Cek apakah sudah mentok kanan
+            // Ditambah 1 karena terkadang scrollWidth memiliki pecahan desimal di browser tertentu
+            if (portfolioGrid.scrollLeft >= (portfolioGrid.scrollWidth - portfolioGrid.clientWidth - 1)) {
+                scrollRightBtn.style.display = 'none';
+            } else {
+                scrollRightBtn.style.display = '';
+            }
+        };
+
+        // Panggil saat halaman pertama kali dimuat
+        updateScrollButtons();
+
+        // Panggil saat sedang di-scroll, secara manual maupun dari tombol
+        portfolioGrid.addEventListener('scroll', updateScrollButtons);
+        
+        // Panggil ketika ukuran layar berubah
+        window.addEventListener('resize', updateScrollButtons);
+
         scrollRightBtn.addEventListener('click', () => {
             portfolioGrid.scrollBy({
                 top: 0,
