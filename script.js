@@ -85,48 +85,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     card.style.opacity = '0';
                 }
             });
-
-            // Update scroll buttons visibility after filter change
-            if (typeof updateScrollButtons === 'function') {
-                setTimeout(updateScrollButtons, 100);
-            }
         });
     });
 
-    // 4. --- PORTFOLIO HORIZONTAL SCROLL ARROWS ---
-    const portfolioGrid = document.getElementById('portfolio-grid');
-    const scrollLeftBtn = document.getElementById('scroll-left');
-    const scrollRightBtn = document.getElementById('scroll-right');
-
-    const updateScrollButtons = () => {
-        if (!portfolioGrid || !scrollLeftBtn || !scrollRightBtn) return;
-        if (window.innerWidth <= 768) return;
-
-        const maxScroll = portfolioGrid.scrollWidth - portfolioGrid.clientWidth;
-        scrollLeftBtn.style.opacity = portfolioGrid.scrollLeft <= 5 ? '0.3' : '1';
-        scrollLeftBtn.style.pointerEvents = portfolioGrid.scrollLeft <= 5 ? 'none' : 'auto';
-
-        scrollRightBtn.style.opacity = portfolioGrid.scrollLeft >= maxScroll - 5 ? '0.3' : '1';
-        scrollRightBtn.style.pointerEvents = portfolioGrid.scrollLeft >= maxScroll - 5 ? 'none' : 'auto';
-    };
-
-    if (portfolioGrid && scrollLeftBtn && scrollRightBtn) {
-        const scrollAmount = 360;
-
-        scrollRightBtn.addEventListener('click', () => {
-            portfolioGrid.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        });
-
-        scrollLeftBtn.addEventListener('click', () => {
-            portfolioGrid.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-        });
-
-        portfolioGrid.addEventListener('scroll', updateScrollButtons);
-        window.addEventListener('resize', updateScrollButtons);
-        updateScrollButtons();
-    }
-
-    // 5. --- COPY EMAIL WITH TOAST ---
+    // 4. --- COPY EMAIL WITH TOAST ---
     const copyEmailCard = document.getElementById('copy-email-card');
     const toast = document.getElementById('toast');
     const toastMessage = document.getElementById('toast-message');
@@ -134,11 +96,15 @@ document.addEventListener('DOMContentLoaded', function() {
     if (copyEmailCard) {
         copyEmailCard.addEventListener('click', () => {
             const email = 'lesmanaadhik@gmail.com';
-            navigator.clipboard.writeText(email).then(() => {
-                showToast('Email berhasil disalin ke clipboard!');
-            }).catch(() => {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(email).then(() => {
+                    showToast('Email berhasil disalin ke clipboard!');
+                }).catch(() => {
+                    showToast('Email: lesmanaadhik@gmail.com');
+                });
+            } else {
                 showToast('Email: lesmanaadhik@gmail.com');
-            });
+            }
         });
     }
 
@@ -151,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
 
-    // 6. --- SCROLL SPY & BACK TO TOP BUTTON ---
+    // 5. --- SCROLL SPY & BACK TO TOP BUTTON ---
     const sections = document.querySelectorAll('section[id]');
     const backToTopBtn = document.getElementById('back-to-top');
 
@@ -189,10 +155,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // 7. --- UPDATE FOOTER YEAR ---
+    // 6. --- UPDATE FOOTER YEAR ---
     const currentYearSpan = document.getElementById('current-year');
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();
     }
 
-});
+});
