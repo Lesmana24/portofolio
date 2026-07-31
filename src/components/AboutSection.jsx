@@ -11,53 +11,55 @@ export default function AboutSection() {
           <p className="text-zinc-400">Mengenal lebih dekat sosok di balik baris kode dan logika aplikasi.</p>
         </div>
 
-        {/* Asymmetric Layout */}
+        {/* Asymmetric Layout with Sticky Left Profile Column */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          {/* Profile Column */}
-          <div className="lg:col-span-4 lg:sticky lg:top-28">
+          {/* Left Profile Column — Sticky Desktop Viewport */}
+          <div className="lg:col-span-4 md:sticky md:top-24 h-fit">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl mb-6 group">
               <img
                 src="/images/profil.png"
                 alt="Lesmana Adhi Kusuma"
-                className="w-full h-[400px] object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                className="w-full h-[380px] object-cover object-top transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none"></div>
             </div>
 
             {/* Quick Stats */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-center">
+              <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-center transition-all duration-300 hover:border-orange-500/40 hover:shadow-lg hover:shadow-orange-500/5">
                 <span className="block font-serif text-2xl font-bold text-orange-500">5+</span>
                 <span className="text-xs text-zinc-400 font-medium">Karya Berdampak</span>
               </div>
-              <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-center">
+              <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-center transition-all duration-300 hover:border-orange-500/40 hover:shadow-lg hover:shadow-orange-500/5">
                 <span className="block font-serif text-2xl font-bold text-orange-500">AI & IoT</span>
                 <span className="text-xs text-zinc-400 font-medium">Sensors & Vision</span>
               </div>
             </div>
           </div>
 
-          {/* Story & Narrative Column */}
-          <div className="lg:col-span-8 bg-zinc-900/90 border border-zinc-800/80 rounded-2xl p-8 sm:p-10 shadow-xl">
-            <h3 className="font-serif text-2xl sm:text-3xl font-bold mb-6 text-zinc-100">
-              Halo! Saya Lesmana.
-            </h3>
+          {/* Right Story & Narrative Column */}
+          <div className="lg:col-span-8 bg-zinc-900/90 border border-zinc-800/80 rounded-2xl p-8 sm:p-10 shadow-xl space-y-8">
+            <div>
+              <h3 className="font-serif text-2xl sm:text-3xl font-bold mb-6 text-zinc-100">
+                Halo! Saya Lesmana.
+              </h3>
 
-            <div className="space-y-5 text-zinc-300 leading-relaxed text-base mb-10">
-              <p>
-                Perjalanan saya di dunia teknologi bermula dari rasa penasaran sederhana:{' '}
-                <em className="text-zinc-200">"Bagaimana cara membuat sesuatu dari layar komputer yang bisa menyelesaikan masalah nyata di sekitarku?"</em>{' '}
-                Bagi saya, coding bukan sekadar merangkai sintaksis, melainkan seni menyusun solusi yang intuitif dan bermanfaat bagi orang lain.
-              </p>
+              <div className="space-y-5 text-zinc-300 leading-relaxed text-base">
+                <p>
+                  Perjalanan saya di dunia teknologi bermula dari rasa penasaran sederhana:{' '}
+                  <em className="text-zinc-200">"Bagaimana cara membuat sesuatu dari layar komputer yang bisa menyelesaikan masalah nyata di sekitarku?"</em>{' '}
+                  Bagi saya, coding bukan sekadar merangkai sintaksis, melainkan seni menyusun solusi yang intuitif dan bermanfaat bagi orang lain.
+                </p>
 
-              <p>
-                Sebagai mahasiswa Teknik Informatika, saya sering menghadapi berbagai tantangan logika rumit—mulai dari mengelola arsitektur database kasir yang padat, merancang alur transaksi laundry yang rapi, hingga menghubungkan sensor hardware IoT di lahan pertanian dengan kecerdasan buatan AI.
-              </p>
+                <p>
+                  Sebagai mahasiswa Teknik Informatika, saya sering menghadapi berbagai tantangan logika rumit—mulai dari mengelola arsitektur database kasir yang padat, merancang alur transaksi laundry yang rapi, hingga menghubungkan sensor hardware IoT di lahan pertanian dengan kecerdasan buatan AI.
+                </p>
 
-              <div className="p-5 rounded-xl bg-orange-500/10 border-l-4 border-orange-500 text-zinc-200 font-medium my-4">
-                "Saya suka mengubah ide menjadi aplikasi web fungsional menggunakan ekosistem <strong>React & Node.js</strong>. 
-                Untuk backend yang tangguh, <strong>Laravel</strong> sering menjadi pilihan utama. Di luar browser, saya antusias bereksperimen 
-                dengan <strong>ESP32, MQTT</strong>, serta integrasi <strong>Computer Vision & LLM</strong>."
+                <div className="p-5 rounded-xl bg-orange-500/10 border-l-4 border-orange-500 text-zinc-200 font-medium my-4">
+                  "Saya suka mengubah ide menjadi aplikasi web fungsional menggunakan ekosistem <strong>React & Node.js</strong>. 
+                  Untuk backend yang tangguh, <strong>Laravel</strong> sering menjadi pilihan utama. Di luar browser, saya antusias bereksperimen 
+                  dengan <strong>ESP32, MQTT</strong>, serta integrasi <strong>Computer Vision & LLM</strong>."
+                </div>
               </div>
             </div>
 
@@ -68,7 +70,7 @@ export default function AboutSection() {
               </h4>
 
               <div className="space-y-4">
-                <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800">
+                <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 transition-all duration-300 hover:border-orange-500/40 hover:shadow-lg hover:shadow-orange-500/5">
                   <span className="block text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2">Frontend UI</span>
                   <div className="flex flex-wrap gap-2">
                     <span className="px-3 py-1 rounded bg-orange-500/15 border border-orange-500/30 text-orange-300 font-mono text-xs font-semibold">React.js</span>
@@ -77,7 +79,7 @@ export default function AboutSection() {
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800">
+                <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 transition-all duration-300 hover:border-orange-500/40 hover:shadow-lg hover:shadow-orange-500/5">
                   <span className="block text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2">Backend & Database</span>
                   <div className="flex flex-wrap gap-2">
                     <span className="px-3 py-1 rounded bg-orange-500/15 border border-orange-500/30 text-orange-300 font-mono text-xs font-semibold">Laravel</span>
@@ -87,7 +89,7 @@ export default function AboutSection() {
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800">
+                <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 transition-all duration-300 hover:border-orange-500/40 hover:shadow-lg hover:shadow-orange-500/5">
                   <span className="block text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2">Hardware AI & Mobile</span>
                   <div className="flex flex-wrap gap-2">
                     <span className="px-3 py-1 rounded bg-orange-500/15 border border-orange-500/30 text-orange-300 font-mono text-xs font-semibold">ESP32 & IoT</span>

@@ -88,7 +88,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 4. --- COPY EMAIL WITH TOAST ---
+    // 4. --- PROJECT STORY EXPAND / COLLAPSE TOGGLE ---
+    const expandToggleBtns = document.querySelectorAll('.expand-toggle-btn');
+    expandToggleBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const container = this.previousElementSibling; // .story-text-container
+            if (!container) return;
+
+            if (container.classList.contains('line-clamp-4')) {
+                container.classList.remove('line-clamp-4');
+                this.textContent = '▲ Sembunyikan Detail';
+            } else {
+                container.classList.add('line-clamp-4');
+                this.textContent = '▼ Baca Selengkapnya';
+            }
+        });
+    });
+
+    // 5. --- COPY EMAIL WITH TOAST ---
     const copyEmailCard = document.getElementById('copy-email-card');
     const toast = document.getElementById('toast');
     const toastMessage = document.getElementById('toast-message');
@@ -117,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
 
-    // 5. --- SCROLL SPY & BACK TO TOP BUTTON ---
+    // 6. --- SCROLL SPY & BACK TO TOP BUTTON ---
     const sections = document.querySelectorAll('section[id]');
     const backToTopBtn = document.getElementById('back-to-top');
 
@@ -155,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // 6. --- UPDATE FOOTER YEAR ---
+    // 7. --- UPDATE FOOTER YEAR ---
     const currentYearSpan = document.getElementById('current-year');
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();

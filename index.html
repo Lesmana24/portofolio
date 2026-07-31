@@ -7,7 +7,7 @@
     
     <!-- SEO & Metadata -->
     <title>Lesmana Adhi Kusuma — Menjembatani Kode & Solusi Dunia Nyata</title>
-    <meta name="description" content="Portofolio Lesmana Adhi Kusuma — Mahasiswa Teknik Informatika & Software Engineer yang berfokus pada aplikasi Web, AI, dan IoT dengan pendekatan personal dan bernyawa.">
+    <meta name="description" content="Portofolio Lesmana Adhi Kusuma — Mahasiswa Teknik Informatika & Software Engineer yang berfokus pada aplikasi Web, AI, dan IoT dengan pendekatan personal.">
     <meta name="keywords" content="Lesmana Adhi Kusuma, Software Engineer, Web Developer, React, Laravel, Node.js, AI, IoT, Indonesia">
     <meta name="author" content="Lesmana Adhi Kusuma">
     <link rel="canonical" href="https://lesmana24.github.io/" />
@@ -142,8 +142,8 @@
                 </div>
 
                 <div class="about-grid-asymmetric">
-                    <!-- Column Left: Personal Profile Card -->
-                    <div class="about-card-profile">
+                    <!-- Sticky Left Column: Personal Profile Card -->
+                    <div class="about-card-profile sticky-profile">
                         <div class="profile-image-wrapper">
                             <img src="images/profil.png" alt="Foto Profil Lesmana Adhi Kusuma" class="profile-img">
                             <div class="profile-frame-accent"></div>
@@ -245,17 +245,13 @@
                     <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
                 </div>
 
-                <!-- Portfolio Grid Container -->
+                <!-- Portfolio Grid Container (Equal Height Flex/Grid) -->
                 <div class="portfolio-wrapper">
-                    <button class="scroll-arrow scroll-left" id="scroll-left" aria-label="Geser Proyek Kiri">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-
                     <div class="portfolio-grid" id="portfolio-grid">
                         
                         <!-- Project 1 -->
                         <article class="project-card storytelling-card" data-category="web">
-                            <div class="project-media">
+                            <div class="project-media aspect-video">
                                 <img src="images/imageKios.png" alt="Sistem Informasi & Kasir Bunga Jondo Tani" loading="lazy">
                                 <span class="project-badge">Web Application</span>
                             </div>
@@ -263,20 +259,24 @@
                                 <h3 class="project-title">Sistem Informasi & Kasir Bunga Jondo Tani</h3>
                                 
                                 <div class="story-accordion">
-                                    <div class="story-block">
-                                        <span class="story-label"><i class="fas fa-exclamation-circle"></i> Masalah & Latar Belakang</span>
-                                        <p class="story-text">Pencatatan inventaris dan transaksi kasir kios bunga lokal yang sebelumnya masih manual, memicu ketidakcocokan stok tanaman hias dan antrean pembayaran yang lambat.</p>
+                                    <div class="story-text-container line-clamp-4">
+                                        <div class="story-block">
+                                            <span class="story-label"><i class="fas fa-exclamation-circle"></i> Masalah & Latar Belakang</span>
+                                            <p class="story-text">Pencatatan inventaris dan transaksi kasir kios bunga lokal yang sebelumnya masih manual, memicu ketidakcocokan stok tanaman hias dan antrean pembayaran yang lambat.</p>
+                                        </div>
+
+                                        <div class="story-block">
+                                            <span class="story-label"><i class="fas fa-puzzle-piece"></i> Tantangan Unik</span>
+                                            <p class="story-text">Merancang arsitektur API modular terpisah antara Frontend React dan Backend Express untuk memastikan kalkulasi transaksi instan tanpa resiko kehabisan stok bersamaan.</p>
+                                        </div>
+
+                                        <div class="story-block">
+                                            <span class="story-label"><i class="fas fa-chart-line"></i> Dampak & Solusi Teknis</span>
+                                            <p class="story-text">Proses transaksi kasir menjadi 3x lebih cepat dengan pemantauan stok bunga terpusat real-time.</p>
+                                        </div>
                                     </div>
 
-                                    <div class="story-block">
-                                        <span class="story-label"><i class="fas fa-puzzle-piece"></i> Tantangan Unik</span>
-                                        <p class="story-text">Merancang arsitektur API modular terpisah antara Frontend React dan Backend Express untuk memastikan kalkulasi transaksi instan tanpa resiko kehabisan stok bersamaan.</p>
-                                    </div>
-
-                                    <div class="story-block">
-                                        <span class="story-label"><i class="fas fa-chart-line"></i> Dampak & Solusi Teknis</span>
-                                        <p class="story-text">Proses transaksi kasir menjadi 3x lebih cepat dengan pemantauan stok bunga terpusat real-time.</p>
-                                    </div>
+                                    <button class="expand-toggle-btn">▼ Baca Selengkapnya</button>
                                 </div>
 
                                 <blockquote class="project-quote">
@@ -300,7 +300,7 @@
 
                         <!-- Project 2 -->
                         <article class="project-card storytelling-card" data-category="web">
-                            <div class="project-media">
+                            <div class="project-media aspect-video">
                                 <img src="images/image1.png" alt="Awan Laundry Web App" loading="lazy">
                                 <span class="project-badge">Operational Web App</span>
                             </div>
@@ -308,20 +308,24 @@
                                 <h3 class="project-title">Awan Laundry — Manajemen Operasional</h3>
                                 
                                 <div class="story-accordion">
-                                    <div class="story-block">
-                                        <span class="story-label"><i class="fas fa-exclamation-circle"></i> Masalah & Latar Belakang</span>
-                                        <p class="story-text">Manajemen antrean cucian dan operasional harian usaha laundry yang rawan acak-acakan saat volume pesanan tinggi.</p>
+                                    <div class="story-text-container line-clamp-4">
+                                        <div class="story-block">
+                                            <span class="story-label"><i class="fas fa-exclamation-circle"></i> Masalah & Latar Belakang</span>
+                                            <p class="story-text">Manajemen antrean cucian dan operasional harian usaha laundry yang rawan acak-acakan saat volume pesanan tinggi.</p>
+                                        </div>
+
+                                        <div class="story-block">
+                                            <span class="story-label"><i class="fas fa-puzzle-piece"></i> Tantangan Unik</span>
+                                            <p class="story-text">Merancang skema database relational MySQL yang efisien untuk melacak status pengerjaan (cuci, jemur, setrika, siap ambil) serta beban pengeluaran bahan harian.</p>
+                                        </div>
+
+                                        <div class="story-block">
+                                            <span class="story-label"><i class="fas fa-chart-line"></i> Dampak & Solusi Teknis</span>
+                                            <p class="story-text">Sistem pemesanan dan pencatatan operasional menjadi terstruktur transparan dan meminimalkan kesalahan riwayat pesanan pelanggan.</p>
+                                        </div>
                                     </div>
 
-                                    <div class="story-block">
-                                        <span class="story-label"><i class="fas fa-puzzle-piece"></i> Tantangan Unik</span>
-                                        <p class="story-text">Merancang skema database relational MySQL yang efisien untuk melacak status pengerjaan (cuci, jemur, setrika, siap ambil) serta beban pengeluaran bahan harian.</p>
-                                    </div>
-
-                                    <div class="story-block">
-                                        <span class="story-label"><i class="fas fa-chart-line"></i> Dampak & Solusi Teknis</span>
-                                        <p class="story-text">Sistem pemesanan dan pencatatan operasional menjadi terstruktur transparan dan meminimalkan kesalahan riwayat pesanan pelanggan.</p>
-                                    </div>
+                                    <button class="expand-toggle-btn">▼ Baca Selengkapnya</button>
                                 </div>
 
                                 <blockquote class="project-quote">
@@ -345,7 +349,7 @@
 
                         <!-- Project 3 -->
                         <article class="project-card storytelling-card" data-category="ai-iot">
-                            <div class="project-media project-images dual-images">
+                            <div class="project-media aspect-video dual-images">
                                 <div class="image-wrapper">
                                     <img src="images/image2.png" alt="Hardware Irigasi Smart Garden ESP32" loading="lazy">
                                     <span class="image-badge"><i class="fas fa-microchip"></i> Hardware Irigasi IoT</span>
@@ -359,20 +363,24 @@
                                 <h3 class="project-title">OLERICURE — Smart Garden IoT & Plant AI Doctor</h3>
                                 
                                 <div class="story-accordion">
-                                    <div class="story-block">
-                                        <span class="story-label"><i class="fas fa-exclamation-circle"></i> Masalah & Latar Belakang</span>
-                                        <p class="story-text">Pemborosan air pada sistem irigasi konvensional dan keterlambatan petani kota dalam mengidentifikasi serangan patogen daun tanaman hortikultura.</p>
+                                    <div class="story-text-container line-clamp-4">
+                                        <div class="story-block">
+                                            <span class="story-label"><i class="fas fa-exclamation-circle"></i> Masalah & Latar Belakang</span>
+                                            <p class="story-text">Pemborosan air pada sistem irigasi konvensional dan keterlambatan petani kota dalam mengidentifikasi serangan patogen daun tanaman hortikultura.</p>
+                                        </div>
+
+                                        <div class="story-block">
+                                            <span class="story-label"><i class="fas fa-puzzle-piece"></i> Tantangan Unik</span>
+                                            <p class="story-text">Mengintegrasikan sinyal sensor ESP32 via MQTT secara uninterrupted, dilanjutkan klasifikasi gambar daun menggunakan MobileNetV2 dan Groq LLM untuk memberikan dosis penanganan tepat.</p>
+                                        </div>
+
+                                        <div class="story-block">
+                                            <span class="story-label"><i class="fas fa-chart-line"></i> Dampak & Solusi Teknis</span>
+                                            <p class="story-text">Penyiraman otomatis presisi sesuai tingkat kelembapan tanah & hasil diagnosis penyakit tanaman cepat dalam hitungan detik.</p>
+                                        </div>
                                     </div>
 
-                                    <div class="story-block">
-                                        <span class="story-label"><i class="fas fa-puzzle-piece"></i> Tantangan Unik</span>
-                                        <p class="story-text">Mengintegrasikan sinyal sensor ESP32 via MQTT secara uninterrupted, dilanjutkan klasifikasi gambar daun menggunakan MobileNetV2 dan Groq LLM untuk memberikan dosis penanganan tepat.</p>
-                                    </div>
-
-                                    <div class="story-block">
-                                        <span class="story-label"><i class="fas fa-chart-line"></i> Dampak & Solusi Teknis</span>
-                                        <p class="story-text">Penyiraman otomatis presisi sesuai tingkat kelembapan tanah & hasil diagnosis penyakit tanaman cepat dalam hitungan detik.</p>
-                                    </div>
+                                    <button class="expand-toggle-btn">▼ Baca Selengkapnya</button>
                                 </div>
 
                                 <blockquote class="project-quote">
@@ -397,7 +405,7 @@
 
                         <!-- Project 4 -->
                         <article class="project-card storytelling-card" data-category="ecommerce">
-                            <div class="project-media">
+                            <div class="project-media aspect-video">
                                 <img src="images/image4.png" alt="Platform E-Commerce TokoSaya" loading="lazy">
                                 <span class="project-badge">E-Commerce Platform</span>
                             </div>
@@ -405,20 +413,24 @@
                                 <h3 class="project-title">Ecommerce TokoSaya — Full-Stack Platform</h3>
                                 
                                 <div class="story-accordion">
-                                    <div class="story-block">
-                                        <span class="story-label"><i class="fas fa-exclamation-circle"></i> Masalah & Latar Belakang</span>
-                                        <p class="story-text">Kebutuhan platform toko digital mandiri yang aman dengan alur belanja yang mulus dari pencarian produk hingga admin dashboard management.</p>
+                                    <div class="story-text-container line-clamp-4">
+                                        <div class="story-block">
+                                            <span class="story-label"><i class="fas fa-exclamation-circle"></i> Masalah & Latar Belakang</span>
+                                            <p class="story-text">Kebutuhan platform toko digital mandiri yang aman dengan alur belanja yang mulus dari pencarian produk hingga admin dashboard management.</p>
+                                        </div>
+
+                                        <div class="story-block">
+                                            <span class="story-label"><i class="fas fa-puzzle-piece"></i> Tantangan Unik</span>
+                                            <p class="story-text">Menangani otentikasi role multi-tier (pelanggan vs admin), pengelolaan keranjang belanja dinamis, dan sinkronisasi pesanan tanpa membebankan server.</p>
+                                        </div>
+
+                                        <div class="story-block">
+                                            <span class="story-label"><i class="fas fa-chart-line"></i> Dampak & Solusi Teknis</span>
+                                            <p class="story-text">Aplikasi e-commerce responsif dengan otentikasi pengguna aman dan panel pengelolaan inventaris produk yang mudah digunakan.</p>
+                                        </div>
                                     </div>
 
-                                    <div class="story-block">
-                                        <span class="story-label"><i class="fas fa-puzzle-piece"></i> Tantangan Unik</span>
-                                        <p class="story-text">Menangani otentikasi role multi-tier (pelanggan vs admin), pengelolaan keranjang belanja dinamis, dan sinkronisasi pesanan tanpa membebankan server.</p>
-                                    </div>
-
-                                    <div class="story-block">
-                                        <span class="story-label"><i class="fas fa-chart-line"></i> Dampak & Solusi Teknis</span>
-                                        <p class="story-text">Aplikasi e-commerce responsif dengan otentikasi pengguna aman dan panel pengelolaan inventaris produk yang mudah digunakan.</p>
-                                    </div>
+                                    <button class="expand-toggle-btn">▼ Baca Selengkapnya</button>
                                 </div>
 
                                 <blockquote class="project-quote">
@@ -442,7 +454,7 @@
 
                         <!-- Project 5 -->
                         <article class="project-card storytelling-card" data-category="web">
-                            <div class="project-media">
+                            <div class="project-media aspect-video">
                                 <img src="images/image3.png" alt="Scientific Calculator Web Tool" loading="lazy">
                                 <span class="project-badge">Web Interactive Tool</span>
                             </div>
@@ -450,20 +462,24 @@
                                 <h3 class="project-title">Scientific Calculator Web Application</h3>
                                 
                                 <div class="story-accordion">
-                                    <div class="story-block">
-                                        <span class="story-label"><i class="fas fa-exclamation-circle"></i> Masalah & Latar Belakang</span>
-                                        <p class="story-text">Kebutuhan alat kalkulator ilmiah berbasis browser yang dapat beroperasi tanpa ketergantungan koneksi server backend.</p>
+                                    <div class="story-text-container line-clamp-4">
+                                        <div class="story-block">
+                                            <span class="story-label"><i class="fas fa-exclamation-circle"></i> Masalah & Latar Belakang</span>
+                                            <p class="story-text">Kebutuhan alat kalkulator ilmiah berbasis browser yang dapat beroperasi tanpa ketergantungan koneksi server backend.</p>
+                                        </div>
+
+                                        <div class="story-block">
+                                            <span class="story-label"><i class="fas fa-puzzle-piece"></i> Tantangan Unik</span>
+                                            <p class="story-text">Menangani pengolahan ekspresi matematika ilmiah rumit (trigonometri, kalkulus dasar, tata urutan kurung) secara murni di JavaScript client-side.</p>
+                                        </div>
+
+                                        <div class="story-block">
+                                            <span class="story-label"><i class="fas fa-chart-line"></i> Dampak & Solusi Teknis</span>
+                                            <p class="story-text">Perhitungan matematis instan, responsif, dan ultra-ringan tanpa overhead jaringan.</p>
+                                        </div>
                                     </div>
 
-                                    <div class="story-block">
-                                        <span class="story-label"><i class="fas fa-puzzle-piece"></i> Tantangan Unik</span>
-                                        <p class="story-text">Menangani pengolahan ekspresi matematika ilmiah rumit (trigonometri, kalkulus dasar, tata urutan kurung) secara murni di JavaScript client-side.</p>
-                                    </div>
-
-                                    <div class="story-block">
-                                        <span class="story-label"><i class="fas fa-chart-line"></i> Dampak & Solusi Teknis</span>
-                                        <p class="story-text">Perhitungan matematis instan, responsif, dan ultra-ringan tanpa overhead jaringan.</p>
-                                    </div>
+                                    <button class="expand-toggle-btn">▼ Baca Selengkapnya</button>
                                 </div>
 
                                 <blockquote class="project-quote">
@@ -485,10 +501,6 @@
                         </article>
 
                     </div>
-
-                    <button class="scroll-arrow scroll-right" id="scroll-right" aria-label="Geser Proyek Kanan">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
                 </div>
             </div>
         </section>

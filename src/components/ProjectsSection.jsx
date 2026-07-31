@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ProjectCard from './ProjectCard';
 
 const projects = [
   {
@@ -98,7 +99,7 @@ export default function ProjectsSection() {
             <button
               key={filter.id}
               onClick={() => setActiveFilter(filter.id)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer ${
                 activeFilter === filter.id
                   ? 'bg-orange-600 text-white shadow-lg shadow-orange-600/25'
                   : 'border border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:border-zinc-700'
@@ -109,90 +110,10 @@ export default function ProjectsSection() {
           ))}
         </div>
 
-        {/* Projects Grid */}
+        {/* Projects Equal-Height Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map(p => (
-            <article
-              key={p.id}
-              className="bg-zinc-950 border border-zinc-800 hover:border-orange-500/40 rounded-2xl overflow-hidden shadow-xl flex flex-col transition-all duration-300 hover:-translate-y-1 group"
-            >
-              {/* Media Container */}
-              <div className="relative h-52 overflow-hidden bg-zinc-900">
-                {p.isDualImage ? (
-                  <div className="grid grid-cols-2 gap-0.5 h-full">
-                    <div className="relative">
-                      <img src={p.image1} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                      <span className="absolute bottom-2 left-2 bg-black/80 text-[10px] px-2 py-0.5 rounded text-zinc-300">IoT Hardware</span>
-                    </div>
-                    <div className="relative">
-                      <img src={p.image2} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                      <span className="absolute bottom-2 left-2 bg-black/80 text-[10px] px-2 py-0.5 rounded text-zinc-300">AI Doctor</span>
-                    </div>
-                  </div>
-                ) : (
-                  <img
-                    src={p.image}
-                    alt={p.title}
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                  />
-                )}
-                <span className="absolute top-3 right-3 bg-zinc-950/90 border border-orange-500/30 text-orange-400 text-xs font-semibold px-3 py-1 rounded-full backdrop-blur-sm">
-                  {p.badge}
-                </span>
-              </div>
-
-              {/* Content Container */}
-              <div className="p-6 flex flex-col flex-grow">
-                <h3 className="font-serif text-xl font-bold mb-4 text-zinc-100 group-hover:text-orange-400 transition-colors">
-                  {p.title}
-                </h3>
-
-                {/* 4-Point Story Block */}
-                <div className="space-y-3 bg-zinc-900/90 p-4 rounded-xl border border-zinc-800/80 mb-4 text-xs">
-                  <div>
-                    <span className="font-bold text-orange-400 block mb-0.5">Masalah & Latar Belakang:</span>
-                    <p className="text-zinc-300 leading-relaxed">{p.problem}</p>
-                  </div>
-                  <div>
-                    <span className="font-bold text-orange-400 block mb-0.5">Tantangan Unik:</span>
-                    <p className="text-zinc-300 leading-relaxed">{p.challenge}</p>
-                  </div>
-                  <div>
-                    <span className="font-bold text-orange-400 block mb-0.5">Dampak/Hasil:</span>
-                    <p className="text-zinc-300 leading-relaxed">{p.impact}</p>
-                  </div>
-                </div>
-
-                {/* Personal Quote */}
-                <blockquote className="text-xs italic text-zinc-400 border-l-2 border-orange-500 pl-3 mb-5">
-                  "{p.quote}"
-                </blockquote>
-
-                {/* Tech Tags */}
-                <div className="flex flex-wrap gap-1.5 mb-6">
-                  {p.tech.map((t, idx) => (
-                    <span key={idx} className="px-2.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-[11px] font-mono text-zinc-400">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Link */}
-                <div className="mt-auto pt-4 border-t border-zinc-800/80">
-                  <a
-                    href={p.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-orange-500 hover:text-orange-400 transition-all hover:gap-3"
-                  >
-                    <span>Jelajahi Kode / Aplikasi</span>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </article>
+            <ProjectCard key={p.id} project={p} />
           ))}
         </div>
       </div>
