@@ -216,15 +216,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const expandToggleBtns = document.querySelectorAll('.expand-toggle-btn');
     expandToggleBtns.forEach(btn => {
         btn.addEventListener('click', function() {
-            const container = this.previousElementSibling; // .story-text-container
-            if (!container) return;
+            const accordion = this.closest('.story-accordion');
+            if (!accordion) return;
 
-            if (container.classList.contains('line-clamp-4')) {
-                container.classList.remove('line-clamp-4');
-                this.textContent = '▲ Sembunyikan Detail';
-            } else {
-                container.classList.add('line-clamp-4');
+            const details = accordion.querySelector('.story-details');
+            if (!details) return;
+
+            if (details.classList.contains('is-open')) {
+                details.classList.remove('is-open');
                 this.textContent = '▼ Baca Selengkapnya';
+            } else {
+                details.classList.add('is-open');
+                this.textContent = '▲ Sembunyikan Detail';
             }
         });
     });

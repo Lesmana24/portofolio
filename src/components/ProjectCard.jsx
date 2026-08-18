@@ -50,27 +50,31 @@ export default function ProjectCard({ project }) {
             {project.title}
           </h3>
 
-          {/* Story Block Container with Expand/Collapse Line Clamp */}
+          {/* Story Block Container with Expandable Technical Details */}
           <div className="bg-zinc-900/90 p-4 rounded-xl border border-zinc-800/80 mb-3 text-xs space-y-2.5">
-            <div className={isExpanded ? '' : 'line-clamp-4'}>
-              <div className="mb-2">
-                <span className="font-bold text-orange-400 block mb-0.5">Masalah & Latar Belakang:</span>
-                <p className="text-zinc-300 leading-relaxed">{project.problem}</p>
-              </div>
-              <div className="mb-2">
-                <span className="font-bold text-orange-400 block mb-0.5">Tantangan Unik:</span>
-                <p className="text-zinc-300 leading-relaxed">{project.challenge}</p>
-              </div>
-              <div>
-                <span className="font-bold text-orange-400 block mb-0.5">Dampak/Hasil:</span>
-                <p className="text-zinc-300 leading-relaxed">{project.impact}</p>
-              </div>
+            <div>
+              <span className="font-bold text-orange-400 block mb-0.5">Masalah & Latar Belakang:</span>
+              <p className="text-zinc-300 leading-relaxed">{project.problem}</p>
             </div>
+
+            {/* Expandable Technical Details */}
+            {isExpanded && (
+              <div className="pt-2.5 mt-2.5 border-t border-zinc-800/60 space-y-2.5 animate-fadeIn">
+                <div>
+                  <span className="font-bold text-orange-400 block mb-0.5">Tantangan Unik:</span>
+                  <p className="text-zinc-300 leading-relaxed">{project.challenge}</p>
+                </div>
+                <div>
+                  <span className="font-bold text-orange-400 block mb-0.5">Dampak & Solusi Teknis:</span>
+                  <p className="text-zinc-300 leading-relaxed">{project.impact}</p>
+                </div>
+              </div>
+            )}
 
             {/* Toggle Expand Button */}
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="text-xs font-medium text-orange-500 hover:underline mt-2 inline-flex items-center gap-1 focus:outline-none cursor-pointer"
+              className="text-xs font-medium text-orange-500 hover:text-orange-400 hover:underline mt-2 inline-flex items-center gap-1 focus:outline-none cursor-pointer transition-colors"
             >
               {isExpanded ? '▲ Sembunyikan Detail' : '▼ Baca Selengkapnya'}
             </button>
