@@ -5,12 +5,6 @@ export default function HeroSection() {
     <section id="home" className="min-h-[85vh] pt-32 pb-20 flex items-center bg-zinc-950 text-zinc-100">
       <div className="max-w-6xl mx-auto px-6 w-full">
         <div className="max-w-3xl">
-          {/* Status Badge */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-sm font-semibold mb-7">
-            <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse shadow-[0_0_10px_#ea580c]"></span>
-            <span>Terbuka untuk Pekerjaan & Collaborations</span>
-          </div>
-
           {/* Editorial Headline */}
           <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight mb-5">
             Lesmana Adhi Kusuma: <br />
