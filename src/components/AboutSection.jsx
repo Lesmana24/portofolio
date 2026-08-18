@@ -102,11 +102,19 @@ export default function AboutSection() {
               </div>
             </div>
 
-            {/* GitHub Activity Graph */}
-            <div className="pt-8 border-t border-zinc-800">
+            {/* GitHub Activity & Streak Stats */}
+            <div className="pt-8 border-t border-zinc-800 space-y-4">
               <h4 className="font-semibold text-orange-400 mb-4 flex items-center gap-2">
                 <span>Aktivitas & Konsistensi Coding (GitHub)</span>
               </h4>
+              <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-orange-500/40 transition-all duration-300 overflow-hidden flex justify-center">
+                <img
+                  src="https://streak-stats-lake.vercel.app/?user=Lesmana24&theme=highcontrast&hide_border=true&timezone=Asia/Jakarta"
+                  alt="Lesmana's GitHub Streak"
+                  className="max-w-[520px] w-full h-auto rounded-lg"
+                  loading="lazy"
+                />
+              </div>
               <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-orange-500/40 transition-all duration-300 overflow-hidden">
                 <img
                   src="https://github-readme-activity-graph.vercel.app/graph?username=Lesmana24&theme=github-compact&v=2"

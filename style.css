@@ -628,11 +628,17 @@ button {
     font-weight: 600;
 }
 
-/* GitHub Activity Graph */
+/* GitHub Activity & Streak Graph */
 .github-activity-wrapper {
     margin-top: 2rem;
     padding-top: 1.75rem;
     border-top: 1px solid var(--border-color);
+}
+
+.github-stats-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
 }
 
 .github-graph-card {
@@ -642,6 +648,17 @@ button {
     padding: 1rem;
     overflow: hidden;
     transition: all var(--transition-normal);
+}
+
+.github-graph-card.streak-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.25rem 1rem;
+}
+
+.github-graph-card.streak-card img {
+    max-width: 520px;
 }
 
 .github-graph-card:hover {
