@@ -39,7 +39,7 @@ export default function ProjectCard({ project }) {
               className="h-full w-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
             />
           )}
-          <span className="absolute top-3 right-3 bg-zinc-950/90 border border-orange-500/30 text-orange-400 text-xs font-semibold px-3 py-1 rounded-full backdrop-blur-sm shadow-md">
+          <span className="project-badge">
             {project.badge}
           </span>
         </div>

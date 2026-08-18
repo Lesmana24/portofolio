@@ -963,6 +963,7 @@ button {
     padding: 0.25rem 0.5rem;
     border-radius: var(--radius-sm);
     backdrop-filter: blur(4px);
+    transition: all var(--transition-fast);
 }
 
 .project-badge {
@@ -971,13 +972,27 @@ button {
     right: 12px;
     background-color: rgba(9, 9, 11, 0.88);
     color: var(--accent-badge-text);
-    border: 1px solid rgba(234, 88, 12, 0.3);
+    border: 1px solid rgba(234, 88, 12, 0.35);
     font-size: 0.75rem;
     font-weight: 600;
     padding: 0.3rem 0.75rem;
     border-radius: var(--radius-full);
     backdrop-filter: blur(8px);
     z-index: 2;
+    transition: all var(--transition-fast);
+}
+
+[data-theme="light"] .project-badge {
+    background-color: rgba(255, 255, 255, 0.92);
+    color: #c2410c;
+    border-color: rgba(234, 88, 12, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .image-badge {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #18181b;
+    border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .project-content {
