@@ -502,10 +502,10 @@ button {
 .stat-num {
     display: block;
     font-family: var(--font-heading);
-    font-size: 1.75rem;
+    font-size: 1.35rem;
     font-weight: 700;
     color: var(--accent-primary);
-    line-height: 1.1;
+    line-height: 1.2;
 }
 
 .stat-lbl {
@@ -626,6 +626,34 @@ button {
     border-color: rgba(234, 88, 12, 0.3);
     color: var(--accent-badge-text);
     font-weight: 600;
+}
+
+/* GitHub Activity Graph */
+.github-activity-wrapper {
+    margin-top: 2rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.github-graph-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    overflow: hidden;
+    transition: all var(--transition-normal);
+}
+
+.github-graph-card:hover {
+    border-color: var(--border-color-hover);
+    box-shadow: 0 12px 30px -10px rgba(234, 88, 12, 0.15);
+}
+
+.github-graph-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-md);
 }
 
 /* -------- 6. PORTFOLIO / PROJECTS SECTION (STORYTELLING CARDS) -------- */

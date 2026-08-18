@@ -27,12 +27,12 @@ export default function AboutSection() {
             {/* Quick Stats */}
             <div className="grid grid-cols-2 gap-4">
               <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-center transition-all duration-300 hover:border-orange-500/40 hover:shadow-lg hover:shadow-orange-500/5">
-                <span className="block font-serif text-2xl font-bold text-orange-500">5+</span>
-                <span className="text-xs text-zinc-400 font-medium">Karya Berdampak</span>
+                <span className="block font-serif text-lg sm:text-xl font-bold text-orange-500 mb-1">6+ Proyek</span>
+                <span className="text-xs text-zinc-400 font-medium leading-tight block">Full-Stack & Enterprise</span>
               </div>
               <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-center transition-all duration-300 hover:border-orange-500/40 hover:shadow-lg hover:shadow-orange-500/5">
-                <span className="block font-serif text-2xl font-bold text-orange-500">AI & IoT</span>
-                <span className="text-xs text-zinc-400 font-medium">Sensors & Vision</span>
+                <span className="block font-serif text-lg sm:text-xl font-bold text-orange-500 mb-1">AI & Smart IoT</span>
+                <span className="text-xs text-zinc-400 font-medium leading-tight block">ESP32, Vision AI & LLM</span>
               </div>
             </div>
           </div>
@@ -99,6 +99,21 @@ export default function AboutSection() {
                     <span className="px-3 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 font-mono text-xs">Flutter</span>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* GitHub Activity Graph */}
+            <div className="pt-8 border-t border-zinc-800">
+              <h4 className="font-semibold text-orange-400 mb-4 flex items-center gap-2">
+                <span>Aktivitas & Konsistensi Coding (GitHub)</span>
+              </h4>
+              <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-orange-500/40 transition-all duration-300 overflow-hidden">
+                <img
+                  src="https://github-readme-activity-graph.vercel.app/graph?username=Lesmana24&theme=github-compact&v=2"
+                  alt="Lesmana's GitHub Activity Graph"
+                  className="w-full h-auto rounded-lg display-block"
+                  loading="lazy"
+                />
               </div>
             </div>
           </div>
