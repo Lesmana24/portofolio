@@ -46,6 +46,7 @@ export default function HeroSection() {
           <div className="pt-6 border-t border-dashed border-zinc-800 flex flex-wrap items-center gap-3">
             <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Fokus Utama:</span>
             <div className="flex flex-wrap gap-2">
+              <span className="px-3.5 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">Go (Golang)</span>
               <span className="px-3.5 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">React.js</span>
               <span className="px-3.5 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">Laravel</span>
               <span className="px-3.5 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">Node.js</span>
