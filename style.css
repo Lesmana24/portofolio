@@ -633,13 +633,62 @@ button {
 }
 
 /* -------- 6. PORTFOLIO / PROJECTS SECTION (STORYTELLING CARDS) -------- */
+.portfolio-controls-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
 .portfolio-filter-bar {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    margin-bottom: 3rem;
+    gap: 0.65rem;
     flex-wrap: wrap;
+}
+
+.portfolio-nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-left: auto;
+}
+
+.scroll-hint-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background-color: var(--bg-surface);
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-color);
+}
+
+.scroll-nav-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-full);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.scroll-nav-btn:hover {
+    background-color: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: #ffffff;
+    box-shadow: 0 4px 12px var(--accent-glow);
+    transform: translateY(-1px);
 }
 
 .filter-btn {
@@ -661,17 +710,48 @@ button {
 
 .portfolio-wrapper {
     position: relative;
+    width: 100%;
 }
 
 .portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 2rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    gap: 1.75rem;
+    padding-top: 0.5rem;
+    padding-bottom: 1.75rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-primary) var(--bg-surface);
+}
 
-    align-items: stretch;
+.portfolio-grid::-webkit-scrollbar {
+    height: 8px;
+}
+
+.portfolio-grid::-webkit-scrollbar-track {
+    background: var(--bg-surface);
+    border-radius: var(--radius-full);
+}
+
+.portfolio-grid::-webkit-scrollbar-thumb {
+    background: var(--accent-primary);
+    border-radius: var(--radius-full);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.portfolio-grid::-webkit-scrollbar-thumb:hover {
+    background: #f97316;
 }
 
 .storytelling-card {
+    flex: 0 0 380px;
+    max-width: 85vw;
+    scroll-snap-align: start;
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
@@ -681,7 +761,11 @@ button {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
+    height: auto;
+}
+
+.storytelling-card.hidden {
+    display: none !important;
 }
 
 .storytelling-card:hover {
@@ -1104,7 +1188,12 @@ button {
     }
 
     .portfolio-grid {
-        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+
+    .storytelling-card {
+        flex: 0 0 320px;
+        max-width: 88vw;
     }
 
     .about-card-info {

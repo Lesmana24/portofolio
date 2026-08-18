@@ -175,7 +175,7 @@
 
                             <p class="about-bio story-highlight">
                                 <i class="fas fa-quote-left quote-icon"></i>
-                                Saya suka mengubah ide menjadi aplikasi web fungsional menggunakan ekosistem <strong>React & Node.js</strong>. Untuk backend yang tangguh dan terstruktur, <strong>Laravel</strong> sering menjadi senjata utama saya. Di luar browser, saya antusias bereksperimen dengan mikrokontroler <strong>ESP32</strong>, protokol <strong>MQTT</strong>, serta implementasi <strong>Computer Vision & LLM</strong>.
+                                Saya suka mengubah ide menjadi aplikasi web fungsional menggunakan ekosistem <strong>React & Node.js</strong>. Untuk backend yang tangguh dan terstruktur, <strong>Laravel</strong> dan <strong>Go (Golang)</strong> sering menjadi senjata utama saya. Di luar browser, saya antusias bereksperimen dengan mikrokontroler <strong>ESP32</strong>, protokol <strong>MQTT</strong>, serta implementasi <strong>Computer Vision & LLM</strong>.
                             </p>
                         </div>
 
@@ -195,10 +195,10 @@
                                 <div class="skill-group-pill feature-pill">
                                     <span class="group-label">Backend & Database</span>
                                     <div class="group-tags">
+                                        <span class="tag tag-highlight">Go (Golang)</span>
                                         <span class="tag tag-highlight">Laravel</span>
                                         <span class="tag">Node.js / Express</span>
-                                        <span class="tag">PHP</span>
-                                        <span class="tag">MySQL</span>
+                                        <span class="tag">MySQL & PostgreSQL</span>
                                     </div>
                                 </div>
 
@@ -237,18 +237,84 @@
                     <p class="section-subtitle">Kisah di balik tantangan teknis, solusi arsitektur, dan dampak nyata yang telah dibangun.</p>
                 </div>
 
-                <!-- Category Filters -->
-                <div class="portfolio-filter-bar">
-                    <button class="filter-btn active" data-filter="all">Semua Cerita Proyek</button>
-                    <button class="filter-btn" data-filter="web">Web Application</button>
-                    <button class="filter-btn" data-filter="ai-iot">AI & IoT Systems</button>
-                    <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
+                <!-- Category Filters & Horizontal Controls -->
+                <div class="portfolio-controls-bar">
+                    <div class="portfolio-filter-bar">
+                        <button class="filter-btn active" data-filter="all">Semua Cerita Proyek</button>
+                        <button class="filter-btn" data-filter="web">Web Application</button>
+                        <button class="filter-btn" data-filter="ai-iot">AI & IoT Systems</button>
+                        <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
+                    </div>
+
+                    <div class="portfolio-nav-buttons">
+                        <span class="scroll-hint-pill">
+                            <i class="fas fa-arrows-left-right"></i> Geser kanan-kiri
+                        </span>
+                        <button id="scroll-left-btn" class="scroll-nav-btn" aria-label="Geser Kiri" title="Geser Kiri">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button id="scroll-right-btn" class="scroll-nav-btn" aria-label="Geser Kanan" title="Geser Kanan">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Portfolio Grid Container (Equal Height Flex/Grid) -->
+                <!-- Portfolio Horizontal Carousel Container -->
                 <div class="portfolio-wrapper">
                     <div class="portfolio-grid" id="portfolio-grid">
                         
+                        <!-- SIMRS Billing Project -->
+                        <article class="project-card storytelling-card" data-category="web">
+                            <div class="project-media aspect-video">
+                                <img src="images/simrs-billing.png" alt="SIMRS Billing — Sistem Informasi Manajemen Rumah Sakit" loading="lazy">
+                                <span class="project-badge">Enterprise Web App</span>
+                            </div>
+                            <div class="project-content">
+                                <h3 class="project-title">SIMRS Billing — Sistem Informasi Manajemen Rumah Sakit</h3>
+                                
+                                <div class="story-accordion">
+                                    <div class="story-text-container line-clamp-4">
+                                        <div class="story-block">
+                                            <span class="story-label"><i class="fas fa-exclamation-circle"></i> Masalah & Latar Belakang</span>
+                                            <p class="story-text">Sistem penagihan rumah sakit (SIMRS) konvensional yang lambat, berisiko kesalahan kalkulasi desimal keuangan, serta rawan klaim ganda dan transaksi kasir tanpa otorisasi.</p>
+                                        </div>
+
+                                        <div class="story-block">
+                                            <span class="story-label"><i class="fas fa-puzzle-piece"></i> Tantangan Unik</span>
+                                            <p class="story-text">Mengembangkan monorepo enterprise Full-Stack (Backend Go/Gin & Frontend React 19/Vite 6) dengan otorisasi 2FA kasir, proteksi transaksi idempoten (X-Idempotency-Key), matematika presisi desimal (shopspring/decimal), serta integrasi ImageKit API.</p>
+                                        </div>
+
+                                        <div class="story-block">
+                                            <span class="story-label"><i class="fas fa-chart-line"></i> Dampak & Solusi Teknis</span>
+                                            <p class="story-text">Kalkulasi tagihan medis presisi 100%, verifikasi klaim BPJS & asuransi swasta terstruktur, audit trail real-time aktivitas kasir, dan portal mandiri pasien.</p>
+                                        </div>
+                                    </div>
+
+                                    <button class="expand-toggle-btn">▼ Baca Selengkapnya</button>
+                                </div>
+
+                                <blockquote class="project-quote">
+                                    "Menghadirkan presisi keuangan dan keandalan sistem berstandar enterprise pada operasional rumah sakit."
+                                </blockquote>
+
+                                <div class="project-tech">
+                                    <span class="tech-tag">Go (Golang)</span>
+                                    <span class="tech-tag">Gin</span>
+                                    <span class="tech-tag">React 19</span>
+                                    <span class="tech-tag">PostgreSQL</span>
+                                    <span class="tech-tag">GORM</span>
+                                    <span class="tech-tag">Tailwind CSS</span>
+                                    <span class="tech-tag">ImageKit API</span>
+                                </div>
+
+                                <div class="project-footer">
+                                    <a href="https://github.com/Lesmana24/simrs-billing" class="project-link" target="_blank" rel="noopener">
+                                        <span>Jelajahi Kode Repositori</span> <i class="fab fa-github"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+
                         <!-- Project 1 -->
                         <article class="project-card storytelling-card" data-category="web">
                             <div class="project-media aspect-video">

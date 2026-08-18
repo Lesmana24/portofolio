@@ -62,9 +62,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 3. --- PORTFOLIO CATEGORY FILTERING ---
+    // 3. --- PORTFOLIO CATEGORY FILTERING & HORIZONTAL SCROLL ---
     const filterButtons = document.querySelectorAll('.filter-btn');
     const projectCards = document.querySelectorAll('.project-card');
+    const portfolioGrid = document.getElementById('portfolio-grid');
+    const scrollLeftBtn = document.getElementById('scroll-left-btn');
+    const scrollRightBtn = document.getElementById('scroll-right-btn');
 
     filterButtons.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -85,8 +88,26 @@ document.addEventListener('DOMContentLoaded', function() {
                     card.style.opacity = '0';
                 }
             });
+
+            // Reset horizontal scroll position when filter changes
+            if (portfolioGrid) {
+                portfolioGrid.scrollTo({ left: 0, behavior: 'smooth' });
+            }
         });
     });
+
+    // Horizontal Scroll Navigation Buttons
+    if (scrollLeftBtn && portfolioGrid) {
+        scrollLeftBtn.addEventListener('click', () => {
+            portfolioGrid.scrollBy({ left: -400, behavior: 'smooth' });
+        });
+    }
+
+    if (scrollRightBtn && portfolioGrid) {
+        scrollRightBtn.addEventListener('click', () => {
+            portfolioGrid.scrollBy({ left: 400, behavior: 'smooth' });
+        });
+    }
 
     // 4. --- PROJECT STORY EXPAND / COLLAPSE TOGGLE ---
     const expandToggleBtns = document.querySelectorAll('.expand-toggle-btn');
