@@ -62,39 +62,119 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 3. --- PORTFOLIO CATEGORY FILTERING & HORIZONTAL SCROLL ---
+    // 3. --- PORTFOLIO CATEGORY FILTERING, SEARCH & HORIZONTAL SCROLL ---
     const filterButtons = document.querySelectorAll('.filter-btn');
     const projectCards = document.querySelectorAll('.project-card');
     const portfolioGrid = document.getElementById('portfolio-grid');
     const scrollLeftBtn = document.getElementById('scroll-left-btn');
     const scrollRightBtn = document.getElementById('scroll-right-btn');
+    const searchInput = document.getElementById('portfolio-search-input');
+    const clearSearchBtn = document.getElementById('clear-search-btn');
+    const noProjectsFound = document.getElementById('no-projects-found');
+    const resetSearchBtn = document.getElementById('reset-search-btn');
 
-    filterButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Reset active state
-            filterButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+    let activeFilterValue = 'all';
+    let searchQuery = '';
 
-            const filterValue = btn.getAttribute('data-filter');
+    function filterProjects() {
+        let visibleCount = 0;
 
-            projectCards.forEach(card => {
-                const cardCategory = card.getAttribute('data-category');
+        projectCards.forEach(card => {
+            const cardCategory = card.getAttribute('data-category');
+            const cardTitle = card.querySelector('.project-title')?.textContent.toLowerCase() || '';
+            const cardTech = Array.from(card.querySelectorAll('.tech-tag')).map(t => t.textContent.toLowerCase()).join(' ');
+            const cardStory = card.querySelector('.story-accordion')?.textContent.toLowerCase() || '';
+            const cardBadge = card.querySelector('.project-badge')?.textContent.toLowerCase() || '';
 
-                if (filterValue === 'all' || cardCategory === filterValue) {
-                    card.classList.remove('hidden');
-                    card.style.opacity = '1';
-                } else {
-                    card.classList.add('hidden');
-                    card.style.opacity = '0';
-                }
-            });
+            const matchesCategory = activeFilterValue === 'all' || cardCategory === activeFilterValue;
+            
+            const fullContent = `${cardTitle} ${cardTech} ${cardStory} ${cardBadge}`;
+            const matchesSearch = searchQuery === '' || fullContent.includes(searchQuery.toLowerCase());
 
-            // Reset horizontal scroll position when filter changes
-            if (portfolioGrid) {
-                portfolioGrid.scrollTo({ left: 0, behavior: 'smooth' });
+            if (matchesCategory && matchesSearch) {
+                card.classList.remove('hidden');
+                card.style.opacity = '1';
+                visibleCount++;
+            } else {
+                card.classList.add('hidden');
+                card.style.opacity = '0';
             }
         });
+
+        // Toggle Empty State UI
+        if (noProjectsFound) {
+            if (visibleCount === 0) {
+                noProjectsFound.classList.remove('hidden');
+                if (portfolioGrid) portfolioGrid.classList.add('hidden');
+            } else {
+                noProjectsFound.classList.add('hidden');
+                if (portfolioGrid) portfolioGrid.classList.remove('hidden');
+            }
+        }
+
+        // Reset scroll position to beginning
+        if (portfolioGrid) {
+            portfolioGrid.scrollTo({ left: 0, behavior: 'smooth' });
+        }
+    }
+
+    // Category Filter Buttons Click
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Avoid resetting active class if reset-search-btn is clicked
+            if (btn.id === 'reset-search-btn') return;
+            filterButtons.forEach(b => {
+                if (b.id !== 'reset-search-btn') b.classList.remove('active');
+            });
+            btn.classList.add('active');
+
+            activeFilterValue = btn.getAttribute('data-filter');
+            filterProjects();
+        });
     });
+
+    // Real-Time Search Input
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.trim();
+            if (clearSearchBtn) {
+                if (searchQuery.length > 0) {
+                    clearSearchBtn.classList.remove('hidden');
+                } else {
+                    clearSearchBtn.classList.add('hidden');
+                }
+            }
+            filterProjects();
+        });
+    }
+
+    // Clear Search Input Button
+    if (clearSearchBtn) {
+        clearSearchBtn.addEventListener('click', () => {
+            if (searchInput) {
+                searchInput.value = '';
+                searchQuery = '';
+                clearSearchBtn.classList.add('hidden');
+                filterProjects();
+                searchInput.focus();
+            }
+        });
+    }
+
+    // Reset Search Button in Empty State
+    if (resetSearchBtn) {
+        resetSearchBtn.addEventListener('click', () => {
+            if (searchInput) searchInput.value = '';
+            searchQuery = '';
+            activeFilterValue = 'all';
+            if (clearSearchBtn) clearSearchBtn.classList.add('hidden');
+            filterButtons.forEach(b => {
+                if (b.getAttribute('data-filter') === 'all') b.classList.add('active');
+                else if (b.id !== 'reset-search-btn') b.classList.remove('active');
+            });
+            filterProjects();
+        });
+    }
 
     // Horizontal Scroll Navigation Buttons
     if (scrollLeftBtn && portfolioGrid) {

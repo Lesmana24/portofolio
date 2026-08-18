@@ -86,17 +86,33 @@ const projects = [
 
 export default function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
   const scrollRef = useRef(null);
 
-  const filteredProjects = activeFilter === 'all'
-    ? projects
-    : projects.filter(p => p.category === activeFilter);
+  const filteredProjects = projects.filter(p => {
+    const matchesCategory = activeFilter === 'all' || p.category === activeFilter;
+    const q = searchQuery.toLowerCase().trim();
+    const matchesSearch = !q || (
+      p.title.toLowerCase().includes(q) ||
+      p.badge.toLowerCase().includes(q) ||
+      p.tech.some(t => t.toLowerCase().includes(q)) ||
+      p.problem.toLowerCase().includes(q) ||
+      p.challenge.toLowerCase().includes(q) ||
+      p.impact.toLowerCase().includes(q)
+    );
+    return matchesCategory && matchesSearch;
+  });
 
   const handleFilterChange = (filterId) => {
     setActiveFilter(filterId);
     if (scrollRef.current) {
       scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
     }
+  };
+
+  const resetFilters = () => {
+    setSearchQuery('');
+    setActiveFilter('all');
   };
 
   const scroll = (direction) => {
@@ -116,8 +132,33 @@ export default function ProjectsSection() {
           <p className="text-zinc-400">Kisah di balik tantangan teknis, solusi arsitektur, dan dampak nyata yang telah dibangun.</p>
         </div>
 
-        {/* Controls Bar: Filters & Scroll Nav */}
+        {/* Controls Bar: Search, Filters & Scroll Nav */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-10">
+          {/* Search Box */}
+          <div className="relative w-full sm:w-72">
+            <svg className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Cari proyek atau teknologi..."
+              className="w-full pl-10 pr-9 py-2 rounded-full bg-zinc-950 border border-zinc-800 text-sm text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-200"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+          </div>
+
+          {/* Filters */}
           <div className="flex flex-wrap items-center gap-2.5">
             {[
               { id: 'all', label: 'Semua Cerita Proyek' },
@@ -139,13 +180,8 @@ export default function ProjectsSection() {
             ))}
           </div>
 
+          {/* Scroll Nav Buttons */}
           <div className="flex items-center gap-3 ml-auto">
-            <span className="hidden sm:inline-flex items-center gap-1.5 text-xs text-zinc-400 bg-zinc-950 px-3 py-1.5 rounded-full border border-zinc-800">
-              <svg className="w-3.5 h-3.5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-              </svg>
-              Geser kanan-kiri
-            </span>
             <button
               onClick={() => scroll('left')}
               className="w-10 h-10 rounded-full bg-zinc-950 border border-zinc-800 text-zinc-300 hover:text-white hover:bg-orange-600 hover:border-orange-600 flex items-center justify-center transition-all cursor-pointer shadow-md"
@@ -169,17 +205,35 @@ export default function ProjectsSection() {
           </div>
         </div>
 
-        {/* Projects Horizontal Scroll Container */}
-        <div
-          ref={scrollRef}
-          className="flex flex-nowrap overflow-x-auto gap-7 pb-6 snap-x snap-mandatory scroll-smooth scrollbar-thin scrollbar-thumb-orange-600 scrollbar-track-zinc-800"
-        >
-          {filteredProjects.map(p => (
-            <div key={p.id} className="w-[320px] sm:w-[380px] flex-shrink-0 snap-start flex flex-col">
-              <ProjectCard project={p} />
+        {/* Projects Horizontal Scroll Container or Empty State */}
+        {filteredProjects.length > 0 ? (
+          <div
+            ref={scrollRef}
+            className="flex flex-nowrap overflow-x-auto gap-7 pb-6 snap-x snap-mandatory scroll-smooth scrollbar-thin scrollbar-thumb-orange-600 scrollbar-track-zinc-800"
+          >
+            {filteredProjects.map(p => (
+              <div key={p.id} className="w-[320px] sm:w-[380px] flex-shrink-0 snap-start flex flex-col">
+                <ProjectCard project={p} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-16 px-6 bg-zinc-950/60 border border-dashed border-zinc-800 rounded-2xl">
+            <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
             </div>
-          ))}
-        </div>
+            <h3 className="text-lg font-semibold text-zinc-200 mb-1">Proyek Tidak Ditemukan</h3>
+            <p className="text-sm text-zinc-400 mb-5 max-w-sm mx-auto">Tidak ada proyek yang cocok dengan kata kunci atau filter pencarian Anda.</p>
+            <button
+              onClick={resetFilters}
+              className="px-5 py-2 rounded-full bg-orange-600 hover:bg-orange-700 text-white text-sm font-semibold transition-all cursor-pointer"
+            >
+              Reset Pencarian
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

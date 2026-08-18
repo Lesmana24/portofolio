@@ -232,8 +232,24 @@
                     <p class="section-subtitle">Kisah di balik tantangan teknis, solusi arsitektur, dan dampak nyata yang telah dibangun.</p>
                 </div>
 
-                <!-- Category Filters & Horizontal Controls -->
+                <!-- Category Filters, Search & Horizontal Controls -->
                 <div class="portfolio-controls-bar">
+                    <div class="portfolio-search-wrapper">
+                        <div class="portfolio-search-box">
+                            <i class="fas fa-search search-icon"></i>
+                            <input 
+                                type="text" 
+                                id="portfolio-search-input" 
+                                class="portfolio-search-input" 
+                                placeholder="Cari proyek atau teknologi (React, Go, IoT)..." 
+                                aria-label="Cari Proyek"
+                            >
+                            <button id="clear-search-btn" class="clear-search-btn hidden" aria-label="Hapus Pencarian" title="Hapus Pencarian">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
                     <div class="portfolio-filter-bar">
                         <button class="filter-btn active" data-filter="all">Semua Cerita Proyek</button>
                         <button class="filter-btn" data-filter="web">Web Application</button>
@@ -558,6 +574,14 @@
                             </div>
                         </article>
 
+                    </div>
+
+                    <!-- No Projects Found Empty State -->
+                    <div id="no-projects-found" class="no-projects-found hidden">
+                        <div class="no-projects-icon"><i class="fas fa-search"></i></div>
+                        <h3>Proyek Tidak Ditemukan</h3>
+                        <p>Tidak ada proyek yang sesuai dengan kata kunci atau filter pencarian Anda.</p>
+                        <button id="reset-search-btn" class="filter-btn active"><i class="fas fa-redo"></i> Reset Pencarian</button>
                     </div>
                 </div>
             </div>
