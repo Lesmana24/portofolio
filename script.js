@@ -305,4 +305,143 @@ document.addEventListener('DOMContentLoaded', function() {
         currentYearSpan.textContent = new Date().getFullYear();
     }
 
+    // 8. --- INTERACTIVE CONSTELLATION CANVAS BACKGROUND ENGINE ---
+    const canvas = document.getElementById('bg-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let width = 0;
+        let height = 0;
+        let particles = [];
+        let mouse = { x: null, y: null, radius: 140 };
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initParticles();
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        window.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        function getThemeColors() {
+            const currentTheme = htmlElement.getAttribute('data-theme') || 'dark';
+            if (currentTheme === 'dark') {
+                return {
+                    particle: 'rgba(234, 88, 12, 0.45)',
+                    line: 'rgba(234, 88, 12, ',
+                    mouseLine: 'rgba(251, 146, 60, '
+                };
+            } else {
+                return {
+                    particle: 'rgba(194, 65, 12, 0.35)',
+                    line: 'rgba(194, 65, 12, ',
+                    mouseLine: 'rgba(194, 65, 12, '
+                };
+            }
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.radius = Math.random() * 1.8 + 0.8;
+                this.vx = (Math.random() - 0.5) * 0.45;
+                this.vy = (Math.random() - 0.5) * 0.45;
+                this.alpha = Math.random() * 0.5 + 0.2;
+                this.pulseSpeed = Math.random() * 0.01 + 0.005;
+                this.pulseDir = Math.random() > 0.5 ? 1 : -1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounce off edges
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+
+                // Pulse alpha
+                this.alpha += this.pulseSpeed * this.pulseDir;
+                if (this.alpha > 0.75 || this.alpha < 0.15) {
+                    this.pulseDir *= -1;
+                }
+            }
+
+            draw(colors) {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = colors.particle;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            // Scale particle density proportionally to screen size
+            const count = Math.min(Math.max(Math.floor((width * height) / 18000), 30), 85);
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            const colors = getThemeColors();
+            const maxDistance = 125;
+
+            // Update & Draw Particles
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw(colors);
+
+                // Connect particles close to each other
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < maxDistance) {
+                        const alpha = (1 - dist / maxDistance) * 0.18;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = colors.line + alpha + ')';
+                        ctx.lineWidth = 0.7;
+                        ctx.stroke();
+                    }
+                }
+
+                // Connect mouse cursor to nearby particles
+                if (mouse.x !== null && mouse.y !== null) {
+                    const dx = particles[i].x - mouse.x;
+                    const dy = particles[i].y - mouse.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < mouse.radius) {
+                        const alpha = (1 - dist / mouse.radius) * 0.35;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(mouse.x, mouse.y);
+                        ctx.strokeStyle = colors.mouseLine + alpha + ')';
+                        ctx.lineWidth = 0.95;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animateCanvas);
+        }
+
+        resizeCanvas();
+        animateCanvas();
+    }
+
 });

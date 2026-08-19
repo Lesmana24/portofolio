@@ -1397,3 +1397,121 @@ button {
         padding: 1.75rem;
     }
 }
+
+/* -------- 8. ANIMATED AMBIENT BACKGROUND LAYER -------- */
+.bg-animation-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+#bg-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.85;
+    transition: opacity var(--transition-normal);
+}
+
+.bg-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    opacity: 0.22;
+    transition: background var(--transition-normal), opacity var(--transition-normal);
+}
+
+[data-theme="dark"] .bg-blob {
+    opacity: 0.25;
+    mix-blend-mode: screen;
+}
+
+[data-theme="light"] .bg-blob {
+    opacity: 0.16;
+    mix-blend-mode: multiply;
+}
+
+.blob-1 {
+    top: -12%;
+    left: -10%;
+    width: 48vw;
+    height: 48vw;
+    max-width: 600px;
+    max-height: 600px;
+    background: radial-gradient(circle, var(--accent-primary) 0%, rgba(234, 88, 12, 0) 70%);
+    animation: floatBlob1 24s ease-in-out infinite alternate;
+}
+
+.blob-2 {
+    bottom: -15%;
+    right: -10%;
+    width: 52vw;
+    height: 52vw;
+    max-width: 650px;
+    max-height: 650px;
+    background: radial-gradient(circle, rgba(234, 88, 12, 0.85) 0%, rgba(249, 115, 22, 0) 70%);
+    animation: floatBlob2 28s ease-in-out infinite alternate;
+}
+
+.blob-3 {
+    top: 45%;
+    left: 50%;
+    width: 38vw;
+    height: 38vw;
+    max-width: 480px;
+    max-height: 480px;
+    background: radial-gradient(circle, rgba(251, 146, 60, 0.65) 0%, rgba(234, 88, 12, 0) 70%);
+    transform: translate(-50%, -50%);
+    animation: floatBlob3 22s ease-in-out infinite alternate;
+}
+
+@keyframes floatBlob1 {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(10%, 14%) scale(1.12);
+    }
+    100% {
+        transform: translate(-6%, 8%) scale(0.95);
+    }
+}
+
+@keyframes floatBlob2 {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(-12%, -14%) scale(1.18);
+    }
+    100% {
+        transform: translate(8%, -6%) scale(0.92);
+    }
+}
+
+@keyframes floatBlob3 {
+    0% {
+        transform: translate(-50%, -50%) scale(0.92);
+    }
+    50% {
+        transform: translate(-44%, -56%) scale(1.14);
+    }
+    100% {
+        transform: translate(-56%, -44%) scale(1);
+    }
+}
+
+/* Ensure body & content elements stay above fixed background animation */
+header, main, footer, #back-to-top, #toast {
+    position: relative;
+    z-index: 1;
+}
