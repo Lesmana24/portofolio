@@ -17,6 +17,23 @@ const projects = [
   },
   {
     id: 2,
+    title: 'SIMRS FEFO — Manajemen Stok & Kedaluwarsa Obat Rumah Sakit',
+    category: 'web',
+    badge: 'Enterprise Web App',
+    isDualImage: true,
+    image1: '/images/sistem-obat.png',
+    image2: '/images/sistem-obat-fefo.png',
+    badge1: 'Dashboard Farmasi',
+    badge2: 'Engine FEFO',
+    problem: 'Risiko obat kedaluwarsa terpakai pada operasional rumah sakit dan kerugian finansial akibat penumpukan stok expired, serta potensi human-error petugas farmasi saat memilih batch obat secara manual.',
+    challenge: 'Mengembangkan sistem Full-Stack (Backend Go/Gin & Frontend React 19/Vite 8) dengan transaksi atomik database (SELECT FOR UPDATE) untuk mencegah race condition pemotongan stok, serta engine simulasi live FEFO (First Expired, First Out) secara real-time.',
+    impact: 'Otomatisasi pemotongan stok berurutan berdasarkan expired date terdekat, proteksi mutasi stok ganda secara konkuren, indikator visual status expired (Aman, Mendekati, Kadaluwarsa), dan UI glassmorphism modern dual-theme.',
+    quote: 'Memastikan keselamatan pasien dan efisiensi farmasi melalui otomatisasi pemotongan stok obat berbasis tanggal kedaluwarsa terdekat.',
+    tech: ['Go (Golang)', 'Gin', 'React 19', 'Vite', 'PostgreSQL', 'GORM', 'Tailwind CSS v4', 'Framer Motion', 'JWT Auth'],
+    link: 'https://github.com/Lesmana24/Sistem-Obat-Frontend'
+  },
+  {
+    id: 3,
     title: 'Sistem Informasi & Kasir Bunga Jondo Tani',
     category: 'web',
     badge: 'Web Application',
@@ -29,7 +46,7 @@ const projects = [
     link: 'https://github.com/Lesmana24/Sistem-Informasi-Manajemen-Inventaris-dan-Kasir'
   },
   {
-    id: 3,
+    id: 4,
     title: 'Awan Laundry — Manajemen Operasional',
     category: 'web',
     badge: 'Operational Web App',
@@ -42,13 +59,15 @@ const projects = [
     link: 'https://github.com/Lesmana24/Proyek-1'
   },
   {
-    id: 4,
+    id: 5,
     title: 'OLERICURE — Smart Garden IoT & Plant AI Doctor',
     category: 'ai-iot',
     badge: 'IoT & AI Systems',
     isDualImage: true,
     image1: '/images/image2.png',
     image2: '/images/image2_diagnosis.png',
+    badge1: 'IoT Hardware',
+    badge2: 'AI Doctor',
     problem: 'Pemborosan air pada sistem irigasi konvensional dan keterlambatan petani dalam mengidentifikasi penyakit daun tanaman hortikultura.',
     challenge: 'Mengintegrasikan sinyal sensor ESP32 via MQTT secara uninterrupted, dilanjutkan klasifikasi gambar daun menggunakan MobileNetV2 dan Groq LLM.',
     impact: 'Penyiraman otomatis presisi sesuai tingkat kelembapan tanah & diagnosis penyakit daun cepat dalam hitungan detik.',
@@ -57,7 +76,7 @@ const projects = [
     link: 'https://github.com/Lesmana24/Proyek3-Website'
   },
   {
-    id: 5,
+    id: 6,
     title: 'Ecommerce TokoSaya — Full-Stack Platform',
     category: 'ecommerce',
     badge: 'E-Commerce Platform',
@@ -70,7 +89,7 @@ const projects = [
     link: 'https://github.com/Lesmana24/Ecommerce-TokoSaya'
   },
   {
-    id: 6,
+    id: 7,
     title: 'Scientific Calculator Web Application',
     category: 'web',
     badge: 'Web Interactive Tool',

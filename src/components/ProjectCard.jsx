@@ -18,7 +18,7 @@ export default function ProjectCard({ project }) {
                   className="h-full w-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                 />
                 <span className="absolute bottom-2 left-2 bg-black/80 text-[10px] px-2 py-0.5 rounded text-zinc-300 font-medium backdrop-blur-sm">
-                  IoT Hardware
+                  {project.badge1 || 'IoT Hardware'}
                 </span>
               </div>
               <div className="relative h-full w-full">
@@ -28,7 +28,7 @@ export default function ProjectCard({ project }) {
                   className="h-full w-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                 />
                 <span className="absolute bottom-2 left-2 bg-black/80 text-[10px] px-2 py-0.5 rounded text-zinc-300 font-medium backdrop-blur-sm">
-                  AI Doctor
+                  {project.badge2 || 'AI Doctor'}
                 </span>
               </div>
             </div>
