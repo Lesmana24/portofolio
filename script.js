@@ -36,21 +36,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateGithubWidgetsTheme(theme) {
         const streakImg = document.getElementById('github-streak-img');
-        const activityImg = document.getElementById('github-activity-img');
 
         if (streakImg) {
             if (theme === 'dark') {
                 streakImg.src = 'https://streak-stats-lake.vercel.app/?user=Lesmana24&theme=highcontrast&hide_border=true&timezone=Asia/Jakarta';
             } else {
                 streakImg.src = 'https://streak-stats-lake.vercel.app/?user=Lesmana24&theme=default&hide_border=true&timezone=Asia/Jakarta';
-            }
-        }
-
-        if (activityImg) {
-            if (theme === 'dark') {
-                activityImg.src = 'https://github-readme-activity-graph.vercel.app/graph?username=Lesmana24&theme=github-compact&v=2';
-            } else {
-                activityImg.src = 'https://github-readme-activity-graph.vercel.app/graph?username=Lesmana24&theme=minimal&v=2';
             }
         }
     }

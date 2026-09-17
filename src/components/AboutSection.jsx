@@ -115,14 +115,6 @@ export default function AboutSection() {
                   loading="lazy"
                 />
               </div>
-              <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-orange-500/40 transition-all duration-300 overflow-hidden">
-                <img
-                  src="https://github-readme-activity-graph.vercel.app/graph?username=Lesmana24&theme=github-compact&v=2"
-                  alt="Lesmana's GitHub Activity Graph"
-                  className="w-full h-auto rounded-lg display-block"
-                  loading="lazy"
-                />
-              </div>
             </div>
           </div>
         </div>
