@@ -61,10 +61,58 @@
 
     <!-- Ambient Animated Background Layer -->
     <div class="bg-animation-container" aria-hidden="true">
+        <!-- Living Canvas Engine (Constellations, Beacon Sonar Rings, Telemetry Pulses, Drifting Tech Glyphs) -->
         <canvas id="bg-canvas"></canvas>
+
+        <!-- Multi-Phase Organic Aurora Blobs -->
         <div class="bg-blob blob-1"></div>
         <div class="bg-blob blob-2"></div>
         <div class="bg-blob blob-3"></div>
+        <div class="bg-blob blob-4"></div>
+
+        <!-- Architectural & Engineering Vector HUD Overlay -->
+        <div class="bg-hud-overlay">
+            <!-- Rotating Precision Reticle Ring (Top-Right Blueprint Element) -->
+            <svg class="hud-reticle reticle-tr" viewBox="0 0 200 200" fill="none">
+                <circle cx="100" cy="100" r="92" stroke="currentColor" stroke-width="1" stroke-dasharray="4 6" opacity="0.3"/>
+                <circle cx="100" cy="100" r="72" stroke="currentColor" stroke-width="1" opacity="0.18"/>
+                <circle cx="100" cy="100" r="46" stroke="var(--accent-primary)" stroke-width="1.2" stroke-dasharray="8 6" opacity="0.35"/>
+                <circle cx="100" cy="100" r="16" stroke="currentColor" stroke-width="1" opacity="0.22"/>
+                <path d="M100 0 V200 M0 100 H200" stroke="currentColor" stroke-width="0.75" stroke-dasharray="2 4" opacity="0.22"/>
+            </svg>
+
+            <!-- Secondary Rotating Reticle (Bottom-Left Counterbalance) -->
+            <svg class="hud-reticle reticle-bl" viewBox="0 0 160 160" fill="none">
+                <circle cx="80" cy="80" r="74" stroke="currentColor" stroke-width="1" stroke-dasharray="3 7" opacity="0.25"/>
+                <circle cx="80" cy="80" r="50" stroke="var(--accent-primary)" stroke-width="1" stroke-dasharray="6 4" opacity="0.3"/>
+                <path d="M80 8 V152 M8 80 H152" stroke="currentColor" stroke-width="0.75" stroke-dasharray="2 4" opacity="0.18"/>
+            </svg>
+
+            <!-- Animated Micro-Circuit Traces with Flowing Signal Beams -->
+            <svg class="hud-circuits" viewBox="0 0 1200 800" preserveAspectRatio="none" fill="none">
+                <!-- Circuit Trace 1 (Top Left to Center) -->
+                <path class="circuit-track" d="M -20,120 L 160,120 L 240,200 L 460,200 L 520,260" stroke="currentColor" stroke-width="1.2" opacity="0.16"/>
+                <path class="circuit-pulse pulse-1" d="M -20,120 L 160,120 L 240,200 L 460,200 L 520,260" stroke="var(--accent-primary)" stroke-width="2"/>
+
+                <!-- Circuit Trace 2 (Right to Lower Center) -->
+                <path class="circuit-track" d="M 1220,380 L 1020,380 L 940,460 L 720,460 L 660,520" stroke="currentColor" stroke-width="1.2" opacity="0.16"/>
+                <path class="circuit-pulse pulse-2" d="M 1220,380 L 1020,380 L 940,460 L 720,460 L 660,520" stroke="var(--accent-primary)" stroke-width="2"/>
+
+                <!-- Circuit Nodes (Connection Terminals) -->
+                <circle cx="240" cy="200" r="3" fill="var(--accent-primary)" opacity="0.45"/>
+                <circle cx="460" cy="200" r="3" fill="var(--accent-primary)" opacity="0.45"/>
+                <circle cx="940" cy="460" r="3" fill="var(--accent-primary)" opacity="0.45"/>
+                <circle cx="720" cy="460" r="3" fill="var(--accent-primary)" opacity="0.45"/>
+            </svg>
+
+            <!-- Floating Subtle Engineering Coordinate Markers -->
+            <div class="hud-crosshair ch-1"><span class="crosshair-icon">+</span><span class="coord-label">SYS.CORE // READY</span></div>
+            <div class="hud-crosshair ch-2"><span class="crosshair-icon">+</span><span class="coord-label">PORT : 8080</span></div>
+            <div class="hud-crosshair ch-3"><span class="crosshair-icon">+</span><span class="coord-label">LAT 07°47'S // 110°22'E</span></div>
+        </div>
+
+        <!-- Subtle Tactile Noise / Grain Filter -->
+        <div class="bg-noise" aria-hidden="true"></div>
     </div>
 
     <!-- Header & Navigation -->

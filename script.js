@@ -427,30 +427,69 @@ document.addEventListener('DOMContentLoaded', function() {
         currentYearSpan.textContent = new Date().getFullYear();
     }
 
-    // 8. --- INTERACTIVE CONSTELLATION CANVAS BACKGROUND ENGINE ---
+    // 8. --- MULTI-TIERED LIVING TELEMETRY CANVAS ENGINE ---
     const canvas = document.getElementById('bg-canvas');
     if (canvas) {
         const ctx = canvas.getContext('2d');
         let width = 0;
         let height = 0;
         let particles = [];
-        let mouse = { x: null, y: null, radius: 140 };
+        let beacons = [];
+        let telemetryPulses = [];
+        let techGlyphs = [];
+        let shockwaves = [];
+        let mouse = { x: null, y: null, radius: 150 };
+        let animationFrameId = null;
+        let isTabActive = true;
+
+        const glyphTokens = ['< / >', '{ }', 'λ', '01', 'IoT', 'AI', '0x', '++', '=>', '::'];
 
         function resizeCanvas() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
-            initParticles();
+            initEngine();
         }
 
-        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('resize', () => {
+            clearTimeout(window._resizeTimer);
+            window._resizeTimer = setTimeout(resizeCanvas, 150);
+        });
+
         window.addEventListener('mousemove', (e) => {
             mouse.x = e.clientX;
             mouse.y = e.clientY;
-        });
+        }, { passive: true });
 
         window.addEventListener('mouseleave', () => {
             mouse.x = null;
             mouse.y = null;
+        });
+
+        // Click / Touch Shockwave interaction
+        window.addEventListener('click', (e) => {
+            // Ignore clicks on buttons/links to preserve click feel
+            if (e.target.closest('button, a, input, select, textarea')) return;
+            spawnShockwave(e.clientX, e.clientY);
+        });
+
+        function spawnShockwave(x, y) {
+            shockwaves.push({
+                x,
+                y,
+                radius: 4,
+                maxRadius: Math.min(width * 0.2, 160),
+                alpha: 0.45
+            });
+        }
+
+        // Pause animation when tab is inactive to save battery & CPU
+        document.addEventListener('visibilitychange', () => {
+            isTabActive = !document.hidden;
+            if (isTabActive) {
+                animateCanvas();
+            } else if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
         });
 
         function getThemeColors() {
@@ -459,72 +498,244 @@ document.addEventListener('DOMContentLoaded', function() {
                 return {
                     particle: 'rgba(234, 88, 12, 0.45)',
                     line: 'rgba(234, 88, 12, ',
-                    mouseLine: 'rgba(251, 146, 60, '
+                    mouseLine: 'rgba(251, 146, 60, ',
+                    beaconCore: 'rgba(234, 88, 12, 0.85)',
+                    beaconRing: 'rgba(249, 115, 22, ',
+                    pulseHead: 'rgba(255, 255, 255, 0.95)',
+                    pulseTail: 'rgba(234, 88, 12, ',
+                    glyphColor: 'rgba(251, 146, 60, ',
+                    shockwaveColor: 'rgba(234, 88, 12, '
                 };
             } else {
                 return {
                     particle: 'rgba(194, 65, 12, 0.35)',
                     line: 'rgba(194, 65, 12, ',
-                    mouseLine: 'rgba(194, 65, 12, '
+                    mouseLine: 'rgba(194, 65, 12, ',
+                    beaconCore: 'rgba(194, 65, 12, 0.8)',
+                    beaconRing: 'rgba(194, 65, 12, ',
+                    pulseHead: 'rgba(194, 65, 12, 0.95)',
+                    pulseTail: 'rgba(194, 65, 12, ',
+                    glyphColor: 'rgba(194, 65, 12, ',
+                    shockwaveColor: 'rgba(194, 65, 12, '
                 };
             }
         }
 
+        // 1. Constellation Particle Node
         class Particle {
-            constructor() {
+            constructor(isBeacon = false) {
+                this.isBeacon = isBeacon;
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.radius = Math.random() * 1.8 + 0.8;
-                this.vx = (Math.random() - 0.5) * 0.45;
-                this.vy = (Math.random() - 0.5) * 0.45;
-                this.alpha = Math.random() * 0.5 + 0.2;
-                this.pulseSpeed = Math.random() * 0.01 + 0.005;
+                this.radius = isBeacon ? (Math.random() * 1.5 + 2.8) : (Math.random() * 1.6 + 0.8);
+                this.vx = (Math.random() - 0.5) * (isBeacon ? 0.25 : 0.42);
+                this.vy = (Math.random() - 0.5) * (isBeacon ? 0.25 : 0.42);
+                this.alpha = Math.random() * 0.4 + 0.2;
+                this.pulseSpeed = Math.random() * 0.01 + 0.006;
                 this.pulseDir = Math.random() > 0.5 ? 1 : -1;
+
+                // Beacon Sonar Ripple Properties
+                if (isBeacon) {
+                    this.sonarRadius = 0;
+                    this.maxSonar = Math.random() * 15 + 32;
+                    this.sonarSpeed = Math.random() * 0.35 + 0.35;
+                }
             }
 
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
 
-                // Bounce off edges
+                // Bounce off edges smoothly
                 if (this.x < 0 || this.x > width) this.vx *= -1;
                 if (this.y < 0 || this.y > height) this.vy *= -1;
 
                 // Pulse alpha
                 this.alpha += this.pulseSpeed * this.pulseDir;
-                if (this.alpha > 0.75 || this.alpha < 0.15) {
+                if (this.alpha > 0.8 || this.alpha < 0.15) {
                     this.pulseDir *= -1;
+                }
+
+                // Update sonar ring if beacon
+                if (this.isBeacon) {
+                    this.sonarRadius += this.sonarSpeed;
+                    if (this.sonarRadius > this.maxSonar) {
+                        this.sonarRadius = 0;
+                    }
                 }
             }
 
             draw(colors) {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = colors.particle;
-                ctx.fill();
+                if (this.isBeacon) {
+                    // Draw outer expanding sonar ring
+                    const sonarAlpha = (1 - this.sonarRadius / this.maxSonar) * 0.38;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.sonarRadius, 0, Math.PI * 2);
+                    ctx.strokeStyle = colors.beaconRing + sonarAlpha + ')';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+
+                    // Inner bright core
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = colors.beaconCore;
+                    ctx.fill();
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = colors.particle;
+                    ctx.fill();
+                }
             }
         }
 
-        function initParticles() {
-            particles = [];
-            // Scale particle density proportionally to screen size
-            const count = Math.min(Math.max(Math.floor((width * height) / 18000), 30), 85);
-            for (let i = 0; i < count; i++) {
-                particles.push(new Particle());
+        // 2. Drifting Code & Hardware Glyphs
+        class TechGlyph {
+            constructor() {
+                this.reset(true);
+            }
+
+            reset(initial = false) {
+                this.token = glyphTokens[Math.floor(Math.random() * glyphTokens.length)];
+                this.x = Math.random() * width;
+                this.y = initial ? (Math.random() * height) : (height + 20);
+                this.vy = -(Math.random() * 0.25 + 0.15);
+                this.vx = (Math.random() - 0.5) * 0.15;
+                this.alpha = Math.random() * 0.12 + 0.08;
+                this.targetAlpha = this.alpha;
+            }
+
+            update() {
+                this.y += this.vy;
+                this.x += this.vx;
+                if (this.y < -30 || this.x < -30 || this.x > width + 30) {
+                    this.reset(false);
+                }
+            }
+
+            draw(colors) {
+                ctx.font = '10px "JetBrains Mono", monospace';
+                ctx.fillStyle = colors.glyphColor + this.alpha + ')';
+                ctx.fillText(this.token, this.x, this.y);
             }
         }
+
+        // 3. Telemetry Signal Pulses (Data Packets traveling along lines)
+        class TelemetryPulse {
+            constructor(p1, p2) {
+                this.p1 = p1;
+                this.p2 = p2;
+                this.progress = 0;
+                this.speed = Math.random() * 0.015 + 0.01;
+                this.isDead = false;
+            }
+
+            update() {
+                this.progress += this.speed;
+                if (this.progress >= 1) {
+                    this.isDead = true;
+                }
+            }
+
+            draw(colors) {
+                const currentX = this.p1.x + (this.p2.x - this.p1.x) * this.progress;
+                const currentY = this.p1.y + (this.p2.y - this.p1.y) * this.progress;
+
+                // Head spark
+                ctx.beginPath();
+                ctx.arc(currentX, currentY, 2.2, 0, Math.PI * 2);
+                ctx.fillStyle = colors.pulseHead;
+                ctx.fill();
+
+                // Fading tail
+                const tailProgress = Math.max(0, this.progress - 0.18);
+                const tailX = this.p1.x + (this.p2.x - this.p1.x) * tailProgress;
+                const tailY = this.p1.y + (this.p2.y - this.p1.y) * tailProgress;
+
+                ctx.beginPath();
+                ctx.moveTo(tailX, tailY);
+                ctx.lineTo(currentX, currentY);
+                ctx.strokeStyle = colors.pulseTail + '0.7)';
+                ctx.lineWidth = 1.6;
+                ctx.stroke();
+            }
+        }
+
+        function initEngine() {
+            particles = [];
+            techGlyphs = [];
+            telemetryPulses = [];
+            shockwaves = [];
+
+            // Scale particle density with screen area (30 to 75 particles)
+            const count = Math.min(Math.max(Math.floor((width * height) / 20000), 28), 75);
+            const beaconCount = Math.min(Math.max(Math.floor(count / 12), 3), 5);
+
+            for (let i = 0; i < count; i++) {
+                const isBeacon = i < beaconCount;
+                particles.push(new Particle(isBeacon));
+            }
+
+            // Spawn 6 to 8 tech glyphs
+            const glyphCount = Math.min(Math.max(Math.floor(width / 220), 5), 8);
+            for (let i = 0; i < glyphCount; i++) {
+                techGlyphs.push(new TechGlyph());
+            }
+        }
+
+        let frameCounter = 0;
 
         function animateCanvas() {
+            if (!isTabActive) return;
+
             ctx.clearRect(0, 0, width, height);
             const colors = getThemeColors();
             const maxDistance = 125;
+            frameCounter++;
 
-            // Update & Draw Particles
+            // 1. Process Shockwaves
+            for (let s = shockwaves.length - 1; s >= 0; s--) {
+                const sw = shockwaves[s];
+                sw.radius += 3.5;
+                sw.alpha *= 0.95;
+
+                ctx.beginPath();
+                ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2);
+                ctx.strokeStyle = colors.shockwaveColor + sw.alpha + ')';
+                ctx.lineWidth = 1.4;
+                ctx.stroke();
+
+                // Push nearby particles gently outwards
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+                    const dx = p.x - sw.x;
+                    const dy = p.y - sw.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < sw.radius + 15 && dist > sw.radius - 25 && dist > 1) {
+                        const pushForce = 0.8 * (1 - dist / sw.maxRadius);
+                        p.x += (dx / dist) * pushForce;
+                        p.y += (dy / dist) * pushForce;
+                    }
+                }
+
+                if (sw.alpha < 0.02 || sw.radius >= sw.maxRadius) {
+                    shockwaves.splice(s, 1);
+                }
+            }
+
+            // 2. Draw & Update Floating Tech Glyphs
+            for (let g = 0; g < techGlyphs.length; g++) {
+                techGlyphs[g].update();
+                techGlyphs[g].draw(colors);
+            }
+
+            // 3. Connect Constellation Mesh & Candidate Links for Pulses
+            let candidatePairs = [];
+
             for (let i = 0; i < particles.length; i++) {
                 particles[i].update();
                 particles[i].draw(colors);
 
-                // Connect particles close to each other
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
@@ -538,6 +749,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         ctx.strokeStyle = colors.line + alpha + ')';
                         ctx.lineWidth = 0.7;
                         ctx.stroke();
+
+                        if (telemetryPulses.length < 4 && Math.random() < 0.05) {
+                            candidatePairs.push([particles[i], particles[j]]);
+                        }
                     }
                 }
 
@@ -559,7 +774,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
 
-            requestAnimationFrame(animateCanvas);
+            // 4. Randomly launch new Telemetry Pulses along connected lines
+            if (candidatePairs.length > 0 && telemetryPulses.length < 3 && frameCounter % 40 === 0) {
+                const pair = candidatePairs[Math.floor(Math.random() * candidatePairs.length)];
+                telemetryPulses.push(new TelemetryPulse(pair[0], pair[1]));
+            }
+
+            // 5. Update & Draw Telemetry Pulses
+            for (let p = telemetryPulses.length - 1; p >= 0; p--) {
+                telemetryPulses[p].update();
+                telemetryPulses[p].draw(colors);
+                if (telemetryPulses[p].isDead) {
+                    telemetryPulses.splice(p, 1);
+                }
+            }
+
+            animationFrameId = requestAnimationFrame(animateCanvas);
         }
 
         resizeCanvas();

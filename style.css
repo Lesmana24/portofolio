@@ -1586,6 +1586,17 @@ button {
     animation: floatBlob3 22s ease-in-out infinite alternate;
 }
 
+.blob-4 {
+    top: 25%;
+    left: -8%;
+    width: 36vw;
+    height: 36vw;
+    max-width: 440px;
+    max-height: 440px;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.5) 0%, rgba(234, 88, 12, 0) 70%);
+    animation: floatBlob4 26s ease-in-out infinite alternate;
+}
+
 @keyframes floatBlob1 {
     0% {
         transform: translate(0, 0) scale(1);
@@ -1619,6 +1630,191 @@ button {
     }
     100% {
         transform: translate(-56%, -44%) scale(1);
+    }
+}
+
+@keyframes floatBlob4 {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(14%, -10%) scale(1.1);
+    }
+    100% {
+        transform: translate(4%, 12%) scale(0.94);
+    }
+}
+
+/* Tactile Film Grain / Paper Texture Overlay */
+.bg-noise {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 140px 140px;
+    z-index: 2;
+}
+
+[data-theme="dark"] .bg-noise {
+    opacity: 0.04;
+    mix-blend-mode: screen;
+}
+
+[data-theme="light"] .bg-noise {
+    opacity: 0.025;
+    mix-blend-mode: multiply;
+}
+
+/* Architectural & Engineering HUD Vector Layer */
+.bg-hud-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+    color: var(--text-muted);
+}
+
+.hud-reticle {
+    position: absolute;
+    pointer-events: none;
+    transform-origin: center center;
+}
+
+.reticle-tr {
+    top: -30px;
+    right: -30px;
+    width: 320px;
+    height: 320px;
+    animation: rotateReticleSlow 75s linear infinite;
+}
+
+.reticle-bl {
+    bottom: 4%;
+    left: -40px;
+    width: 220px;
+    height: 220px;
+    animation: rotateReticleReverse 55s linear infinite;
+}
+
+@keyframes rotateReticleSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes rotateReticleReverse {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+}
+
+/* Animated Micro-Circuit Traces with Flowing Signal Beams */
+.hud-circuits {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.circuit-track {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.circuit-pulse {
+    stroke-dasharray: 60 700;
+    stroke-dashoffset: 760;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 6px var(--accent-glow));
+}
+
+.pulse-1 {
+    animation: circuitSignalFlow 9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.pulse-2 {
+    animation: circuitSignalFlow 11s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation-delay: 4.5s;
+}
+
+@keyframes circuitSignalFlow {
+    0% {
+        stroke-dashoffset: 760;
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.85;
+    }
+    80% {
+        opacity: 0.85;
+    }
+    100% {
+        stroke-dashoffset: -100;
+        opacity: 0;
+    }
+}
+
+/* Technical HUD Crosshairs & Engineering Metadata */
+.hud-crosshair {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    opacity: 0.35;
+    user-select: none;
+    pointer-events: none;
+    transition: opacity var(--transition-normal);
+}
+
+.hud-crosshair .crosshair-icon {
+    color: var(--accent-primary);
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+
+.ch-1 {
+    top: calc(var(--header-height) + 2rem);
+    right: 3rem;
+}
+
+.ch-2 {
+    bottom: 5rem;
+    right: 4rem;
+}
+
+.ch-3 {
+    top: 48%;
+    left: 2.5rem;
+    transform: translateY(-50%);
+}
+
+@media (max-width: 992px) {
+    .hud-crosshair, .reticle-bl {
+        display: none;
+    }
+    .reticle-tr {
+        width: 220px;
+        height: 220px;
+        right: -60px;
+        top: -60px;
+    }
+}
+
+/* Reduced Motion Safety */
+@media (prefers-reduced-motion: reduce) {
+    .bg-blob, .hud-reticle, .circuit-pulse {
+        animation: none !important;
     }
 }
 
