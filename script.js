@@ -1,8 +1,127 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+    const htmlElement = document.documentElement;
+
+    // --- LANGUAGE SWITCHER / i18n INITIALIZATION ---
+    let currentLang = localStorage.getItem('portfolio-lang') || 'id';
+    const langBtns = document.querySelectorAll('.lang-btn');
+
+    function getNestedTranslation(obj, path) {
+        if (!obj || !path) return null;
+        return path.split('.').reduce((acc, part) => (acc && acc[part] !== undefined) ? acc[part] : null, obj);
+    }
+
+    function setLanguage(lang) {
+        if (typeof translations === 'undefined' || !translations[lang]) return;
+        currentLang = lang;
+        htmlElement.setAttribute('lang', lang);
+        localStorage.setItem('portfolio-lang', lang);
+
+        const dict = translations[lang];
+
+        // 1. Document Title & Meta Description
+        if (dict.meta) {
+            if (dict.meta.title) document.title = dict.meta.title;
+            const metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc && dict.meta.description) metaDesc.setAttribute('content', dict.meta.description);
+        }
+
+        // 2. data-i18n (plain text)
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            const val = getNestedTranslation(dict, key);
+            if (val !== null && val !== undefined) {
+                el.textContent = val;
+            }
+        });
+
+        // 3. data-i18n-html (HTML content)
+        document.querySelectorAll('[data-i18n-html]').forEach(el => {
+            const key = el.getAttribute('data-i18n-html');
+            const val = getNestedTranslation(dict, key);
+            if (val !== null && val !== undefined) {
+                el.innerHTML = val;
+            }
+        });
+
+        // 4. data-i18n-placeholder (input placeholders)
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            const val = getNestedTranslation(dict, key);
+            if (val !== null && val !== undefined) {
+                el.setAttribute('placeholder', val);
+            }
+        });
+
+        // 5. data-i18n-title (tooltip titles)
+        document.querySelectorAll('[data-i18n-title]').forEach(el => {
+            const key = el.getAttribute('data-i18n-title');
+            const val = getNestedTranslation(dict, key);
+            if (val !== null && val !== undefined) {
+                el.setAttribute('title', val);
+            }
+        });
+
+        // 6. data-i18n-aria (accessibility labels)
+        document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+            const key = el.getAttribute('data-i18n-aria');
+            const val = getNestedTranslation(dict, key);
+            if (val !== null && val !== undefined) {
+                el.setAttribute('aria-label', val);
+            }
+        });
+
+        // 7. data-i18n-alt (image alts)
+        document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+            const key = el.getAttribute('data-i18n-alt');
+            const val = getNestedTranslation(dict, key);
+            if (val !== null && val !== undefined) {
+                el.setAttribute('alt', val);
+            }
+        });
+
+        // 8. Update language switcher buttons active status
+        langBtns.forEach(btn => {
+            if (btn.getAttribute('data-lang') === lang) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        // 9. Update theme toggle title with current language
+        const currentTheme = htmlElement.getAttribute('data-theme') || 'dark';
+        updateThemeIcon(currentTheme);
+
+        // 10. Update accordion toggle buttons text according to open state
+        document.querySelectorAll('.expand-toggle-btn').forEach(btn => {
+            const accordion = btn.closest('.story-accordion');
+            const details = accordion ? accordion.querySelector('.story-details') : null;
+            if (details && details.classList.contains('is-open')) {
+                btn.textContent = dict.portfolio.btn_expand_less;
+            } else {
+                btn.textContent = dict.portfolio.btn_expand_more;
+            }
+        });
+
+        // 11. Refresh project filter/search index if active
+        if (typeof filterProjects === 'function') {
+            filterProjects();
+        }
+    }
+
+    // Language switcher click events
+    langBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetLang = btn.getAttribute('data-lang');
+            if (targetLang && targetLang !== currentLang) {
+                setLanguage(targetLang);
+            }
+        });
+    });
+
     // 1. --- THEME SWITCHER (DARK / LIGHT MODE) ---
     const themeToggleBtn = document.getElementById('theme-toggle');
-    const htmlElement = document.documentElement;
 
     // Check saved theme or default to dark
     const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
@@ -25,12 +144,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateThemeIcon(theme) {
         if (!themeToggleBtn) return;
         const icon = themeToggleBtn.querySelector('i');
+        const navDict = (typeof translations !== 'undefined' && translations[currentLang]) ? translations[currentLang].nav : null;
         if (theme === 'dark') {
             icon.className = 'fas fa-sun';
-            themeToggleBtn.setAttribute('title', 'Ubah ke Mode Terang');
+            themeToggleBtn.setAttribute('title', navDict ? navDict.theme_light : 'Ubah ke Mode Terang');
         } else {
             icon.className = 'fas fa-moon';
-            themeToggleBtn.setAttribute('title', 'Ubah ke Mode Gelap');
+            themeToggleBtn.setAttribute('title', navDict ? navDict.theme_dark : 'Ubah ke Mode Gelap');
         }
     }
 
@@ -132,6 +252,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Initialize Language on page load
+    setLanguage(currentLang);
+
     // Category Filter Buttons Click
     filterButtons.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -213,12 +336,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const details = accordion.querySelector('.story-details');
             if (!details) return;
 
+            const dict = (typeof translations !== 'undefined' && translations[currentLang]) ? translations[currentLang].portfolio : null;
+            const moreText = dict ? dict.btn_expand_more : '▼ Baca Selengkapnya';
+            const lessText = dict ? dict.btn_expand_less : '▲ Sembunyikan Detail';
+
             if (details.classList.contains('is-open')) {
                 details.classList.remove('is-open');
-                this.textContent = '▼ Baca Selengkapnya';
+                this.textContent = moreText;
             } else {
                 details.classList.add('is-open');
-                this.textContent = '▲ Sembunyikan Detail';
+                this.textContent = lessText;
             }
         });
     });
@@ -231,14 +358,18 @@ document.addEventListener('DOMContentLoaded', function() {
     if (copyEmailCard) {
         copyEmailCard.addEventListener('click', () => {
             const email = 'lesmanaadhik@gmail.com';
+            const dict = (typeof translations !== 'undefined' && translations[currentLang]) ? translations[currentLang].contact : null;
+            const successMsg = dict ? dict.toast_success : 'Email berhasil disalin ke clipboard!';
+            const fallbackMsg = dict ? dict.toast_fallback : 'Email: lesmanaadhik@gmail.com';
+
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(email).then(() => {
-                    showToast('Email berhasil disalin ke clipboard!');
+                    showToast(successMsg);
                 }).catch(() => {
-                    showToast('Email: lesmanaadhik@gmail.com');
+                    showToast(fallbackMsg);
                 });
             } else {
-                showToast('Email: lesmanaadhik@gmail.com');
+                showToast(fallbackMsg);
             }
         });
     }
