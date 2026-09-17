@@ -1243,10 +1243,23 @@ button {
 }
 
 /* -------- 7. CONTACT SECTION & FOOTER -------- */
+#contact.section {
+    padding-top: 6rem;
+    padding-bottom: 5rem;
+}
+
 .contact-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
+    max-width: 920px;
+    margin: 0 auto;
+}
+
+@media (max-width: 680px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .contact-card {
@@ -1328,11 +1341,13 @@ button {
 
 /* Footer */
 .footer {
-    padding: 3.5rem 0;
+    padding: 2.75rem 0;
     border-top: 1px solid var(--border-color);
     background-color: var(--bg-surface);
     text-align: center;
+    width: 100%;
 }
+
 
 .footer-container {
     display: flex;
@@ -1608,7 +1623,17 @@ button {
 }
 
 /* Ensure body & content elements stay above fixed background animation */
-header, main, footer, #back-to-top, #toast {
+header, main, footer {
     position: relative;
     z-index: 1;
+}
+
+#back-to-top {
+    position: fixed;
+    z-index: 900;
+}
+
+#toast {
+    position: fixed;
+    z-index: 2000;
 }
