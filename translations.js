@@ -6,8 +6,8 @@
 const translations = {
     id: {
         meta: {
-            title: "Lesmana Adhi Kusuma — Menjembatani Kode & Solusi Dunia Nyata",
-            description: "Portofolio Lesmana Adhi Kusuma — Mahasiswa Teknik Informatika & Software Engineer yang berfokus pada aplikasi Web, AI, dan IoT dengan pendekatan personal."
+            title: "Lesmana Adhi Kusuma | Menjembatani Kode & Solusi Dunia Nyata",
+            description: "Portofolio Lesmana Adhi Kusuma, Mahasiswa Teknik Informatika & Software Engineer yang berfokus pada aplikasi Web, AI, dan IoT dengan pendekatan personal."
         },
         nav: {
             logo_aria: "Beranda Lesmana",
@@ -40,7 +40,7 @@ const translations = {
             stat_ai_lbl: "ESP32, Vision AI & LLM",
             heading: "Halo! Saya Lesmana.",
             bio_1: `Perjalanan saya di dunia teknologi bermula dari rasa penasaran sederhana: <em>"Bagaimana cara membuat sesuatu dari layar komputer yang bisa menyelesaikan masalah nyata di sekitarku?"</em> Bagi saya, coding bukan sekadar merangkai sintaksis, melainkan seni menyusun solusi yang intuitif dan bermanfaat bagi orang lain.`,
-            bio_2: `Sebagai mahasiswa Teknik Informatika, saya sering menghadapi berbagai tantangan logika rumit—mulai dari mengelola arsitektur database kasir yang padat, merancang alur transaksi laundry yang rapi, hingga menghubungkan sensor hardware IoT di lahan pertanian dengan kecerdasan buatan AI.`,
+            bio_2: `Sebagai mahasiswa Teknik Informatika, saya sering menghadapi berbagai tantangan logika rumit, mulai dari mengelola arsitektur database kasir yang padat, merancang alur transaksi laundry yang rapi, hingga menghubungkan sensor hardware IoT di lahan pertanian dengan kecerdasan buatan AI.`,
             bio_3: `<i class="fas fa-quote-left quote-icon"></i> Saya suka mengubah ide menjadi aplikasi web fungsional menggunakan ekosistem <strong>React & Node.js</strong>. Untuk backend yang tangguh dan terstruktur, <strong>Laravel</strong> dan <strong>Go (Golang)</strong> sering menjadi senjata utama saya. Di luar browser, saya antusias bereksperimen dengan mikrokontroler <strong>ESP32</strong>, protokol <strong>MQTT</strong>, serta implementasi <strong>Computer Vision & LLM</strong>.`,
             skills_title: `<i class="fas fa-layer-group"></i> Alat & Ekosistem Teknologi`,
             group_frontend: "Frontend UI",
@@ -75,7 +75,7 @@ const translations = {
         },
         projects: {
             simrs_billing: {
-                title: "SIMRS Billing — Sistem Informasi Manajemen Rumah Sakit",
+                title: "SIMRS Billing: Sistem Informasi Manajemen Rumah Sakit",
                 badge: "Enterprise Web App",
                 problem: "Sistem penagihan rumah sakit (SIMRS) konvensional yang lambat, berisiko kesalahan kalkulasi desimal keuangan, serta rawan klaim ganda dan transaksi kasir tanpa otorisasi.",
                 challenge: "Mengembangkan monorepo enterprise Full-Stack (Backend Go/Gin & Frontend React 19/Vite 6) dengan otorisasi 2FA kasir, proteksi transaksi idempoten (X-Idempotency-Key), matematika presisi desimal (shopspring/decimal), serta integrasi ImageKit API.",
@@ -83,7 +83,7 @@ const translations = {
                 quote: `"Menghadirkan presisi keuangan dan keandalan sistem berstandar enterprise pada operasional rumah sakit."`
             },
             simrs_fefo: {
-                title: "SIMRS FEFO — Manajemen Stok & Kedaluwarsa Obat Rumah Sakit",
+                title: "SIMRS FEFO: Manajemen Stok & Kedaluwarsa Obat Rumah Sakit",
                 badge_pharmacy: `<i class="fas fa-chart-line"></i> Dashboard Farmasi`,
                 badge_fefo: `<i class="fas fa-bolt"></i> Engine FEFO`,
                 problem: "Risiko obat kedaluwarsa terpakai pada operasional rumah sakit dan kerugian finansial akibat penumpukan stok expired, serta potensi human-error petugas farmasi saat memilih batch obat secara manual.",
@@ -100,7 +100,7 @@ const translations = {
                 quote: `"Perangkat lunak terbaik adalah yang langsung mempermudah urusan operasional lokal di sekitar kita."`
             },
             awan_laundry: {
-                title: "Awan Laundry — Manajemen Operasional",
+                title: "Awan Laundry: Manajemen Operasional",
                 badge: "Operational Web App",
                 problem: "Manajemen antrean cucian dan operasional harian usaha laundry yang rawan acak-acakan saat volume pesanan tinggi.",
                 challenge: "Merancang skema database relational MySQL yang efisien untuk melacak status pengerjaan (cuci, jemur, setrika, siap ambil) serta beban pengeluaran bahan harian.",
@@ -108,7 +108,7 @@ const translations = {
                 quote: `"Menghadirkan keteraturan dan efisiensi sistem pada operasional UMKM laundry."`
             },
             olericure: {
-                title: "OLERICURE — Smart Garden IoT & Plant AI Doctor",
+                title: "OLERICURE: Smart Garden IoT & Plant AI Doctor",
                 badge_iot: `<i class="fas fa-microchip"></i> Hardware Irigasi IoT`,
                 badge_ai: `<i class="fas fa-brain"></i> Diagnosis AI Plant Doctor`,
                 problem: "Pemborosan air pada sistem irigasi konvensional dan keterlambatan petani kota dalam mengidentifikasi serangan patogen daun tanaman hortikultura.",
@@ -117,7 +117,7 @@ const translations = {
                 quote: `"Ketika sinyal perangkat keras dan model kecerdasan buatan menyatu untuk merawat tanaman."`
             },
             tokosaya: {
-                title: "Ecommerce TokoSaya — Full-Stack Platform",
+                title: "Ecommerce TokoSaya: Full-Stack Platform",
                 badge: "E-Commerce Platform",
                 problem: "Kebutuhan platform toko digital mandiri yang aman dengan alur belanja yang mulus dari pencarian produk hingga admin dashboard management.",
                 challenge: "Menangani otentikasi role multi-tier (pelanggan vs admin), pengelolaan keranjang belanja dinamis, dan sinkronisasi pesanan tanpa membebankan server.",
@@ -155,8 +155,8 @@ const translations = {
 
     en: {
         meta: {
-            title: "Lesmana Adhi Kusuma — Bridging Code & Real-World Solutions",
-            description: "Portfolio of Lesmana Adhi Kusuma — Informatics Engineering Student & Software Engineer focused on Web, AI, and IoT solutions with a personal touch."
+            title: "Lesmana Adhi Kusuma | Bridging Code & Real-World Solutions",
+            description: "Portfolio of Lesmana Adhi Kusuma, Informatics Engineering Student & Software Engineer focused on Web, AI, and IoT solutions with a personal touch."
         },
         nav: {
             logo_aria: "Lesmana's Home",
@@ -188,8 +188,8 @@ const translations = {
             stat_ai_num: "AI & Smart IoT",
             stat_ai_lbl: "ESP32, Vision AI & LLM",
             heading: "Hello! I'm Lesmana.",
-            bio_1: `My journey in technology began with a simple spark of curiosity: <em>"How can I build something from a computer screen that solves real-world problems around me?"</em> To me, coding is far more than typing syntax—it's the craft of engineering intuitive, impactful solutions for people.`,
-            bio_2: `As an Informatics Engineering student, I frequently tackle intricate challenges—from architecting high-volume cashier databases and structuring streamlined laundry transaction workflows, to linking agricultural IoT hardware sensors with computer vision AI.`,
+            bio_1: `My journey in technology began with a simple spark of curiosity: <em>"How can I build something from a computer screen that solves real-world problems around me?"</em> To me, coding is far more than typing syntax; it's the craft of engineering intuitive, impactful solutions for people.`,
+            bio_2: `As an Informatics Engineering student, I frequently tackle intricate challenges, from architecting high-volume cashier databases and structuring streamlined laundry transaction workflows, to linking agricultural IoT hardware sensors with computer vision AI.`,
             bio_3: `<i class="fas fa-quote-left quote-icon"></i> I love transforming ideas into functional web experiences using the <strong>React & Node.js</strong> ecosystem. For resilient, scalable backends, <strong>Laravel</strong> and <strong>Go (Golang)</strong> are my primary tools of choice. Beyond the browser, I am deeply fascinated by exploring <strong>ESP32</strong> microcontrollers, <strong>MQTT</strong> protocols, and <strong>Computer Vision & LLM</strong> integrations.`,
             skills_title: `<i class="fas fa-layer-group"></i> Tools & Tech Ecosystem`,
             group_frontend: "Frontend UI",
@@ -224,7 +224,7 @@ const translations = {
         },
         projects: {
             simrs_billing: {
-                title: "SIMRS Billing — Hospital Information Management System",
+                title: "SIMRS Billing: Hospital Information Management System",
                 badge: "Enterprise Web App",
                 problem: "Conventional hospital billing systems often struggle with latency, financial decimal inaccuracies, duplicate claim submissions, and unauthorized cashier actions.",
                 challenge: "Developing a full-stack enterprise monorepo (Go/Gin Backend & React 19/Vite 6 Frontend) featuring cashier 2FA authorization, idempotent transaction safeguards (X-Idempotency-Key), exact arbitrary-precision decimal mathematics (shopspring/decimal), and ImageKit API integration.",
@@ -232,7 +232,7 @@ const translations = {
                 quote: `"Delivering financial precision and enterprise-grade reliability to mission-critical hospital operations."`
             },
             simrs_fefo: {
-                title: "SIMRS FEFO — Hospital Pharmacy Inventory & Expiry Management",
+                title: "SIMRS FEFO: Hospital Pharmacy Inventory & Expiry Management",
                 badge_pharmacy: `<i class="fas fa-chart-line"></i> Pharmacy Dashboard`,
                 badge_fefo: `<i class="fas fa-bolt"></i> FEFO Engine`,
                 problem: "Risks of dispensing expired medications in hospital care, financial loss from expired stock pileup, and potential human errors during manual medicine batch selection.",
@@ -241,7 +241,7 @@ const translations = {
                 quote: `"Safeguarding patient safety and elevating pharmacy efficiency through automated near-expiry stock deduction."`
             },
             kios_bunga: {
-                title: "Jondo Tani Flower Kiosk — POS & Inventory System",
+                title: "Jondo Tani Flower Kiosk: POS & Inventory System",
                 badge: "Web Application",
                 problem: "Manual inventory records and paper receipts at a local flower nursery caused stock discrepancies of ornamental plants and slow checkout lines.",
                 challenge: "Designing a modular API architecture decoupling React frontend and Express backend to guarantee instantaneous transaction calculation without simultaneous out-of-stock collisions.",
@@ -249,7 +249,7 @@ const translations = {
                 quote: `"The best software is the one that directly streamlines local everyday operations around us."`
             },
             awan_laundry: {
-                title: "Awan Laundry — Operations Management Platform",
+                title: "Awan Laundry: Operations Management Platform",
                 badge: "Operational Web App",
                 problem: "Managing laundry queues and daily operational tracking for a laundromat business that previously suffered from disorder during peak order volumes.",
                 challenge: "Designing an efficient relational MySQL schema to track multi-stage progress (wash, dry, iron, ready for pickup) alongside daily detergent and supply expense logging.",
@@ -257,7 +257,7 @@ const translations = {
                 quote: `"Bringing order and systematic efficiency to small-and-medium laundry business workflows."`
             },
             olericure: {
-                title: "OLERICURE — Smart Garden IoT & Plant AI Doctor",
+                title: "OLERICURE: Smart Garden IoT & Plant AI Doctor",
                 badge_iot: `<i class="fas fa-microchip"></i> IoT Irrigation Hardware`,
                 badge_ai: `<i class="fas fa-brain"></i> Plant Doctor AI Diagnosis`,
                 problem: "Excessive water wastage in conventional irrigation and delayed disease detection by urban farmers facing leaf pathogen infections in horticulture.",
@@ -266,7 +266,7 @@ const translations = {
                 quote: `"Where hardware telemetry and artificial intelligence harmonize to nurture living crops."`
             },
             tokosaya: {
-                title: "TokoSaya Ecommerce — Full-Stack Platform",
+                title: "TokoSaya Ecommerce: Full-Stack Platform",
                 badge: "E-Commerce Platform",
                 problem: "The need for an independent, secure digital storefront with frictionless user purchasing flows from product discovery to admin order dispatching.",
                 challenge: "Handling multi-tier role-based access control (customers vs admins), dynamic cart management, and seamless order synchronization without server overhead.",

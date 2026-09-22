@@ -13,7 +13,7 @@ export default function AboutSection() {
 
         {/* Asymmetric Layout with Sticky Left Profile Column */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          {/* Left Profile Column — Sticky Desktop Viewport */}
+          {/* Left Profile Column: Sticky Desktop Viewport */}
           <div className="lg:col-span-4 md:sticky md:top-24 h-fit">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl mb-6 group">
               <img
@@ -52,7 +52,7 @@ export default function AboutSection() {
                 </p>
 
                 <p>
-                  Sebagai mahasiswa Teknik Informatika, saya sering menghadapi berbagai tantangan logika rumit—mulai dari mengelola arsitektur database kasir yang padat, merancang alur transaksi laundry yang rapi, hingga menghubungkan sensor hardware IoT di lahan pertanian dengan kecerdasan buatan AI.
+                  Sebagai mahasiswa Teknik Informatika, saya sering menghadapi berbagai tantangan logika rumit, mulai dari mengelola arsitektur database kasir yang padat, merancang alur transaksi laundry yang rapi, hingga menghubungkan sensor hardware IoT di lahan pertanian dengan kecerdasan buatan AI.
                 </p>
 
                 <div className="p-5 rounded-xl bg-orange-500/10 border-l-4 border-orange-500 text-zinc-200 font-medium my-4">

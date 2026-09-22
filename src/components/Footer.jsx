@@ -8,7 +8,7 @@ export default function Footer() {
           &copy; {new Date().getFullYear()} <strong className="text-zinc-200">Lesmana Adhi Kusuma</strong>. Hak Cipta Dilindungi.
         </p>
         <p className="text-xs text-zinc-500 italic">
-          Terima kasih sudah mampir! Dibangun dengan bangga & dedikasi oleh Lesmana — manusia biasa yang menyukai baris kode.
+          Terima kasih sudah mampir! Dibangun dengan bangga & dedikasi oleh Lesmana, manusia biasa yang menyukai baris kode.
         </p>
       </div>
     </footer>

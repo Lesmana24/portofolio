@@ -4,7 +4,7 @@ import ProjectCard from './ProjectCard';
 const projects = [
   {
     id: 1,
-    title: 'SIMRS Billing — Sistem Informasi Manajemen Rumah Sakit',
+    title: 'SIMRS Billing: Sistem Informasi Manajemen Rumah Sakit',
     category: 'web',
     badge: 'Enterprise Web App',
     image: '/images/simrs-billing.png',
@@ -17,7 +17,7 @@ const projects = [
   },
   {
     id: 2,
-    title: 'SIMRS FEFO — Manajemen Stok & Kedaluwarsa Obat Rumah Sakit',
+    title: 'SIMRS FEFO: Manajemen Stok & Kedaluwarsa Obat Rumah Sakit',
     category: 'web',
     badge: 'Enterprise Web App',
     isDualImage: true,
@@ -47,7 +47,7 @@ const projects = [
   },
   {
     id: 4,
-    title: 'Awan Laundry — Manajemen Operasional',
+    title: 'Awan Laundry: Manajemen Operasional',
     category: 'web',
     badge: 'Operational Web App',
     image: '/images/image1.png',
@@ -60,7 +60,7 @@ const projects = [
   },
   {
     id: 5,
-    title: 'OLERICURE — Smart Garden IoT & Plant AI Doctor',
+    title: 'OLERICURE: Smart Garden IoT & Plant AI Doctor',
     category: 'ai-iot',
     badge: 'IoT & AI Systems',
     isDualImage: true,
@@ -77,7 +77,7 @@ const projects = [
   },
   {
     id: 6,
-    title: 'Ecommerce TokoSaya — Full-Stack Platform',
+    title: 'Ecommerce TokoSaya: Full-Stack Platform',
     category: 'ecommerce',
     badge: 'E-Commerce Platform',
     image: '/images/image4.png',

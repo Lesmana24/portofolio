@@ -15,7 +15,7 @@
     --transition-normal: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Dark Theme (Default) — Warm Zinc & Burnt Terracotta Accent */
+/* Dark Theme (Default): Warm Zinc & Burnt Terracotta Accent */
 [data-theme="dark"] {
     --bg-body: #09090b;
     --bg-surface: #121215;
@@ -46,7 +46,7 @@
     --scrollbar-thumb-hover: #ea580c;
 }
 
-/* Light Theme — Warm Paper/Stone Tone & Terracotta */
+/* Light Theme: Warm Paper/Stone Tone & Terracotta */
 [data-theme="light"] {
     --bg-body: #fcfbf9;
     --bg-surface: #ffffff;
