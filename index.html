@@ -209,7 +209,7 @@
                         </div>
                         <div class="profile-quick-stats">
                             <div class="stat-box">
-                                <span class="stat-num" data-i18n="about.stat_projects_num">6+ Proyek</span>
+                                <span class="stat-num" data-i18n="about.stat_projects_num">8+ Proyek</span>
                                 <span class="stat-lbl" data-i18n="about.stat_projects_lbl">Full-Stack & Enterprise</span>
                             </div>
                             <div class="stat-box">
@@ -353,6 +353,72 @@
                 <div class="portfolio-wrapper">
                     <div class="portfolio-grid" id="portfolio-grid">
                         
+                        <!-- Concurrent AI News Aggregator & Intelligence Newsroom Project -->
+                        <article class="project-card storytelling-card" data-category="web ai-iot">
+                            <div class="project-media aspect-video dual-images">
+                                <div class="image-wrapper">
+                                    <img src="images/news-aggregator-radar.png" alt="The Dispatch Newsroom Dashboard & Trending Radar" loading="lazy">
+                                    <span class="image-badge" data-i18n-html="projects.news_aggregator.badge_radar"><i class="fas fa-satellite-dish"></i> Radar Tren & Newsroom</span>
+                                </div>
+                                <div class="image-wrapper">
+                                    <img src="images/news-aggregator-bias.png" alt="Spektrum Analisis Bias & Sentimen Media" loading="lazy">
+                                    <span class="image-badge" data-i18n-html="projects.news_aggregator.badge_bias"><i class="fas fa-balance-scale"></i> Spektrum Bias Media</span>
+                                </div>
+                            </div>
+                            <div class="project-content">
+                                <h3 class="project-title" data-i18n="projects.news_aggregator.title">Concurrent AI News Aggregator & Intelligence Newsroom</h3>
+                                
+                                <div class="story-accordion">
+                                    <div class="story-block">
+                                        <span class="story-label" data-i18n-html="portfolio.story_label_problem"><i class="fas fa-exclamation-circle"></i> Masalah & Latar Belakang</span>
+                                        <p class="story-text" data-i18n="projects.news_aggregator.problem">Banjir informasi berita digital sering kali sarat bias media, lambat diproses saat volume URL tinggi, serta rawan halusinasi dan manipulasi kuota pada sistem tanya jawab AI.</p>
+                                    </div>
+
+                                    <div class="story-details">
+                                        <div class="story-block">
+                                            <span class="story-label" data-i18n-html="portfolio.story_label_challenge"><i class="fas fa-puzzle-piece"></i> Tantangan Unik</span>
+                                            <p class="story-text" data-i18n="projects.news_aggregator.challenge">Membangun newsroom intelligence terdistribusi (Go 1.26+/Gin & React 19/Vite) dengan konkurensi Fan-Out/Fan-In Goroutines, 4-tier multi-provider LLM fallback chain (Groq, NVIDIA NIM, Gemini), pencarian semantik hibrida (pgvector HNSW + FTS GIN), bot Telegram 24/7, serta pengamanan enterprise anti-SSRF dan rate limiting atomik Redis.</p>
+                                        </div>
+
+                                        <div class="story-block">
+                                            <span class="story-label" data-i18n-html="portfolio.story_label_impact"><i class="fas fa-chart-line"></i> Dampak & Solusi Teknis</span>
+                                            <p class="story-text" data-i18n="projects.news_aggregator.impact">Peringkasan berita 70-80% lebih cepat melalui konkurensi native, klasterisasi isu otomatis berdasarkan Hotness Score, komparasi bias berita lintas media nasional, streaming SSE Q&A bebas halusinasi, dan pengarahan harian otomatis sadar zona waktu WIB.</p>
+                                        </div>
+                                    </div>
+
+                                    <button class="expand-toggle-btn" data-i18n="portfolio.btn_expand_more">▼ Baca Selengkapnya</button>
+                                </div>
+
+                                <blockquote class="project-quote" data-i18n="projects.news_aggregator.quote">
+                                    "Mengubah lautan informasi berita menjadi intelijen terstruktur dengan arsitektur konkurensi tinggi dan rantai AI tanpa kegagalan."
+                                </blockquote>
+
+                                <div class="project-tech">
+                                    <span class="tech-tag">Go (Golang)</span>
+                                    <span class="tech-tag">Gin Gonic</span>
+                                    <span class="tech-tag">React 19</span>
+                                    <span class="tech-tag">TypeScript</span>
+                                    <span class="tech-tag">PostgreSQL 16</span>
+                                    <span class="tech-tag">pgvector HNSW</span>
+                                    <span class="tech-tag">Redis L1</span>
+                                    <span class="tech-tag">Groq Cloud</span>
+                                    <span class="tech-tag">NVIDIA NIM</span>
+                                    <span class="tech-tag">Google Gemini</span>
+                                    <span class="tech-tag">Telegram Bot</span>
+                                    <span class="tech-tag">Docker</span>
+                                </div>
+
+                                <div class="project-footer">
+                                    <a href="https://github.com/Lesmana24/Concurrent-AI-News-Aggregator" class="project-link" target="_blank" rel="noopener" data-i18n-html="portfolio.btn_repo">
+                                        <span>Jelajahi Kode Repositori</span> <i class="fab fa-github"></i>
+                                    </a>
+                                    <a href="https://t.me/PengumpulBeritaBot" class="project-link" target="_blank" rel="noopener" data-i18n-html="portfolio.btn_telegram">
+                                        <span>Bot Telegram</span> <i class="fab fa-telegram"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+
                         <!-- SIMRS Billing Project -->
                         <article class="project-card storytelling-card" data-category="web">
                             <div class="project-media aspect-video">

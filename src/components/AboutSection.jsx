@@ -27,7 +27,7 @@ export default function AboutSection() {
             {/* Quick Stats */}
             <div className="grid grid-cols-2 gap-4">
               <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-center transition-all duration-300 hover:border-orange-500/40 hover:shadow-lg hover:shadow-orange-500/5">
-                <span className="block font-serif text-lg sm:text-xl font-bold text-orange-500 mb-1">6+ Proyek</span>
+                <span className="block font-serif text-lg sm:text-xl font-bold text-orange-500 mb-1">8+ Proyek</span>
                 <span className="text-xs text-zinc-400 font-medium leading-tight block">Full-Stack & Enterprise</span>
               </div>
               <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-center transition-all duration-300 hover:border-orange-500/40 hover:shadow-lg hover:shadow-orange-500/5">

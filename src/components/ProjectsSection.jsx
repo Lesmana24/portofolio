@@ -3,6 +3,23 @@ import ProjectCard from './ProjectCard';
 
 const projects = [
   {
+    id: 0,
+    title: 'Concurrent AI News Aggregator & Intelligence Newsroom',
+    category: 'web ai-iot',
+    badge: 'AI & Distributed Systems',
+    isDualImage: true,
+    image1: '/images/news-aggregator-radar.png',
+    image2: '/images/news-aggregator-bias.png',
+    badge1: 'Radar Tren & Newsroom',
+    badge2: 'Spektrum Bias Media',
+    problem: 'Banjir informasi berita digital sering kali sarat bias media, lambat diproses saat volume URL tinggi, serta rawan halusinasi dan manipulasi kuota pada sistem tanya jawab AI.',
+    challenge: 'Membangun newsroom intelligence terdistribusi (Go 1.26+/Gin & React 19/Vite) dengan konkurensi Fan-Out/Fan-In Goroutines, 4-tier multi-provider LLM fallback chain (Groq, NVIDIA NIM, Gemini), pencarian semantik hibrida (pgvector HNSW + FTS GIN), bot Telegram 24/7, serta pengamanan enterprise anti-SSRF dan rate limiting atomik Redis.',
+    impact: 'Peringkasan berita 70-80% lebih cepat melalui konkurensi native, klasterisasi isu otomatis berdasarkan Hotness Score, komparasi bias berita lintas media nasional, streaming SSE Q&A bebas halusinasi, dan pengarahan harian otomatis sadar zona waktu WIB.',
+    quote: 'Mengubah lautan informasi berita menjadi intelijen terstruktur dengan arsitektur konkurensi tinggi dan rantai AI tanpa kegagalan.',
+    tech: ['Go (Golang)', 'Gin Gonic', 'React 19', 'TypeScript', 'PostgreSQL 16', 'pgvector HNSW', 'Redis L1', 'Groq Cloud', 'NVIDIA NIM', 'Gemini AI', 'Telegram Bot', 'Docker'],
+    link: 'https://github.com/Lesmana24/Concurrent-AI-News-Aggregator'
+  },
+  {
     id: 1,
     title: 'SIMRS Billing: Sistem Informasi Manajemen Rumah Sakit',
     category: 'web',
@@ -109,7 +126,7 @@ export default function ProjectsSection() {
   const scrollRef = useRef(null);
 
   const filteredProjects = projects.filter(p => {
-    const matchesCategory = activeFilter === 'all' || p.category === activeFilter;
+    const matchesCategory = activeFilter === 'all' || p.category === activeFilter || p.category.includes(activeFilter);
     const q = searchQuery.toLowerCase().trim();
     const matchesSearch = !q || (
       p.title.toLowerCase().includes(q) ||

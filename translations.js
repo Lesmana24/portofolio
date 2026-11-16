@@ -34,7 +34,7 @@ const translations = {
             section_title: "Cerita & Perjalanan",
             section_subtitle: "Mengenal lebih dekat sosok di balik baris kode dan logika aplikasi.",
             img_alt: "Foto Profil Lesmana Adhi Kusuma",
-            stat_projects_num: "6+ Proyek",
+            stat_projects_num: "8+ Proyek",
             stat_projects_lbl: "Full-Stack & Enterprise",
             stat_ai_num: "AI & Smart IoT",
             stat_ai_lbl: "ESP32, Vision AI & LLM",
@@ -69,11 +69,22 @@ const translations = {
             btn_expand_less: "▲ Sembunyikan Detail",
             btn_repo: `<span>Jelajahi Kode Repositori</span> <i class="fab fa-github"></i>`,
             btn_demo: `<span>Uji Coba Aplikasi</span> <i class="fas fa-external-link-alt"></i>`,
+            btn_telegram: `<span>Bot Telegram</span> <i class="fab fa-telegram"></i>`,
             no_projects_title: "Proyek Tidak Ditemukan",
             no_projects_desc: "Tidak ada proyek yang sesuai dengan kata kunci atau filter pencarian Anda.",
             btn_reset_search: `<i class="fas fa-redo"></i> Reset Pencarian`
         },
         projects: {
+            news_aggregator: {
+                title: "Concurrent AI News Aggregator & Intelligence Newsroom",
+                badge: "AI & Distributed Systems",
+                badge_radar: `<i class="fas fa-satellite-dish"></i> Radar Tren & Newsroom`,
+                badge_bias: `<i class="fas fa-balance-scale"></i> Spektrum Bias Media`,
+                problem: "Banjir informasi berita digital sering kali sarat bias media, lambat diproses saat volume URL tinggi, serta rawan halusinasi dan manipulasi kuota pada sistem tanya jawab AI.",
+                challenge: "Membangun newsroom intelligence terdistribusi (Go 1.26+/Gin & React 19/Vite) dengan konkurensi Fan-Out/Fan-In Goroutines, 4-tier multi-provider LLM fallback chain (Groq, NVIDIA NIM, Gemini), pencarian semantik hibrida (pgvector HNSW + FTS GIN), bot Telegram 24/7, serta pengamanan enterprise anti-SSRF dan rate limiting atomik Redis.",
+                impact: "Peringkasan berita 70-80% lebih cepat melalui konkurensi native, klasterisasi isu otomatis berdasarkan Hotness Score, komparasi bias berita lintas media nasional, streaming SSE Q&A bebas halusinasi, dan pengarahan harian otomatis sadar zona waktu WIB.",
+                quote: `"Mengubah lautan informasi berita menjadi intelijen terstruktur dengan arsitektur konkurensi tinggi dan rantai AI tanpa kegagalan."`
+            },
             simrs_billing: {
                 title: "SIMRS Billing: Sistem Informasi Manajemen Rumah Sakit",
                 badge: "Enterprise Web App",
@@ -183,7 +194,7 @@ const translations = {
             section_title: "Story & Journey",
             section_subtitle: "Getting to know the person behind the lines of code and application logic.",
             img_alt: "Profile photo of Lesmana Adhi Kusuma",
-            stat_projects_num: "6+ Projects",
+            stat_projects_num: "8+ Projects",
             stat_projects_lbl: "Full-Stack & Enterprise",
             stat_ai_num: "AI & Smart IoT",
             stat_ai_lbl: "ESP32, Vision AI & LLM",
@@ -218,11 +229,22 @@ const translations = {
             btn_expand_less: "▲ Hide Details",
             btn_repo: `<span>Explore Repository</span> <i class="fab fa-github"></i>`,
             btn_demo: `<span>Try Live Demo</span> <i class="fas fa-external-link-alt"></i>`,
+            btn_telegram: `<span>Telegram Bot</span> <i class="fab fa-telegram"></i>`,
             no_projects_title: "No Projects Found",
             no_projects_desc: "No projects matched your keyword or filter criteria.",
             btn_reset_search: `<i class="fas fa-redo"></i> Reset Search`
         },
         projects: {
+            news_aggregator: {
+                title: "Concurrent AI News Aggregator & Intelligence Newsroom",
+                badge: "AI & Distributed Systems",
+                badge_radar: `<i class="fas fa-satellite-dish"></i> Trending Radar & Newsroom`,
+                badge_bias: `<i class="fas fa-balance-scale"></i> Media Bias Spectrum`,
+                problem: "The deluge of digital news often suffers from media framing bias, excessive latency under bulk URL extraction, AI hallucination risks, and quota abuse vulnerabilities in Q&A systems.",
+                challenge: "Architecting a high-concurrency intelligence newsroom (Go 1.26+/Gin & React 19/Vite) featuring Fan-Out/Fan-In Goroutine pipelines, a 4-tier LLM fallback chain (Groq, NVIDIA NIM, Gemini), hybrid semantic search (pgvector HNSW + FTS GIN), 24/7 Telegram Bot integration, and enterprise anti-SSRF & atomic Redis rate limiting.",
+                impact: "70-80% faster bulk news summarization via native concurrency, automated topic clustering based on dynamic Hotness Scores, multi-outlet framing bias analysis, hallucination-resistant SSE Q&A streaming, and automated daily briefings tuned to WIB timezone.",
+                quote: `"Transforming oceans of fragmented news into structured intelligence through high-concurrency architecture and resilient multi-provider AI."`
+            },
             simrs_billing: {
                 title: "SIMRS Billing: Hospital Information Management System",
                 badge: "Enterprise Web App",

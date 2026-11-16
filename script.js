@@ -220,7 +220,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const cardStory = card.querySelector('.story-accordion')?.textContent.toLowerCase() || '';
             const cardBadge = card.querySelector('.project-badge')?.textContent.toLowerCase() || '';
 
-            const matchesCategory = activeFilterValue === 'all' || cardCategory === activeFilterValue;
+            const matchesCategory = activeFilterValue === 'all' || 
+                                    cardCategory === activeFilterValue || 
+                                    (cardCategory && cardCategory.split(' ').includes(activeFilterValue));
             
             const fullContent = `${cardTitle} ${cardTech} ${cardStory} ${cardBadge}`;
             const matchesSearch = searchQuery === '' || fullContent.includes(searchQuery.toLowerCase());
