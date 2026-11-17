@@ -251,6 +251,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Reset scroll position to beginning
         if (portfolioGrid) {
             portfolioGrid.scrollTo({ left: 0, behavior: 'smooth' });
+            if (typeof window.updateCard3DTransforms === 'function') {
+                setTimeout(window.updateCard3DTransforms, 60);
+            }
         }
     }
 
@@ -797,5 +800,389 @@ document.addEventListener('DOMContentLoaded', function() {
         resizeCanvas();
         animateCanvas();
     }
+
+    // 9. --- INTERACTIVE 3D SCROLL-DRIVEN WEBGL TECH CORE (THREE.JS) ---
+    function initHero3DCore() {
+        if (typeof THREE === 'undefined') return;
+        const canvas3d = document.getElementById('hero-3d-canvas');
+        const wrapper3d = document.getElementById('hero-3d-wrapper');
+        if (!canvas3d || !wrapper3d) return;
+
+        // Check reduced motion preference
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return;
+        }
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+        camera.position.set(0, 0, 5.2);
+
+        const renderer = new THREE.WebGLRenderer({
+            canvas: canvas3d,
+            alpha: true,
+            antialias: true,
+            powerPreference: 'high-performance'
+        });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+        // Group container for all 3D artifacts
+        const coreGroup = new THREE.Group();
+        scene.add(coreGroup);
+
+        // 1. Geodesic Icosahedron Wireframe Outer Shell
+        const outerGeo = new THREE.IcosahedronGeometry(1.5, 1);
+        const wireframeGeo = new THREE.WireframeGeometry(outerGeo);
+        const wireframeMat = new THREE.LineBasicMaterial({
+            color: 0xea580c,
+            transparent: true,
+            opacity: 0.75
+        });
+        const outerWire = new THREE.LineSegments(wireframeGeo, wireframeMat);
+        coreGroup.add(outerWire);
+
+        // 2. Translucent Inner Octahedron Core with Emissive Pulse
+        const innerGeo = new THREE.OctahedronGeometry(0.8, 0);
+        const innerMat = new THREE.MeshPhongMaterial({
+            color: 0xf97316,
+            emissive: 0xc2410c,
+            emissiveIntensity: 0.45,
+            shininess: 90,
+            transparent: true,
+            opacity: 0.7,
+            flatShading: true
+        });
+        const innerMesh = new THREE.Mesh(innerGeo, innerMat);
+        coreGroup.add(innerMesh);
+
+        // 3. Cybernetic Dual Orbital Rings
+        const ring1Geo = new THREE.TorusGeometry(2.0, 0.016, 16, 80);
+        const ring1Mat = new THREE.MeshBasicMaterial({ color: 0xfb923c, transparent: true, opacity: 0.5 });
+        const ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
+        ring1.rotation.x = Math.PI / 3;
+        ring1.rotation.y = Math.PI / 6;
+        coreGroup.add(ring1);
+
+        const ring2Geo = new THREE.TorusGeometry(2.25, 0.012, 16, 80);
+        const ring2Mat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.4 });
+        const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
+        ring2.rotation.x = -Math.PI / 4;
+        ring2.rotation.z = Math.PI / 5;
+        coreGroup.add(ring2);
+
+        // 4. Floating Orbital Particles
+        const particleCount = 60;
+        const particlePositions = new Float32Array(particleCount * 3);
+        for (let i = 0; i < particleCount; i++) {
+            const radius = 1.6 + Math.random() * 1.2;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos((Math.random() * 2) - 1);
+            particlePositions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+            particlePositions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+            particlePositions[i * 3 + 2] = radius * Math.cos(phi);
+        }
+        const particleGeo = new THREE.BufferGeometry();
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+        const particleMat = new THREE.PointsMaterial({
+            color: 0xfdba74,
+            size: 0.045,
+            transparent: true,
+            opacity: 0.75
+        });
+        const particles = new THREE.Points(particleGeo, particleMat);
+        coreGroup.add(particles);
+
+        // 5. Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+        scene.add(ambientLight);
+
+        const pointLight1 = new THREE.PointLight(0xea580c, 2.5, 12);
+        pointLight1.position.set(4, 4, 4);
+        scene.add(pointLight1);
+
+        const pointLight2 = new THREE.PointLight(0x38bdf8, 1.8, 10);
+        pointLight2.position.set(-4, -3, 3);
+        scene.add(pointLight2);
+
+        // Responsive Sizing
+        function resize3D() {
+            const width = wrapper3d.clientWidth;
+            const height = wrapper3d.clientHeight;
+            if (width === 0 || height === 0) return;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height, false);
+        }
+        resize3D();
+        window.addEventListener('resize', resize3D);
+
+        // Scroll Velocity & Progress Reactor
+        let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+        let scrollVelocity = 0;
+        let targetScrollRotY = 0;
+        let targetScrollRotX = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+            const deltaY = currentScrollY - lastScrollY;
+            scrollVelocity = deltaY * 0.0035;
+            targetScrollRotY = currentScrollY * 0.0022;
+            targetScrollRotX = Math.sin(currentScrollY * 0.0015) * 0.35;
+            lastScrollY = currentScrollY;
+        }, { passive: true });
+
+        // Interactive Pointer Drag-to-Rotate
+        let isDragging = false;
+        let previousPointerX = 0;
+        let previousPointerY = 0;
+        let dragRotX = 0;
+        let dragRotY = 0;
+        let dragVelX = 0;
+        let dragVelY = 0;
+
+        wrapper3d.addEventListener('pointerdown', (e) => {
+            isDragging = true;
+            previousPointerX = e.clientX;
+            previousPointerY = e.clientY;
+            wrapper3d.setPointerCapture(e.pointerId);
+        });
+
+        wrapper3d.addEventListener('pointermove', (e) => {
+            if (!isDragging) return;
+            const deltaX = e.clientX - previousPointerX;
+            const deltaY = e.clientY - previousPointerY;
+            dragVelX = deltaX * 0.008;
+            dragVelY = deltaY * 0.008;
+            dragRotY += dragVelX;
+            dragRotX += dragVelY;
+            previousPointerX = e.clientX;
+            previousPointerY = e.clientY;
+        });
+
+        const stopDrag = (e) => {
+            if (isDragging) {
+                isDragging = false;
+                try {
+                    wrapper3d.releasePointerCapture(e.pointerId);
+                } catch (err) {}
+            }
+        };
+        wrapper3d.addEventListener('pointerup', stopDrag);
+        wrapper3d.addEventListener('pointercancel', stopDrag);
+
+        // Visibility Observer: Pause when not in viewport to save 100% GPU
+        let isVisible = true;
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                isVisible = entries[0].isIntersecting;
+            }, { threshold: 0.05 });
+            observer.observe(wrapper3d);
+        }
+
+        // Render Loop
+        let frameCount = 0;
+        function animate3D() {
+            requestAnimationFrame(animate3D);
+            if (!isVisible || document.hidden) return;
+
+            frameCount++;
+            const time = frameCount * 0.015;
+
+            // Idle continuous floating rotation
+            outerWire.rotation.y += 0.005;
+            outerWire.rotation.x += 0.0025;
+            innerMesh.rotation.y -= 0.008;
+            innerMesh.rotation.z += 0.004;
+            ring1.rotation.z += 0.007;
+            ring2.rotation.z -= 0.005;
+            particles.rotation.y += 0.002;
+
+            // Damping drag inertia
+            if (!isDragging) {
+                dragVelX *= 0.94;
+                dragVelY *= 0.94;
+                dragRotY += dragVelX;
+                dragRotX += dragVelY;
+            }
+
+            // Scroll velocity damping
+            scrollVelocity *= 0.92;
+
+            // Smooth interpolation to target rotation
+            const targetX = targetScrollRotX + dragRotX;
+            const targetY = targetScrollRotY + dragRotY + (scrollVelocity * 2);
+
+            coreGroup.rotation.x += (targetX - coreGroup.rotation.x) * 0.08;
+            coreGroup.rotation.y += (targetY - coreGroup.rotation.y) * 0.08;
+
+            // Organic levitation bobbing
+            coreGroup.position.y = Math.sin(time) * 0.12;
+
+            // Emissive core pulse
+            innerMat.emissiveIntensity = 0.35 + Math.sin(time * 2) * 0.2;
+
+            renderer.render(scene, camera);
+        }
+        animate3D();
+    }
+
+    // 10. --- 3D SPATIAL SCROLL & CARD TILT ENGINE (PORTFOLIO SHOWCASE) ---
+    function initPortfolio3DEngine() {
+        const grid = document.getElementById('portfolio-grid');
+        if (!grid) return;
+
+        // Ensure each card has a specular glare overlay
+        const cards = grid.querySelectorAll('.storytelling-card');
+        cards.forEach(card => {
+            if (!card.querySelector('.card-glare')) {
+                const glare = document.createElement('div');
+                glare.className = 'card-glare';
+                card.appendChild(glare);
+            }
+        });
+
+        // Track active hovered card to pause scroll transform while tilting
+        let hoveredCard = null;
+
+        // 3D Spatial Perspective Transformation on Horizontal Scroll
+        window.updateCard3DTransforms = function() {
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                return;
+            }
+
+            const gridRect = grid.getBoundingClientRect();
+            const gridCenter = gridRect.left + gridRect.width / 2;
+
+            const visibleCards = grid.querySelectorAll('.storytelling-card:not(.hidden)');
+            visibleCards.forEach(card => {
+                if (card === hoveredCard) return; // Allow mouse tilt to take precedence
+
+                const cardRect = card.getBoundingClientRect();
+                const cardCenter = cardRect.left + cardRect.width / 2;
+                const normalizedDist = (cardCenter - gridCenter) / (gridRect.width / 2);
+                const clampedDist = Math.max(-1.5, Math.min(1.5, normalizedDist));
+
+                // Transform parameters
+                const rotY = clampedDist * -14; // degrees
+                const transZ = -Math.abs(clampedDist) * 55; // pixels depth
+                const scale = Math.max(0.92, 1 - Math.abs(clampedDist) * 0.07);
+
+                card.style.transform = `perspective(1200px) rotateY(${rotY.toFixed(2)}deg) translateZ(${transZ.toFixed(1)}px) scale3d(${scale.toFixed(3)}, ${scale.toFixed(3)}, 1)`;
+            });
+        };
+
+        // Scroll listener with requestAnimationFrame throttling
+        let isScrollTicking = false;
+        grid.addEventListener('scroll', () => {
+            if (!isScrollTicking) {
+                requestAnimationFrame(() => {
+                    window.updateCard3DTransforms();
+                    isScrollTicking = false;
+                });
+                isScrollTicking = true;
+            }
+        }, { passive: true });
+
+        window.addEventListener('resize', () => {
+            window.updateCard3DTransforms();
+        }, { passive: true });
+
+        // Initial perspective calculation
+        setTimeout(window.updateCard3DTransforms, 100);
+
+        // Mousewheel Horizontal Scroll Conversion
+        grid.addEventListener('wheel', (e) => {
+            // Only hijack if dominant scroll is vertical (standard mousewheel)
+            if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                e.preventDefault();
+                grid.scrollBy({
+                    left: e.deltaY * 1.35,
+                    behavior: 'auto'
+                });
+            }
+        }, { passive: false });
+
+        // Momentum Drag-to-Scroll for Mouse / Trackpad
+        let isPointerDown = false;
+        let startX = 0;
+        let scrollStartLeft = 0;
+        let lastMoveX = 0;
+        let dragVelocity = 0;
+        let momentumAnimId = null;
+
+        grid.addEventListener('mousedown', (e) => {
+            // Don't drag if clicking buttons, links, or inputs
+            if (e.target.closest('a, button, input, textarea')) return;
+            isPointerDown = true;
+            grid.classList.add('is-dragging');
+            startX = e.pageX - grid.offsetLeft;
+            scrollStartLeft = grid.scrollLeft;
+            lastMoveX = e.pageX;
+            dragVelocity = 0;
+            if (momentumAnimId) cancelAnimationFrame(momentumAnimId);
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isPointerDown) return;
+            e.preventDefault();
+            const x = e.pageX - grid.offsetLeft;
+            const walk = (x - startX) * 1.25;
+            grid.scrollLeft = scrollStartLeft - walk;
+            dragVelocity = e.pageX - lastMoveX;
+            lastMoveX = e.pageX;
+        });
+
+        const endPointerDrag = () => {
+            if (!isPointerDown) return;
+            isPointerDown = false;
+            grid.classList.remove('is-dragging');
+
+            // Apply smooth momentum
+            function stepMomentum() {
+                if (Math.abs(dragVelocity) > 0.5) {
+                    grid.scrollLeft -= dragVelocity;
+                    dragVelocity *= 0.92;
+                    momentumAnimId = requestAnimationFrame(stepMomentum);
+                }
+            }
+            stepMomentum();
+        };
+
+        window.addEventListener('mouseup', endPointerDrag);
+
+        // 3D Gyroscopic Card Tilt on Hover
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                hoveredCard = card;
+            });
+
+            card.addEventListener('mousemove', (e) => {
+                if (isPointerDown) return;
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const pctX = ((x / rect.width) * 100).toFixed(1);
+                const pctY = ((y / rect.height) * 100).toFixed(1);
+                card.style.setProperty('--glare-x', `${pctX}%`);
+                card.style.setProperty('--glare-y', `${pctY}%`);
+
+                // Gyroscope tilt angles (-8 to +8 degrees)
+                const rotX = (((y - rect.height / 2) / (rect.height / 2)) * -8).toFixed(2);
+                const rotY = (((x - rect.width / 2) / (rect.width / 2)) * 8).toFixed(2);
+
+                card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(12px) scale3d(1.02, 1.02, 1)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                hoveredCard = null;
+                // Revert smoothly to spatial scroll position
+                window.updateCard3DTransforms();
+            });
+        });
+    }
+
+    // Initialize 3D Engines
+    initHero3DCore();
+    initPortfolio3DEngine();
 
 });

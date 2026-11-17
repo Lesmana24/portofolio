@@ -430,10 +430,87 @@ button {
 
 .hero-container {
     width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+@media (min-width: 992px) {
+    .hero-container {
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 3rem;
+    }
 }
 
 .hero-content {
     max-width: 840px;
+}
+
+/* 3D Interactive Spatial Tech Core */
+.hero-3d-visual {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-3d-canvas-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-xl);
+    background: radial-gradient(circle at center, rgba(234, 88, 12, 0.08) 0%, rgba(24, 24, 27, 0.4) 70%, transparent 100%);
+    border: 1px solid rgba(234, 88, 12, 0.2);
+    box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(234, 88, 12, 0.05);
+    backdrop-filter: blur(8px);
+    overflow: hidden;
+    cursor: grab;
+    transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.hero-3d-canvas-wrapper:active {
+    cursor: grabbing;
+}
+
+.hero-3d-canvas-wrapper:hover {
+    border-color: rgba(234, 88, 12, 0.4);
+    box-shadow: 0 25px 60px -10px rgba(234, 88, 12, 0.15), inset 0 0 35px rgba(234, 88, 12, 0.1);
+}
+
+#hero-3d-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.hero-3d-badge {
+    position: absolute;
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(9, 9, 11, 0.85);
+    border: 1px solid rgba(234, 88, 12, 0.3);
+    color: var(--accent-badge-text);
+    font-size: 0.72rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-full);
+    backdrop-filter: blur(8px);
+    white-space: nowrap;
+    pointer-events: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.hero-3d-canvas-wrapper:active .hero-3d-badge {
+    opacity: 0.4;
+    transform: translateX(-50%) scale(0.95);
 }
 
 .status-pill {
@@ -959,6 +1036,8 @@ button {
 .portfolio-wrapper {
     position: relative;
     width: 100%;
+    perspective: 1400px;
+    perspective-origin: center center;
 }
 
 .portfolio-grid {
@@ -970,11 +1049,20 @@ button {
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     gap: 1.75rem;
-    padding-top: 0.5rem;
-    padding-bottom: 1.75rem;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     scrollbar-color: var(--accent-primary) var(--bg-surface);
+    transform-style: preserve-3d;
+}
+
+.portfolio-grid.is-dragging {
+    cursor: grabbing;
+    user-select: none;
+    scroll-snap-type: none;
 }
 
 .portfolio-grid::-webkit-scrollbar {
@@ -999,17 +1087,20 @@ button {
 .storytelling-card {
     flex: 0 0 380px;
     max-width: 85vw;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-card);
-    transition: all var(--transition-normal);
+    transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: auto;
+    transform-style: preserve-3d;
+    will-change: transform, box-shadow;
+    position: relative;
 }
 
 .storytelling-card.hidden {
@@ -1017,9 +1108,38 @@ button {
 }
 
 .storytelling-card:hover {
-    transform: translateY(-4px);
     border-color: var(--border-color-hover);
-    box-shadow: 0 16px 36px -10px rgba(234, 88, 12, 0.15);
+    box-shadow: 0 20px 40px -12px rgba(234, 88, 12, 0.2);
+}
+
+/* 3D Specular Glare Overlay */
+.card-glare {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at var(--glare-x, 50%) var(--glare-y, 50%), rgba(255, 255, 255, 0.12) 0%, transparent 65%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    mix-blend-mode: overlay;
+    z-index: 10;
+}
+
+.storytelling-card:hover .card-glare {
+    opacity: 1;
+}
+
+/* 3D Spatial layering on inner components */
+.storytelling-card .project-badge {
+    transform: translateZ(24px);
+    transition: transform 0.25s ease;
+}
+
+.storytelling-card .project-title {
+    transform: translateZ(16px);
+}
+
+.storytelling-card .tech-tag {
+    transform: translateZ(8px);
 }
 
 /* Aspect Video Container 16:9 */
@@ -1820,6 +1940,13 @@ button {
 @media (prefers-reduced-motion: reduce) {
     .bg-blob, .hud-reticle, .circuit-pulse {
         animation: none !important;
+    }
+    .storytelling-card {
+        transform: none !important;
+        transition: none !important;
+    }
+    .hero-3d-visual {
+        display: none !important;
     }
 }
 

@@ -28,7 +28,8 @@ const translations = {
             description: "Mahasiswa Teknik Informatika yang menemukan kesenangan dalam memecahkan masalah kompleks. Saya tidak hanya menulis kode; saya suka membangun alat yang benar-benar membantu manusia dalam kehidupan sehari-hari.",
             cta_projects: `<i class="fas fa-compass"></i> Jelajahi Proyek Saya`,
             cta_contact: `<i class="fas fa-coffee"></i> Mari Ngobrol`,
-            focus_label: "Fokus Eksplorasi:"
+            focus_label: "Fokus Eksplorasi:",
+            badge_3d: `<i class="fas fa-cube"></i> 3D Interaktif // Scroll & Putar`
         },
         about: {
             section_title: "Cerita & Perjalanan",
@@ -188,7 +189,8 @@ const translations = {
             description: "Informatics Engineering student who thrives on tackling complex challenges. I don't just write code; I love crafting tools that genuinely empower people in their everyday lives.",
             cta_projects: `<i class="fas fa-compass"></i> Explore My Projects`,
             cta_contact: `<i class="fas fa-coffee"></i> Let's Talk`,
-            focus_label: "Core Focus:"
+            focus_label: "Core Focus:",
+            badge_3d: `<i class="fas fa-cube"></i> 3D Interactive // Scroll & Drag`
         },
         about: {
             section_title: "Story & Journey",
