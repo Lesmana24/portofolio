@@ -1060,7 +1060,7 @@ button {
     padding-right: 0.5rem;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
-    scrollbar-color: var(--accent-primary) var(--bg-surface);
+    scrollbar-color: var(--accent-primary) rgba(255, 255, 255, 0.05);
 }
 
 .portfolio-grid::-webkit-scrollbar {
@@ -1068,7 +1068,7 @@ button {
 }
 
 .portfolio-grid::-webkit-scrollbar-track {
-    background: var(--bg-surface);
+    background: rgba(255, 255, 255, 0.05);
     border-radius: var(--radius-full);
 }
 
@@ -1087,6 +1087,9 @@ button {
     max-width: 85vw;
     scroll-snap-align: start;
     background-color: var(--bg-card);
+    background-color: color-mix(in srgb, var(--bg-card) 88%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     overflow: hidden;
