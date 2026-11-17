@@ -1029,6 +1029,26 @@ document.addEventListener('DOMContentLoaded', function() {
             heroWrapper.addEventListener('pointercancel', stopDrag);
         }
 
+        // Compute Hero Visual Area 3D World Position dynamically
+        function getHeroVisualWorldPos() {
+            const visualEl = document.getElementById('hero-3d-visual');
+            if (!visualEl) return { x: 2.2, y: 0 };
+            const rect = visualEl.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+
+            const ndcX = (cx / window.innerWidth) * 2 - 1;
+            const ndcY = -(cy / window.innerHeight) * 2 + 1;
+
+            const vHeight = 2 * Math.tan((camera.fov * Math.PI) / 360) * camera.position.z;
+            const vWidth = vHeight * camera.aspect;
+
+            return {
+                x: (ndcX * vWidth) / 2,
+                y: (ndcY * vHeight) / 2
+            };
+        }
+
         // Target state variables
         let targetX = 2.4;
         let targetY = 0.2;
@@ -1051,13 +1071,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const time = frameCount * 0.015;
 
             const isDesktop = window.innerWidth >= 992;
+            const heroPos = getHeroVisualWorldPos();
 
             // Compute Morph Phase based on Scroll Progress (0.0 to 1.0)
             if (currentProgress < 0.22) {
                 // PHASE 1: TECH CORE (Hero)
                 const p = currentProgress / 0.22;
-                targetX = isDesktop ? 2.3 : 0;
-                targetY = isDesktop ? 0.2 : 0.6;
+                targetX = isDesktop ? heroPos.x : 0;
+                targetY = isDesktop ? heroPos.y : 0.6;
                 targetZ = 0;
                 targetScale = isDesktop ? 1.0 : 0.75;
 
@@ -1072,8 +1093,8 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (currentProgress < 0.52) {
                 // PHASE 2: NEURAL LATTICE (About Section)
                 const p = (currentProgress - 0.22) / 0.30;
-                targetX = isDesktop ? (2.3 - p * 1.5) : 0; // Drifts towards center
-                targetY = isDesktop ? (0.2 - p * 0.6) : 0.4;
+                targetX = isDesktop ? (heroPos.x - p * 1.4) : 0; // Drifts towards center
+                targetY = isDesktop ? (heroPos.y - p * 0.5) : 0.4;
                 targetZ = -0.5 - p * 0.8;
                 targetScale = isDesktop ? (1.0 + p * 0.45) : 0.85; // Expands outward!
 
