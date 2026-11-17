@@ -29,7 +29,11 @@ const translations = {
             cta_projects: `<i class="fas fa-compass"></i> Jelajahi Proyek Saya`,
             cta_contact: `<i class="fas fa-coffee"></i> Mari Ngobrol`,
             focus_label: "Fokus Eksplorasi:",
-            badge_3d: `<i class="fas fa-cube"></i> 3D Interaktif // Scroll & Putar`
+            badge_3d: `<i class="fas fa-cube"></i> <span id="hero-3d-phase-text">3D Core // Scroll untuk Berubah Bentuk</span>`,
+            phase_core: "3D Core // Scroll untuk Berubah Bentuk",
+            phase_lattice: "3D Kisi Neural // Struktur Arsitektur",
+            phase_portal: "3D Portal Siber // Eksplorasi Proyek",
+            phase_beacon: "3D Suar Sinyal // Mari Terhubung"
         },
         about: {
             section_title: "Cerita & Perjalanan",
@@ -190,7 +194,11 @@ const translations = {
             cta_projects: `<i class="fas fa-compass"></i> Explore My Projects`,
             cta_contact: `<i class="fas fa-coffee"></i> Let's Talk`,
             focus_label: "Core Focus:",
-            badge_3d: `<i class="fas fa-cube"></i> 3D Interactive // Scroll & Drag`
+            badge_3d: `<i class="fas fa-cube"></i> <span id="hero-3d-phase-text">3D Core // Scroll to Morph Shape</span>`,
+            phase_core: "3D Core // Scroll to Morph Shape",
+            phase_lattice: "3D Neural Lattice // Architectural Matrix",
+            phase_portal: "3D Cyber Portal // Project Gateway",
+            phase_beacon: "3D Telemetry Beacon // Let's Connect"
         },
         about: {
             section_title: "Story & Journey",

@@ -61,6 +61,11 @@
 
     <!-- Ambient Animated Background Layer -->
     <div class="bg-animation-container" aria-hidden="true">
+        <!-- Persistent 3D Scroll-Driven WebGL Spatial Canvas -->
+        <div class="spatial-3d-scene-container" id="spatial-3d-scene" aria-hidden="true">
+            <canvas id="spatial-3d-canvas"></canvas>
+        </div>
+
         <!-- Living Canvas Engine (Constellations, Beacon Sonar Rings, Telemetry Pulses, Drifting Tech Glyphs) -->
         <canvas id="bg-canvas"></canvas>
 
@@ -190,12 +195,11 @@
                     </div>
                 </div>
 
-                <!-- 3D Interactive Spatial Tech Core Visual -->
-                <div class="hero-3d-visual" aria-hidden="true">
+                <!-- 3D Interactive Spatial Viewport & Phase HUD -->
+                <div class="hero-3d-visual" id="hero-3d-visual" aria-label="3D Interactive Viewport">
                     <div class="hero-3d-canvas-wrapper" id="hero-3d-wrapper">
-                        <canvas id="hero-3d-canvas"></canvas>
-                        <div class="hero-3d-badge" data-i18n-html="hero.badge_3d">
-                            <i class="fas fa-cube"></i> 3D Interaktif // Scroll & Putar
+                        <div class="hero-3d-badge" id="hero-3d-badge" data-i18n-html="hero.badge_3d">
+                            <i class="fas fa-cube"></i> <span id="hero-3d-phase-text">3D Core // Scroll untuk Berubah Bentuk</span>
                         </div>
                     </div>
                 </div>

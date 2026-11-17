@@ -447,7 +447,25 @@ button {
     max-width: 840px;
 }
 
-/* 3D Interactive Spatial Tech Core */
+/* Persistent 3D Scroll-Driven WebGL Spatial Scene */
+.spatial-3d-scene-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+#spatial-3d-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* 3D Interactive Spatial Viewport in Hero */
 .hero-3d-visual {
     position: relative;
     width: 100%;
@@ -457,6 +475,7 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 2;
 }
 
 .hero-3d-canvas-wrapper {
@@ -464,10 +483,10 @@ button {
     width: 100%;
     height: 100%;
     border-radius: var(--radius-xl);
-    background: radial-gradient(circle at center, rgba(234, 88, 12, 0.08) 0%, rgba(24, 24, 27, 0.4) 70%, transparent 100%);
-    border: 1px solid rgba(234, 88, 12, 0.2);
+    background: radial-gradient(circle at center, rgba(234, 88, 12, 0.08) 0%, rgba(24, 24, 27, 0.3) 70%, transparent 100%);
+    border: 1px solid rgba(234, 88, 12, 0.25);
     box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(234, 88, 12, 0.05);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(4px);
     overflow: hidden;
     cursor: grab;
     transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
@@ -478,14 +497,8 @@ button {
 }
 
 .hero-3d-canvas-wrapper:hover {
-    border-color: rgba(234, 88, 12, 0.4);
-    box-shadow: 0 25px 60px -10px rgba(234, 88, 12, 0.15), inset 0 0 35px rgba(234, 88, 12, 0.1);
-}
-
-#hero-3d-canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
+    border-color: rgba(234, 88, 12, 0.45);
+    box-shadow: 0 25px 60px -10px rgba(234, 88, 12, 0.2), inset 0 0 35px rgba(234, 88, 12, 0.1);
 }
 
 .hero-3d-badge {
@@ -493,19 +506,19 @@ button {
     bottom: 14px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(9, 9, 11, 0.85);
-    border: 1px solid rgba(234, 88, 12, 0.3);
+    background: rgba(9, 9, 11, 0.88);
+    border: 1px solid rgba(234, 88, 12, 0.35);
     color: var(--accent-badge-text);
     font-size: 0.72rem;
     font-weight: 600;
     font-family: var(--font-mono);
-    padding: 0.35rem 0.85rem;
+    padding: 0.4rem 0.95rem;
     border-radius: var(--radius-full);
     backdrop-filter: blur(8px);
     white-space: nowrap;
     pointer-events: none;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-    transition: opacity var(--transition-fast), transform var(--transition-fast);
+    transition: all var(--transition-fast);
 }
 
 .hero-3d-canvas-wrapper:active .hero-3d-badge {
@@ -1036,8 +1049,6 @@ button {
 .portfolio-wrapper {
     position: relative;
     width: 100%;
-    perspective: 1400px;
-    perspective-origin: center center;
 }
 
 .portfolio-grid {
@@ -1049,20 +1060,13 @@ button {
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     gap: 1.75rem;
-    padding-top: 1rem;
-    padding-bottom: 2rem;
+    padding-top: 0.75rem;
+    padding-bottom: 1.75rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     scrollbar-color: var(--accent-primary) var(--bg-surface);
-    transform-style: preserve-3d;
-}
-
-.portfolio-grid.is-dragging {
-    cursor: grabbing;
-    user-select: none;
-    scroll-snap-type: none;
 }
 
 .portfolio-grid::-webkit-scrollbar {
@@ -1087,20 +1091,17 @@ button {
 .storytelling-card {
     flex: 0 0 380px;
     max-width: 85vw;
-    scroll-snap-align: center;
+    scroll-snap-align: start;
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-card);
-    transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+    transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: auto;
-    transform-style: preserve-3d;
-    will-change: transform, box-shadow;
-    position: relative;
 }
 
 .storytelling-card.hidden {
@@ -1108,38 +1109,9 @@ button {
 }
 
 .storytelling-card:hover {
+    transform: translateY(-6px);
     border-color: var(--border-color-hover);
-    box-shadow: 0 20px 40px -12px rgba(234, 88, 12, 0.2);
-}
-
-/* 3D Specular Glare Overlay */
-.card-glare {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: radial-gradient(circle at var(--glare-x, 50%) var(--glare-y, 50%), rgba(255, 255, 255, 0.12) 0%, transparent 65%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    mix-blend-mode: overlay;
-    z-index: 10;
-}
-
-.storytelling-card:hover .card-glare {
-    opacity: 1;
-}
-
-/* 3D Spatial layering on inner components */
-.storytelling-card .project-badge {
-    transform: translateZ(24px);
-    transition: transform 0.25s ease;
-}
-
-.storytelling-card .project-title {
-    transform: translateZ(16px);
-}
-
-.storytelling-card .tech-tag {
-    transform: translateZ(8px);
+    box-shadow: 0 16px 36px -10px rgba(234, 88, 12, 0.2);
 }
 
 /* Aspect Video Container 16:9 */
@@ -1945,7 +1917,7 @@ button {
         transform: none !important;
         transition: none !important;
     }
-    .hero-3d-visual {
+    .hero-3d-visual, .spatial-3d-scene-container {
         display: none !important;
     }
 }

@@ -251,9 +251,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Reset scroll position to beginning
         if (portfolioGrid) {
             portfolioGrid.scrollTo({ left: 0, behavior: 'smooth' });
-            if (typeof window.updateCard3DTransforms === 'function') {
-                setTimeout(window.updateCard3DTransforms, 60);
-            }
         }
     }
 
@@ -801,12 +798,11 @@ document.addEventListener('DOMContentLoaded', function() {
         animateCanvas();
     }
 
-    // 9. --- INTERACTIVE 3D SCROLL-DRIVEN WEBGL TECH CORE (THREE.JS) ---
-    function initHero3DCore() {
+    // 9. --- MULTI-SECTION SCROLL-DRIVEN 3D MORPHING ENGINE (THREE.JS) ---
+    function initScrollMorphing3D() {
         if (typeof THREE === 'undefined') return;
-        const canvas3d = document.getElementById('hero-3d-canvas');
-        const wrapper3d = document.getElementById('hero-3d-wrapper');
-        if (!canvas3d || !wrapper3d) return;
+        const canvas = document.getElementById('spatial-3d-canvas');
+        if (!canvas) return;
 
         // Check reduced motion preference
         if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -814,71 +810,132 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-        camera.position.set(0, 0, 5.2);
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(0, 0, 7.5);
 
         const renderer = new THREE.WebGLRenderer({
-            canvas: canvas3d,
+            canvas: canvas,
             alpha: true,
             antialias: true,
             powerPreference: 'high-performance'
         });
         renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        renderer.setSize(window.innerWidth, window.innerHeight);
 
-        // Group container for all 3D artifacts
-        const coreGroup = new THREE.Group();
-        scene.add(coreGroup);
+        // Master 3D Group
+        const masterGroup = new THREE.Group();
+        scene.add(masterGroup);
 
-        // 1. Geodesic Icosahedron Wireframe Outer Shell
-        const outerGeo = new THREE.IcosahedronGeometry(1.5, 1);
-        const wireframeGeo = new THREE.WireframeGeometry(outerGeo);
-        const wireframeMat = new THREE.LineBasicMaterial({
+        // ==========================================
+        // 1. GEOMETRY 1: THE CORE (Hero Phase)
+        // ==========================================
+        const coreGeo = new THREE.IcosahedronGeometry(1.5, 1);
+        const coreWireGeo = new THREE.WireframeGeometry(coreGeo);
+        const coreWireMat = new THREE.LineBasicMaterial({
             color: 0xea580c,
             transparent: true,
-            opacity: 0.75
+            opacity: 0.9
         });
-        const outerWire = new THREE.LineSegments(wireframeGeo, wireframeMat);
-        coreGroup.add(outerWire);
+        const coreWire = new THREE.LineSegments(coreWireGeo, coreWireMat);
+        masterGroup.add(coreWire);
 
-        // 2. Translucent Inner Octahedron Core with Emissive Pulse
-        const innerGeo = new THREE.OctahedronGeometry(0.8, 0);
-        const innerMat = new THREE.MeshPhongMaterial({
+        const innerCrystalGeo = new THREE.OctahedronGeometry(0.8, 0);
+        const innerCrystalMat = new THREE.MeshPhongMaterial({
             color: 0xf97316,
             emissive: 0xc2410c,
-            emissiveIntensity: 0.45,
+            emissiveIntensity: 0.5,
             shininess: 90,
             transparent: true,
-            opacity: 0.7,
+            opacity: 0.8,
             flatShading: true
         });
-        const innerMesh = new THREE.Mesh(innerGeo, innerMat);
-        coreGroup.add(innerMesh);
+        const innerCrystal = new THREE.Mesh(innerCrystalGeo, innerCrystalMat);
+        masterGroup.add(innerCrystal);
 
-        // 3. Cybernetic Dual Orbital Rings
-        const ring1Geo = new THREE.TorusGeometry(2.0, 0.016, 16, 80);
-        const ring1Mat = new THREE.MeshBasicMaterial({ color: 0xfb923c, transparent: true, opacity: 0.5 });
-        const ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
-        ring1.rotation.x = Math.PI / 3;
-        ring1.rotation.y = Math.PI / 6;
-        coreGroup.add(ring1);
+        // ==========================================
+        // 2. GEOMETRY 2: THE NEURAL LATTICE (About Phase)
+        // ==========================================
+        const latticeGeo = new THREE.DodecahedronGeometry(2.3, 1);
+        const latticeWireGeo = new THREE.WireframeGeometry(latticeGeo);
+        const latticeWireMat = new THREE.LineBasicMaterial({
+            color: 0xf59e0b,
+            transparent: true,
+            opacity: 0.0 // starts invisible, fades in at About
+        });
+        const latticeWire = new THREE.LineSegments(latticeWireGeo, latticeWireMat);
+        masterGroup.add(latticeWire);
 
-        const ring2Geo = new THREE.TorusGeometry(2.25, 0.012, 16, 80);
-        const ring2Mat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.4 });
-        const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
-        ring2.rotation.x = -Math.PI / 4;
-        ring2.rotation.z = Math.PI / 5;
-        coreGroup.add(ring2);
+        // ==========================================
+        // 3. GEOMETRY 3: THE CYBER PORTAL (Portfolio Phase)
+        // ==========================================
+        const portalGeo = new THREE.TorusGeometry(3.0, 0.035, 16, 100);
+        const portalMat = new THREE.MeshBasicMaterial({
+            color: 0x06b6d4,
+            transparent: true,
+            opacity: 0.0
+        });
+        const portalRing = new THREE.Mesh(portalGeo, portalMat);
+        masterGroup.add(portalRing);
 
-        // 4. Floating Orbital Particles
-        const particleCount = 60;
+        const portalInnerGeo = new THREE.TorusGeometry(2.7, 0.02, 16, 80);
+        const portalInnerMat = new THREE.MeshBasicMaterial({
+            color: 0xea580c,
+            transparent: true,
+            opacity: 0.0
+        });
+        const portalInnerRing = new THREE.Mesh(portalInnerGeo, portalInnerMat);
+        masterGroup.add(portalInnerRing);
+
+        // ==========================================
+        // 4. GEOMETRY 4: THE BEACON (Contact Phase)
+        // ==========================================
+        const beaconWaves = [];
+        for (let i = 0; i < 3; i++) {
+            const waveGeo = new THREE.RingGeometry(1.1 + i * 0.6, 1.16 + i * 0.6, 48);
+            const waveMat = new THREE.MeshBasicMaterial({
+                color: 0x10b981,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.0
+            });
+            const wave = new THREE.Mesh(waveGeo, waveMat);
+            wave.rotation.x = Math.PI / 2;
+            masterGroup.add(wave);
+            beaconWaves.push(wave);
+        }
+
+        // ==========================================
+        // 5. GYROSCOPE ORBITAL RINGS
+        // ==========================================
+        const gyro1Geo = new THREE.TorusGeometry(2.05, 0.016, 16, 80);
+        const gyro1Mat = new THREE.MeshBasicMaterial({ color: 0xfb923c, transparent: true, opacity: 0.65 });
+        const gyro1 = new THREE.Mesh(gyro1Geo, gyro1Mat);
+        gyro1.rotation.x = Math.PI / 3;
+        masterGroup.add(gyro1);
+
+        const gyro2Geo = new THREE.TorusGeometry(2.3, 0.012, 16, 80);
+        const gyro2Mat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.5 });
+        const gyro2 = new THREE.Mesh(gyro2Geo, gyro2Mat);
+        gyro2.rotation.x = -Math.PI / 4;
+        masterGroup.add(gyro2);
+
+        // ==========================================
+        // 6. ADAPTIVE PARTICLE CLOUD (100 particles)
+        // ==========================================
+        const particleCount = 100;
         const particlePositions = new Float32Array(particleCount * 3);
+        const particleBaseRadii = new Float32Array(particleCount);
+        const particleThetas = new Float32Array(particleCount);
+        const particlePhis = new Float32Array(particleCount);
+
         for (let i = 0; i < particleCount; i++) {
-            const radius = 1.6 + Math.random() * 1.2;
-            const theta = Math.random() * Math.PI * 2;
-            const phi = Math.acos((Math.random() * 2) - 1);
-            particlePositions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-            particlePositions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-            particlePositions[i * 3 + 2] = radius * Math.cos(phi);
+            particleBaseRadii[i] = 1.6 + Math.random() * 1.4;
+            particleThetas[i] = Math.random() * Math.PI * 2;
+            particlePhis[i] = Math.acos((Math.random() * 2) - 1);
+
+            particlePositions[i * 3] = particleBaseRadii[i] * Math.sin(particlePhis[i]) * Math.cos(particleThetas[i]);
+            particlePositions[i * 3 + 1] = particleBaseRadii[i] * Math.sin(particlePhis[i]) * Math.sin(particleThetas[i]);
+            particlePositions[i * 3 + 2] = particleBaseRadii[i] * Math.cos(particlePhis[i]);
         }
         const particleGeo = new THREE.BufferGeometry();
         particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
@@ -886,303 +943,268 @@ document.addEventListener('DOMContentLoaded', function() {
             color: 0xfdba74,
             size: 0.045,
             transparent: true,
-            opacity: 0.75
+            opacity: 0.8
         });
         const particles = new THREE.Points(particleGeo, particleMat);
-        coreGroup.add(particles);
+        masterGroup.add(particles);
 
-        // 5. Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+        // ==========================================
+        // 7. LIGHTING
+        // ==========================================
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
         scene.add(ambientLight);
 
-        const pointLight1 = new THREE.PointLight(0xea580c, 2.5, 12);
-        pointLight1.position.set(4, 4, 4);
+        const pointLight1 = new THREE.PointLight(0xea580c, 3, 15);
+        pointLight1.position.set(5, 5, 5);
         scene.add(pointLight1);
 
-        const pointLight2 = new THREE.PointLight(0x38bdf8, 1.8, 10);
-        pointLight2.position.set(-4, -3, 3);
+        const pointLight2 = new THREE.PointLight(0x06b6d4, 2, 12);
+        pointLight2.position.set(-5, -4, 4);
         scene.add(pointLight2);
 
-        // Responsive Sizing
-        function resize3D() {
-            const width = wrapper3d.clientWidth;
-            const height = wrapper3d.clientHeight;
-            if (width === 0 || height === 0) return;
-            camera.aspect = width / height;
+        // Resize Handler
+        function resizeScene() {
+            camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
-            renderer.setSize(width, height, false);
+            renderer.setSize(window.innerWidth, window.innerHeight);
         }
-        resize3D();
-        window.addEventListener('resize', resize3D);
+        window.addEventListener('resize', resizeScene);
 
-        // Scroll Velocity & Progress Reactor
+        // ==========================================
+        // 8. SCROLL-DRIVEN MORPHING STATE MACHINE
+        // ==========================================
+        const heroBadgeText = document.getElementById('hero-3d-phase-text');
+        const heroBadgeIcon = document.querySelector('#hero-3d-badge i');
+
         let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
         let scrollVelocity = 0;
-        let targetScrollRotY = 0;
-        let targetScrollRotX = 0;
+        let currentProgress = 0;
 
         window.addEventListener('scroll', () => {
             const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
-            const deltaY = currentScrollY - lastScrollY;
-            scrollVelocity = deltaY * 0.0035;
-            targetScrollRotY = currentScrollY * 0.0022;
-            targetScrollRotX = Math.sin(currentScrollY * 0.0015) * 0.35;
+            scrollVelocity = (currentScrollY - lastScrollY) * 0.003;
             lastScrollY = currentScrollY;
+
+            const maxScroll = (document.documentElement.scrollHeight - window.innerHeight) || 1;
+            currentProgress = Math.max(0, Math.min(1, currentScrollY / maxScroll));
         }, { passive: true });
 
-        // Interactive Pointer Drag-to-Rotate
+        // Interactive Pointer Drag in Hero Viewport
+        const heroWrapper = document.getElementById('hero-3d-wrapper');
         let isDragging = false;
         let previousPointerX = 0;
         let previousPointerY = 0;
-        let dragRotX = 0;
-        let dragRotY = 0;
+        let manualRotX = 0;
+        let manualRotY = 0;
         let dragVelX = 0;
         let dragVelY = 0;
 
-        wrapper3d.addEventListener('pointerdown', (e) => {
-            isDragging = true;
-            previousPointerX = e.clientX;
-            previousPointerY = e.clientY;
-            wrapper3d.setPointerCapture(e.pointerId);
-        });
+        if (heroWrapper) {
+            heroWrapper.addEventListener('pointerdown', (e) => {
+                isDragging = true;
+                previousPointerX = e.clientX;
+                previousPointerY = e.clientY;
+                heroWrapper.setPointerCapture(e.pointerId);
+            });
 
-        wrapper3d.addEventListener('pointermove', (e) => {
-            if (!isDragging) return;
-            const deltaX = e.clientX - previousPointerX;
-            const deltaY = e.clientY - previousPointerY;
-            dragVelX = deltaX * 0.008;
-            dragVelY = deltaY * 0.008;
-            dragRotY += dragVelX;
-            dragRotX += dragVelY;
-            previousPointerX = e.clientX;
-            previousPointerY = e.clientY;
-        });
+            heroWrapper.addEventListener('pointermove', (e) => {
+                if (!isDragging) return;
+                const deltaX = e.clientX - previousPointerX;
+                const deltaY = e.clientY - previousPointerY;
+                dragVelX = deltaX * 0.008;
+                dragVelY = deltaY * 0.008;
+                manualRotY += dragVelX;
+                manualRotX += dragVelY;
+                previousPointerX = e.clientX;
+                previousPointerY = e.clientY;
+            });
 
-        const stopDrag = (e) => {
-            if (isDragging) {
-                isDragging = false;
-                try {
-                    wrapper3d.releasePointerCapture(e.pointerId);
-                } catch (err) {}
-            }
-        };
-        wrapper3d.addEventListener('pointerup', stopDrag);
-        wrapper3d.addEventListener('pointercancel', stopDrag);
-
-        // Visibility Observer: Pause when not in viewport to save 100% GPU
-        let isVisible = true;
-        if ('IntersectionObserver' in window) {
-            const observer = new IntersectionObserver((entries) => {
-                isVisible = entries[0].isIntersecting;
-            }, { threshold: 0.05 });
-            observer.observe(wrapper3d);
+            const stopDrag = (e) => {
+                if (isDragging) {
+                    isDragging = false;
+                    try { heroWrapper.releasePointerCapture(e.pointerId); } catch (err) {}
+                }
+            };
+            heroWrapper.addEventListener('pointerup', stopDrag);
+            heroWrapper.addEventListener('pointercancel', stopDrag);
         }
 
-        // Render Loop
+        // Target state variables
+        let targetX = 2.4;
+        let targetY = 0.2;
+        let targetZ = 0;
+        let targetScale = 1.0;
+        let targetCoreOpacity = 0.9;
+        let targetCrystalOpacity = 0.8;
+        let targetLatticeOpacity = 0.0;
+        let targetPortalOpacity = 0.0;
+        let targetBeaconOpacity = 0.0;
+        let activePhaseName = '';
+
         let frameCount = 0;
-        function animate3D() {
-            requestAnimationFrame(animate3D);
-            if (!isVisible || document.hidden) return;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            if (document.hidden) return;
 
             frameCount++;
             const time = frameCount * 0.015;
 
-            // Idle continuous floating rotation
-            outerWire.rotation.y += 0.005;
-            outerWire.rotation.x += 0.0025;
-            innerMesh.rotation.y -= 0.008;
-            innerMesh.rotation.z += 0.004;
-            ring1.rotation.z += 0.007;
-            ring2.rotation.z -= 0.005;
-            particles.rotation.y += 0.002;
+            const isDesktop = window.innerWidth >= 992;
 
-            // Damping drag inertia
+            // Compute Morph Phase based on Scroll Progress (0.0 to 1.0)
+            if (currentProgress < 0.22) {
+                // PHASE 1: TECH CORE (Hero)
+                const p = currentProgress / 0.22;
+                targetX = isDesktop ? 2.3 : 0;
+                targetY = isDesktop ? 0.2 : 0.6;
+                targetZ = 0;
+                targetScale = isDesktop ? 1.0 : 0.75;
+
+                targetCoreOpacity = 0.9 - p * 0.2;
+                targetCrystalOpacity = 0.8;
+                targetLatticeOpacity = p * 0.2;
+                targetPortalOpacity = 0.0;
+                targetBeaconOpacity = 0.0;
+
+                activePhaseName = 'phase_core';
+                if (heroBadgeIcon) heroBadgeIcon.className = 'fas fa-cube';
+            } else if (currentProgress < 0.52) {
+                // PHASE 2: NEURAL LATTICE (About Section)
+                const p = (currentProgress - 0.22) / 0.30;
+                targetX = isDesktop ? (2.3 - p * 1.5) : 0; // Drifts towards center
+                targetY = isDesktop ? (0.2 - p * 0.6) : 0.4;
+                targetZ = -0.5 - p * 0.8;
+                targetScale = isDesktop ? (1.0 + p * 0.45) : 0.85; // Expands outward!
+
+                targetCoreOpacity = 0.7 - p * 0.45;
+                targetCrystalOpacity = 0.8 - p * 0.3;
+                targetLatticeOpacity = 0.2 + p * 0.65; // Wireframe lattice blooms!
+                targetPortalOpacity = p * 0.15;
+                targetBeaconOpacity = 0.0;
+
+                activePhaseName = 'phase_lattice';
+                if (heroBadgeIcon) heroBadgeIcon.className = 'fas fa-network-wired';
+            } else if (currentProgress < 0.80) {
+                // PHASE 3: CYBER PORTAL (Portfolio Section)
+                const p = (currentProgress - 0.52) / 0.28;
+                targetX = isDesktop ? (0.8 - p * 0.8) : 0; // Centered
+                targetY = 0.4;
+                targetZ = -1.3 - p * 0.7;
+                targetScale = isDesktop ? (1.45 + p * 0.45) : 0.95; // Massive gateway ring!
+
+                targetCoreOpacity = 0.25 - p * 0.18;
+                targetCrystalOpacity = 0.5 - p * 0.35;
+                targetLatticeOpacity = 0.85 - p * 0.7;
+                targetPortalOpacity = 0.15 + p * 0.75; // Grand portal glows in cyan!
+                targetBeaconOpacity = 0.0;
+
+                activePhaseName = 'phase_portal';
+                if (heroBadgeIcon) heroBadgeIcon.className = 'fas fa-circle-notch';
+            } else {
+                // PHASE 4: TELEMETRY BEACON (Contact Section)
+                const p = (currentProgress - 0.80) / 0.20;
+                targetX = 0;
+                targetY = -0.2;
+                targetZ = -1.2;
+                targetScale = isDesktop ? 1.1 : 0.8;
+
+                targetCoreOpacity = 0.07 + p * 0.45;
+                targetCrystalOpacity = 0.15 + p * 0.5;
+                targetLatticeOpacity = 0.15 - p * 0.15;
+                targetPortalOpacity = 0.9 - p * 0.85;
+                targetBeaconOpacity = p * 0.85; // Radar rings radiate!
+
+                activePhaseName = 'phase_beacon';
+                if (heroBadgeIcon) heroBadgeIcon.className = 'fas fa-broadcast-tower';
+            }
+
+            // Update HUD text if language dictionary available
+            if (heroBadgeText && typeof translations !== 'undefined') {
+                const lang = document.documentElement.getAttribute('lang') || 'id';
+                const transObj = translations[lang] && translations[lang].hero;
+                if (transObj && transObj[activePhaseName]) {
+                    heroBadgeText.textContent = transObj[activePhaseName];
+                }
+            }
+
+            // Smooth Interpolation (Lerp) of Group Position & Scale
+            masterGroup.position.x += (targetX - masterGroup.position.x) * 0.08;
+            masterGroup.position.y += (targetY - masterGroup.position.y) * 0.08;
+            masterGroup.position.z += (targetZ - masterGroup.position.z) * 0.08;
+
+            const curScale = masterGroup.scale.x;
+            const newScale = curScale + (targetScale - curScale) * 0.08;
+            masterGroup.scale.set(newScale, newScale, newScale);
+
+            // Smooth Opacity Transitions
+            coreWireMat.opacity += (targetCoreOpacity - coreWireMat.opacity) * 0.08;
+            innerCrystalMat.opacity += (targetCrystalOpacity - innerCrystalMat.opacity) * 0.08;
+            latticeWireMat.opacity += (targetLatticeOpacity - latticeWireMat.opacity) * 0.08;
+            portalMat.opacity += (targetPortalOpacity - portalMat.opacity) * 0.08;
+            portalInnerMat.opacity += (targetPortalOpacity * 0.7 - portalInnerMat.opacity) * 0.08;
+
+            // Beacon Waves Expansion Animation
+            beaconWaves.forEach((wave, idx) => {
+                wave.material.opacity += (targetBeaconOpacity - wave.material.opacity) * 0.08;
+                if (targetBeaconOpacity > 0.05) {
+                    const waveScale = 1.0 + ((time * 0.8 + idx * 0.4) % 1.5);
+                    wave.scale.set(waveScale, waveScale, waveScale);
+                }
+            });
+
+            // Gyroscope Rings Rotation & Tilt
+            gyro1.rotation.z += 0.008 + Math.abs(scrollVelocity);
+            gyro2.rotation.z -= 0.006 + Math.abs(scrollVelocity);
+            portalRing.rotation.z += 0.005 + Math.abs(scrollVelocity);
+            portalInnerRing.rotation.z -= 0.008;
+
+            // Morphing Gyroscope Angles based on phase
+            gyro1.rotation.x = (Math.PI / 3) + currentProgress * Math.PI;
+            gyro2.rotation.y = (Math.PI / 4) + currentProgress * Math.PI * 1.5;
+
+            // Particles rotation & pulsation
+            particles.rotation.y += 0.003 + Math.abs(scrollVelocity);
+            particles.rotation.x = Math.sin(time * 0.5) * 0.2;
+
+            // Drag inertia damping
             if (!isDragging) {
-                dragVelX *= 0.94;
-                dragVelY *= 0.94;
-                dragRotY += dragVelX;
-                dragRotX += dragVelY;
+                dragVelX *= 0.93;
+                dragVelY *= 0.93;
+                manualRotY += dragVelX;
+                manualRotX += dragVelY;
             }
 
             // Scroll velocity damping
             scrollVelocity *= 0.92;
 
-            // Smooth interpolation to target rotation
-            const targetX = targetScrollRotX + dragRotX;
-            const targetY = targetScrollRotY + dragRotY + (scrollVelocity * 2);
+            // Master Group Rotation: Continuous + Scroll Driven + Manual Drag
+            const baseRotY = time * 0.3 + (currentProgress * Math.PI * 4) + manualRotY + (scrollVelocity * 4);
+            const baseRotX = Math.sin(time * 0.4) * 0.15 + (currentProgress * Math.PI * 1.5) + manualRotX;
 
-            coreGroup.rotation.x += (targetX - coreGroup.rotation.x) * 0.08;
-            coreGroup.rotation.y += (targetY - coreGroup.rotation.y) * 0.08;
+            masterGroup.rotation.y += (baseRotY - masterGroup.rotation.y) * 0.08;
+            masterGroup.rotation.x += (baseRotX - masterGroup.rotation.x) * 0.08;
 
             // Organic levitation bobbing
-            coreGroup.position.y = Math.sin(time) * 0.12;
+            masterGroup.position.y += Math.sin(time * 1.2) * 0.04;
 
             // Emissive core pulse
-            innerMat.emissiveIntensity = 0.35 + Math.sin(time * 2) * 0.2;
+            innerCrystalMat.emissiveIntensity = 0.35 + Math.sin(time * 2) * 0.2;
 
             renderer.render(scene, camera);
         }
-        animate3D();
+        animate();
     }
 
-    // 10. --- 3D SPATIAL SCROLL & CARD TILT ENGINE (PORTFOLIO SHOWCASE) ---
-    function initPortfolio3DEngine() {
-        const grid = document.getElementById('portfolio-grid');
-        if (!grid) return;
-
-        // Ensure each card has a specular glare overlay
-        const cards = grid.querySelectorAll('.storytelling-card');
-        cards.forEach(card => {
-            if (!card.querySelector('.card-glare')) {
-                const glare = document.createElement('div');
-                glare.className = 'card-glare';
-                card.appendChild(glare);
-            }
-        });
-
-        // Track active hovered card to pause scroll transform while tilting
-        let hoveredCard = null;
-
-        // 3D Spatial Perspective Transformation on Horizontal Scroll
-        window.updateCard3DTransforms = function() {
-            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                return;
-            }
-
-            const gridRect = grid.getBoundingClientRect();
-            const gridCenter = gridRect.left + gridRect.width / 2;
-
-            const visibleCards = grid.querySelectorAll('.storytelling-card:not(.hidden)');
-            visibleCards.forEach(card => {
-                if (card === hoveredCard) return; // Allow mouse tilt to take precedence
-
-                const cardRect = card.getBoundingClientRect();
-                const cardCenter = cardRect.left + cardRect.width / 2;
-                const normalizedDist = (cardCenter - gridCenter) / (gridRect.width / 2);
-                const clampedDist = Math.max(-1.5, Math.min(1.5, normalizedDist));
-
-                // Transform parameters
-                const rotY = clampedDist * -14; // degrees
-                const transZ = -Math.abs(clampedDist) * 55; // pixels depth
-                const scale = Math.max(0.92, 1 - Math.abs(clampedDist) * 0.07);
-
-                card.style.transform = `perspective(1200px) rotateY(${rotY.toFixed(2)}deg) translateZ(${transZ.toFixed(1)}px) scale3d(${scale.toFixed(3)}, ${scale.toFixed(3)}, 1)`;
-            });
-        };
-
-        // Scroll listener with requestAnimationFrame throttling
-        let isScrollTicking = false;
-        grid.addEventListener('scroll', () => {
-            if (!isScrollTicking) {
-                requestAnimationFrame(() => {
-                    window.updateCard3DTransforms();
-                    isScrollTicking = false;
-                });
-                isScrollTicking = true;
-            }
-        }, { passive: true });
-
-        window.addEventListener('resize', () => {
-            window.updateCard3DTransforms();
-        }, { passive: true });
-
-        // Initial perspective calculation
-        setTimeout(window.updateCard3DTransforms, 100);
-
-        // Mousewheel Horizontal Scroll Conversion
-        grid.addEventListener('wheel', (e) => {
-            // Only hijack if dominant scroll is vertical (standard mousewheel)
-            if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-                e.preventDefault();
-                grid.scrollBy({
-                    left: e.deltaY * 1.35,
-                    behavior: 'auto'
-                });
-            }
-        }, { passive: false });
-
-        // Momentum Drag-to-Scroll for Mouse / Trackpad
-        let isPointerDown = false;
-        let startX = 0;
-        let scrollStartLeft = 0;
-        let lastMoveX = 0;
-        let dragVelocity = 0;
-        let momentumAnimId = null;
-
-        grid.addEventListener('mousedown', (e) => {
-            // Don't drag if clicking buttons, links, or inputs
-            if (e.target.closest('a, button, input, textarea')) return;
-            isPointerDown = true;
-            grid.classList.add('is-dragging');
-            startX = e.pageX - grid.offsetLeft;
-            scrollStartLeft = grid.scrollLeft;
-            lastMoveX = e.pageX;
-            dragVelocity = 0;
-            if (momentumAnimId) cancelAnimationFrame(momentumAnimId);
-        });
-
-        window.addEventListener('mousemove', (e) => {
-            if (!isPointerDown) return;
-            e.preventDefault();
-            const x = e.pageX - grid.offsetLeft;
-            const walk = (x - startX) * 1.25;
-            grid.scrollLeft = scrollStartLeft - walk;
-            dragVelocity = e.pageX - lastMoveX;
-            lastMoveX = e.pageX;
-        });
-
-        const endPointerDrag = () => {
-            if (!isPointerDown) return;
-            isPointerDown = false;
-            grid.classList.remove('is-dragging');
-
-            // Apply smooth momentum
-            function stepMomentum() {
-                if (Math.abs(dragVelocity) > 0.5) {
-                    grid.scrollLeft -= dragVelocity;
-                    dragVelocity *= 0.92;
-                    momentumAnimId = requestAnimationFrame(stepMomentum);
-                }
-            }
-            stepMomentum();
-        };
-
-        window.addEventListener('mouseup', endPointerDrag);
-
-        // 3D Gyroscopic Card Tilt on Hover
-        cards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                hoveredCard = card;
-            });
-
-            card.addEventListener('mousemove', (e) => {
-                if (isPointerDown) return;
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                const pctX = ((x / rect.width) * 100).toFixed(1);
-                const pctY = ((y / rect.height) * 100).toFixed(1);
-                card.style.setProperty('--glare-x', `${pctX}%`);
-                card.style.setProperty('--glare-y', `${pctY}%`);
-
-                // Gyroscope tilt angles (-8 to +8 degrees)
-                const rotX = (((y - rect.height / 2) / (rect.height / 2)) * -8).toFixed(2);
-                const rotY = (((x - rect.width / 2) / (rect.width / 2)) * 8).toFixed(2);
-
-                card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(12px) scale3d(1.02, 1.02, 1)`;
-            });
-
-            card.addEventListener('mouseleave', () => {
-                hoveredCard = null;
-                // Revert smoothly to spatial scroll position
-                window.updateCard3DTransforms();
-            });
-        });
+    // 10. --- SMOOTH NATIVE PORTFOLIO SHOWCASE SCROLL ---
+    function initPortfolioSmoothScroll() {
+        // Native horizontal scrolling is enabled with clean CSS.
+        // Scroll navigation buttons (#scroll-left-btn, #scroll-right-btn) already handle smooth scrollBy.
+        // No wheel interception, no mousedown hijacking, no lag!
     }
 
     // Initialize 3D Engines
-    initHero3DCore();
-    initPortfolio3DEngine();
+    initScrollMorphing3D();
+    initPortfolioSmoothScroll();
 
 });
